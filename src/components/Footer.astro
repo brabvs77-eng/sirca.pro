@@ -6,10 +6,10 @@ import { tasks } from '../data/tasks';
 <footer class="site-footer">
   <div class="wrap footer-grid">
     <div>
-      <p class="serif" style="font-size:1.4rem;margin:0 0 0.4rem">sirca.pro</p>
+      <p class="serif" style="font-size:1.6rem;margin:0 0 0.4rem;color:var(--sirca-gold-2)">sirca.pro</p>
       <p class="muted" style="color:#d8cfbf">
-        Официальный дилер Sirca и G Nature. {company.legalNameShort}.<br />
-        Доставка: {company.delivery}. Склад на сайте не публикуем.
+        Глянцевый каталог официального дилера Sirca и G Nature.<br />
+        {company.legalNameShort}. Доставка: {company.delivery}. Склад не публикуем.
       </p>
       <p>
         <a href={`tel:${company.phoneTel}`}>{company.phoneDisplay}</a>
@@ -18,7 +18,7 @@ import { tasks } from '../data/tasks';
       </p>
     </div>
     <div>
-      <p class="eyebrow" style="color:#d8cfbf">Задачи</p>
+      <p class="eyebrow" style="color:var(--sirca-gold)">Главы</p>
       <p>
         {tasks.map((t, i) => (
           <>
@@ -29,7 +29,7 @@ import { tasks } from '../data/tasks';
       </p>
     </div>
     <div>
-      <p class="eyebrow" style="color:#d8cfbf">Компания</p>
+      <p class="eyebrow" style="color:var(--sirca-gold)">Компания</p>
       <p>
         <a href="/requisites">Реквизиты</a><br />
         <a href="/delivery">Доставка</a><br />

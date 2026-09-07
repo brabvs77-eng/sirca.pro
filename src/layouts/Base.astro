@@ -8,9 +8,10 @@ type Props = {
   title: string;
   description: string;
   canonical?: string;
+  cover?: boolean;
 };
 
-const { title, description, canonical } = Astro.props;
+const { title, description, canonical, cover = false } = Astro.props;
 const url = canonical ?? new URL(Astro.url.pathname, company.site).toString();
 ---
 
@@ -29,9 +30,10 @@ const url = canonical ?? new URL(Astro.url.pathname, company.site).toString();
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="sirca.pro" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/onest-400.woff2" as="font" type="font/woff2" crossorigin />
     <slot name="head" />
   </head>
-  <body>
+  <body class:list={[{ 'has-cover': cover }]}>
     <a class="skip" href="#main">К содержанию</a>
     <Header />
     <main id="main">
