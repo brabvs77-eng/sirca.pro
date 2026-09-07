@@ -41,6 +41,20 @@ const chem =
       <h1>{product.name}</h1>
       <p class="price" style="font-size:2.1rem;margin-top:-0.35rem">от {formatRub(from)}</p>
       <p>{product.description}</p>
+      <div class="specs">
+        <div>
+          <small>химия</small>
+          <strong>{chem}</strong>
+        </div>
+        <div>
+          <small>учёт</small>
+          <strong>за {product.unit}</strong>
+        </div>
+        <div>
+          <small>раздел</small>
+          <strong>{product.use === 'parquet' ? 'паркет' : product.use === 'windows' ? 'окна' : product.use === 'oils' ? 'масло' : product.use === 'furniture' ? 'мебель' : 'экстерьер'}</strong>
+        </div>
+      </div>
       <table class="table">
         <thead>
           <tr>

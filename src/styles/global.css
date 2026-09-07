@@ -364,12 +364,17 @@ p {
   }
 
   .cover-pane {
-    flex: 1 1 50%;
+    flex: 1 1 0;
     min-height: 100svh;
   }
 
+  .cover:hover .cover-pane:not(:hover) {
+    flex-grow: 0.72;
+    filter: saturate(0.85);
+  }
+
   .cover-pane:hover {
-    flex: 1.18 1 50%;
+    flex-grow: 1.55;
   }
 }
 
@@ -383,7 +388,7 @@ p {
   background-size: cover;
   background-position: center;
   isolation: isolate;
-  transition: flex 0.7s var(--ease);
+  transition: flex-grow 0.7s var(--ease);
 }
 
 .cover-pane::before {
