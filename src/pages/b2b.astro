@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { company } from '../data/company';
+---
+
+<Base
+  title="Опт и маляры: Sirca и G Nature | sirca.pro"
+  description="Счёт, УПД, колеровка, расчёт цикла для подрядчиков и столярных цехов. Москва и отгрузка по России."
+>
+  <div class="wrap" style="padding:2rem 0 3rem">
+    <p class="crumbs"><a href="/">Главная</a> / Опт</p>
+    <h1>Для подрядчиков и столярки</h1>
+    <p>
+      Счёт от {company.legalNameShort}, УПД, колеровка в цвет объекта, комплект грунт + финиш + уход.
+      Два бренда в одном расчёте «дом»: масла G Nature на сруб и террасу, Sirca на окна и паркет.
+    </p>
+    <ul class="features">
+      <li>Оптовая отгрузка канистрами 2,5 и 10 л</li>
+      <li>Подбор цикла под породу и климат</li>
+      <li>Отгрузка по России</li>
+    </ul>
+    <p>
+      <a class="btn" href={`tel:${company.phoneTel}`}>{company.director}, {company.phoneDisplay}</a>
+      <a class="btn btn-ghost" href="/requisites">Реквизиты</a>
+    </p>
+  </div>
+</Base>

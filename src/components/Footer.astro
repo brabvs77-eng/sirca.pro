@@ -1,0 +1,49 @@
+---
+import { company, offerDisclaimer } from '../data/company';
+import { tasks } from '../data/tasks';
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="serif" style="font-size:1.4rem;margin:0 0 0.4rem">sirca.pro</p>
+      <p class="muted" style="color:#d8cfbf">
+        Официальный дилер Sirca и G Nature. {company.legalNameShort}.<br />
+        Доставка: {company.delivery}. Склад на сайте не публикуем.
+      </p>
+      <p>
+        <a href={`tel:${company.phoneTel}`}>{company.phoneDisplay}</a>
+        · {company.director}<br />
+        <a href={company.whatsapp}>WhatsApp</a>
+      </p>
+    </div>
+    <div>
+      <p class="eyebrow" style="color:#d8cfbf">Задачи</p>
+      <p>
+        {tasks.map((t, i) => (
+          <>
+            {i > 0 ? ' · ' : ''}
+            <a href={`/tasks/${t.slug}`}>{t.title}</a>
+          </>
+        ))}
+      </p>
+    </div>
+    <div>
+      <p class="eyebrow" style="color:#d8cfbf">Компания</p>
+      <p>
+        <a href="/requisites">Реквизиты</a><br />
+        <a href="/delivery">Доставка</a><br />
+        <a href="/privacy">Конфиденциальность</a><br />
+        <a href="/contacts">Контакты</a>
+      </p>
+      <p class="muted" style="color:#d8cfbf;font-size:0.88rem">
+        ИНН {company.inn} · КПП {company.kpp}
+      </p>
+    </div>
+  </div>
+  <div class="wrap footer-disclaimer">
+    <strong>Не является офертой.</strong>
+    {offerDisclaimer}
+    Юридический адрес (не склад): {company.legalAddress}.
+  </div>
+</footer>

@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import { company } from '../data/company';
+---
+
+<Base
+  title="Реквизиты ООО «А.С. КОЛОР» | sirca.pro"
+  description="ИНН, КПП, расчётный счёт в Банке Точка. Официальный дилер Sirca и G Nature."
+>
+  <div class="wrap" style="padding:2rem 0 3rem">
+    <p class="crumbs"><a href="/">Главная</a> / Реквизиты</p>
+    <h1>Реквизиты</h1>
+    <p>Для счёта, УПД и оплаты от юрлица или ИП.</p>
+    <dl class="dl">
+      <dt>Наименование</dt>
+      <dd>{company.legalName}</dd>
+      <dt>ИНН</dt>
+      <dd class="num">{company.inn}</dd>
+      <dt>КПП</dt>
+      <dd class="num">{company.kpp}</dd>
+      <dt>ОГРН</dt>
+      <dd class="num">{company.ogrn}</dd>
+      <dt>Юридический адрес</dt>
+      <dd>{company.legalAddress}</dd>
+      <dt>Банк</dt>
+      <dd>{company.bank.name}</dd>
+      <dt>БИК</dt>
+      <dd class="num">{company.bank.bik}</dd>
+      <dt>Расчётный счёт</dt>
+      <dd class="num">{company.bank.account}</dd>
+      <dt>Корреспондентский счёт</dt>
+      <dd class="num">{company.bank.corr}</dd>
+      <dt>Контакт</dt>
+      <dd>{company.director}, <a href={`tel:${company.phoneTel}`}>{company.phoneDisplay}</a></dd>
+    </dl>
+    <p class="note">Юридический адрес не является складом и пунктом самовывоза. Самовывоз только по согласованию.</p>
+  </div>
+</Base>

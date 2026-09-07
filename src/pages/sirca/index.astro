@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { sircaProducts } from '../../data/products-sirca';
+
+const groups = [
+  { title: 'Водный экстерьер и столярка', items: sircaProducts.filter((p) => ['exterior', 'windows', 'oils'].includes(p.use)) },
+  { title: 'Паркет', items: sircaProducts.filter((p) => p.use === 'parquet') },
+  { title: 'Мебель и столярка (витрина конкурентов)', items: sircaProducts.filter((p) => p.use === 'furniture') },
+];
+---
+
+<Base
+  title="Sirca (Сирка) — ЛКМ для деревянного домостроения | sirca.pro"
+  description="Каталог Sirca: IMW4800, OWP330, OIL30, паркетные лаки, ПУ для столярки. Цены на витрине. Доставка по Москве и России."
+>
+  <div class="wrap" style="padding:2rem 0 3rem">
+    <p class="crumbs"><a href="/">Главная</a> / Sirca</p>
+    <p class="eyebrow">Италия · деревянное домостроение</p>
+    <h1>Sirca — системы для дома, окон и паркета</h1>
+    <p>
+      Артикулы из каталога «ЛКМ для деревянного домостроения», плюс ходовые позиции
+      столярки с открытых витрин. Никаких вымышленных имён вроде «Fassade» или «Elastodeck».
+    </p>
+    <p class="note">
+      Цена за 1 л / 1 кг, если не указано иное. Комплект с отвердителем и колеровка — в счёте.
+      Ориентир розницы Woodperfect минус около 10%.
+    </p>
+
+    {groups.map((g) =>
+      g.items.length ? (
+        <section style="margin-top:2.2rem">
+          <h2>{g.title}</h2>
+          <div class="cards cols-3">
+            {g.items.map((p) => <ProductCard product={p} />)}
+          </div>
+        </section>
+      ) : null
+    )}
+  </div>
+</Base>

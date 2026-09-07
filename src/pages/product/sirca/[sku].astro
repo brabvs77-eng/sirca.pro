@@ -1,0 +1,76 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { company, priceNote } from '../../../data/company';
+import { formatRub } from '../../../data/pricing';
+import { sircaBySlug, sircaFromPrice, sircaProducts } from '../../../data/products-sirca';
+import { tasks } from '../../../data/tasks';
+
+export function getStaticPaths() {
+  return sircaProducts.map((p) => ({ params: { sku: p.slug } }));
+}
+
+const product = sircaBySlug(Astro.params.sku!);
+if (!product) throw new Error('not found');
+
+const from = sircaFromPrice(product);
+const taskLinks = tasks.filter((t) => product.tasks.includes(t.slug));
+---
+
+<Base
+  title={`${product.sku} — Sirca, цена от ${formatRub(from)}`}
+  description={`${product.name}. ${product.short} Официальный дилер, доставка по Москве и России.`}
+>
+  <div class="wrap" style="padding:2rem 0 3rem">
+    <p class="crumbs">
+      <a href="/">Главная</a> / <a href="/sirca">Sirca</a> / {product.sku}
+    </p>
+    <p class="eyebrow">Sirca · {product.chemistry === 'water' ? 'вода' : product.chemistry === 'pu' ? 'полиуретан' : product.chemistry === 'acrylic' ? 'акрил' : 'масло'}</p>
+    <h1>{product.name}</h1>
+    <p class="price" style="font-size:2rem;margin-top:-0.3rem">от {formatRub(from)}</p>
+    <p>{product.description}</p>
+
+    <h2>Цены</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Фасовка</th>
+          <th>Цена</th>
+          <th>Ориентир рынка</th>
+        </tr>
+      </thead>
+      <tbody>
+        {product.packs.map((pack) => (
+          <tr>
+            <td>{pack.volume}</td>
+            <td class="price">{formatRub(pack.price)}</td>
+            <td class="muted">{formatRub(pack.marketPrice)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="muted" style="font-size:0.9rem">
+      {priceNote} Источник ориентира: {product.packs[0].source}.
+      {product.hardener ? ` Отвердитель: ${product.hardener}.` : ''}
+    </p>
+
+    <ul class="features">
+      {product.features.map((f) => <li>{f}</li>)}
+    </ul>
+
+    {taskLinks.length > 0 && (
+      <p>
+        Задачи: {taskLinks.map((t, i) => (
+          <>
+            {i > 0 ? ', ' : ''}
+            <a href={`/tasks/${t.slug}`}>{t.title}</a>
+          </>
+        ))}
+      </p>
+    )}
+
+    <p>
+      <a class="btn" href={`tel:${company.phoneTel}`}>Заказать {company.phoneDisplay}</a>
+      <a class="btn btn-ghost" href={company.whatsapp}>WhatsApp</a>
+    </p>
+  </div>
+</Base>

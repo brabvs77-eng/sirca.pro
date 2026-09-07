@@ -1,0 +1,108 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { company, priceNote } from '../../../data/company';
+import { formatRub } from '../../../data/pricing';
+import { gnBySlug, gnatureProducts, gnFromPrice } from '../../../data/products-gnature';
+import { tasks } from '../../../data/tasks';
+
+export function getStaticPaths() {
+  return gnatureProducts.map((p) => ({ params: { sku: p.slug } }));
+}
+
+const product = gnBySlug(Astro.params.sku!);
+if (!product) throw new Error('not found');
+
+const from = gnFromPrice(product);
+const taskLinks = tasks.filter((t) => product.tasks.includes(t.slug));
+const related = gnatureProducts.filter((p) => p.sku !== product.sku && p.use === product.use).slice(0, 3);
+---
+
+<Base
+  title={`${product.sku} ${product.name} — G Nature, цена от ${formatRub(from)}`}
+  description={`${product.name} (${product.nameDe}). ${product.short} Купить у дилера в Москве, доставка по России.`}
+>
+  <div class="wrap" style="padding:2rem 0 3rem">
+    <p class="crumbs">
+      <a href="/">Главная</a> / <a href="/gnature">G Nature</a> / {product.sku}
+    </p>
+    <p class="eyebrow">G Nature · {product.nameDe}</p>
+    <h1>{product.sku} {product.name}</h1>
+    <p class="price" style="font-size:2rem;margin-top:-0.3rem">от {formatRub(from)}</p>
+    <p>{product.description}</p>
+
+    {product.coverage1 && (
+      <p class="muted">
+        Расход: {product.coverage1} м²/л в 1 слой
+        {product.coverage2 ? ` · ${product.coverage2} м²/л в 2 слоя` : ''}
+        {product.dry ? ` · сушка ${product.dry}` : ''}
+      </p>
+    )}
+
+    <h2>Цены</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Фасовка</th>
+          <th>Цена</th>
+          <th>Ориентир рынка</th>
+        </tr>
+      </thead>
+      <tbody>
+        {product.packs.map((pack) => (
+          <tr>
+            <td>{pack.volume}</td>
+            <td class="price">{formatRub(pack.price)}</td>
+            <td class="muted">{formatRub(pack.marketPrice)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="muted" style="font-size:0.9rem">{priceNote} Источник ориентира: {product.packs[0].source}.</p>
+
+    {product.features.length > 0 && (
+      <>
+        <h2>Свойства</h2>
+        <ul class="features">
+          {product.features.map((f) => <li>{f}</li>)}
+        </ul>
+      </>
+    )}
+
+    {product.composition && (
+      <>
+        <h2>Состав</h2>
+        <p>{product.composition}</p>
+      </>
+    )}
+
+    {product.tinting && <p><strong>Колеровка:</strong> {product.tinting}</p>}
+
+    {taskLinks.length > 0 && (
+      <p>
+        Задачи: {taskLinks.map((t, i) => (
+          <>
+            {i > 0 ? ', ' : ''}
+            <a href={`/tasks/${t.slug}`}>{t.title}</a>
+          </>
+        ))}
+      </p>
+    )}
+
+    <p>
+      <a class="btn" href={`tel:${company.phoneTel}`}>Заказать {company.phoneDisplay}</a>
+      <a class="btn btn-ghost" href="/calc/raskhod">Посчитать литры</a>
+    </p>
+
+    {related.length > 0 && (
+      <p class="muted" style="margin-top:2rem">
+        Рядом в линейке:{' '}
+        {related.map((p, i) => (
+          <>
+            {i > 0 ? ' · ' : ''}
+            <a href={`/product/gnature/${p.slug}`}>{p.sku} {p.name}</a>
+          </>
+        ))}
+      </p>
+    )}
+  </div>
+</Base>

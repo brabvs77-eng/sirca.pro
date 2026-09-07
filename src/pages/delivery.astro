@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import { company } from '../data/company';
+---
+
+<Base
+  title="Доставка краски Sirca и G Nature по Москве и России | sirca.pro"
+  description="Доставка транспортных компаний по Москве и всей России. Склад на сайте не публикуем."
+>
+  <div class="wrap" style="padding:2rem 0 3rem">
+    <p class="crumbs"><a href="/">Главная</a> / Доставка</p>
+    <h1>Доставка: Москва и вся Россия</h1>
+    <p>
+      Отгружаем банки и канистры в {company.city} и в любой регион РФ через транспортные компании.
+      Стоимость доставки зависит от веса, объёма и города — считаем в счёте.
+    </p>
+    <ul class="features">
+      <li>Москва и Московская область — доставка до адреса или терминала ТК</li>
+      <li>Регионы — до терминала СДЭК, Деловых Линий, ПЭК и других по выбору</li>
+      <li>Юрлицам — УПД, счёт на {company.legalNameShort}</li>
+      <li>Адрес склада на сайте не публикуем</li>
+    </ul>
+    <p>
+      <a class="btn" href={`tel:${company.phoneTel}`}>{company.phoneDisplay}</a>
+      <a class="btn btn-ghost" href="/requisites">Реквизиты</a>
+    </p>
+  </div>
+</Base>

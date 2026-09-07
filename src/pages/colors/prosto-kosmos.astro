@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const colors = [
+  ['Рассвет', '#c9a36b'],
+  ['Марс', '#8a3a28'],
+  ['Венера', '#d8c4a0'],
+  ['Нептун', '#3a5a6e'],
+  ['Сияние Нептуна', '#6a8aa0'],
+  ['Сатурн', '#c0b49a'],
+  ['Серебро Сатурна', '#b8b8b4'],
+  ['Бронзовый Меркурий', '#8a6a3a'],
+  ['Пурпурный Квазар', '#5a2a4a'],
+];
+---
+
+<Base
+  title="Просто космос — металлик 285 G Nature | sirca.pro"
+  description="Коллекция металлик для масла 285 Fassadenöl. Фасад с эффектом, стабильность цвета до 10 лет."
+>
+  <div class="wrap" style="padding:2rem 0 3rem">
+    <p class="crumbs"><a href="/">Главная</a> / <a href="/gnature">G Nature</a> / Просто космос</p>
+    <h1>Просто космос</h1>
+    <p>
+      Металлик-оттенки для <a href="/product/gnature/285">масла 285 Fassadenöl</a>.
+      На экране — схема, живой пигмент смотрим на выкрасе.
+    </p>
+    <div class="cards cols-3">
+      {colors.map(([name, hex]) => (
+        <div class="product gn">
+          <div style={`height:5.5rem;margin:-1rem -1rem 0.9rem;background:${hex};border-bottom:1px solid var(--line)`}></div>
+          <h3>{name}</h3>
+        </div>
+      ))}
+    </div>
+    <p style="margin-top:1.5rem">
+      <a class="btn btn-gn" href="/product/gnature/285">Масло 285, цены</a>
+    </p>
+  </div>
+</Base>

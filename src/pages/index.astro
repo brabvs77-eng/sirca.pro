@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { company } from '../data/company';
+import { formatRub } from '../data/pricing';
+import { gnatureProducts, gnFromPrice } from '../data/products-gnature';
+import { sircaProducts, sircaFromPrice } from '../data/products-sirca';
+import { tasks } from '../data/tasks';
+
+const gnHits = ['280', '277', '245', '870']
+  .map((sku) => gnatureProducts.find((p) => p.sku === sku)!)
+  .filter(Boolean);
+const sircaHits = ['imw4800', 'owp330', 'oil30', 'opu60g']
+  .map((slug) => sircaProducts.find((p) => p.slug === slug)!)
+  .filter(Boolean);
+
+const gn280 = gnFromPrice(gnatureProducts.find((p) => p.sku === '280')!);
+const imw = sircaFromPrice(sircaProducts.find((p) => p.slug === 'imw4800')!);
+---
+
+<Base
+  title="Sirca и G Nature — официальный дилер в Москве | sirca.pro"
+  description={`Краски и масла для дерева: Sirca и G Nature. Цены на витрине. Доставка по Москве и России. ${company.legalNameShort}, ${company.phoneDisplay}.`}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: company.legalNameShort,
+    url: company.site,
+    telephone: company.phoneTel,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Москва',
+      addressCountry: 'RU',
+    },
+    areaServed: 'RU',
+  })} />
+  <section class="hero wrap">
+    <p class="eyebrow">Официальный дилер · {company.delivery}</p>
+    <div class="hero-grid">
+      <div>
+        <h1>Краски и масла для дерева: Sirca и G Nature</h1>
+        <p>
+          Два профессиональных бренда на одном складе дилера. Натуральные масла G&nbsp;Nature для дома
+          и террасы. Итальянские системы Sirca для фасада, окон и паркета. Цены открыты.
+        </p>
+        <p>
+          <a class="btn" href={`tel:${company.phoneTel}`}>Позвонить {company.phoneDisplay}</a>
+          <a class="btn btn-ghost" href="/calc/raskhod">Рассчитать литры</a>
+        </p>
+      </div>
+      <aside class="note">
+        <strong>Прайс ниже открытой витрины.</strong>
+        Ориентир — gnature.ru и Woodperfect, наша цена примерно −10%.
+        G Nature 280 — от {formatRub(gn280)}, Sirca IMW4800 — от {formatRub(imw)}/л.
+        Сайт не оферта.
+      </aside>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <h2>Что красите</h2>
+    <ul class="chips">
+      {tasks.map((t) => (
+        <li><a href={`/tasks/${t.slug}`}>{t.title}</a></li>
+      ))}
+    </ul>
+  </section>
+
+  <hr class="rule wrap" />
+
+  <section class="wrap split">
+    <article class="panel gn">
+      <p class="eyebrow">Германия · biopin</p>
+      <h2>G Nature</h2>
+      <p>Натуральные масла и краски: фасад, терраса, баня, пол, столешница. Колеровка 2000+ цветов.</p>
+      <p><a class="btn btn-gn" href="/gnature">Каталог G Nature</a></p>
+    </article>
+    <article class="panel sirca">
+      <p class="eyebrow">Италия · домостроение</p>
+      <h2>Sirca</h2>
+      <p>Водные и ПУ системы для сруба, окон, дверей и паркета. Артикулы из каталога, не выдуманные имена.</p>
+      <p><a class="btn btn-sirca" href="/sirca">Каталог Sirca</a></p>
+    </article>
+  </section>
+
+  <section class="wrap" style="margin-top:2.4rem">
+    <h2>Хиты G Nature</h2>
+    <div class="cards cols-3">
+      {gnHits.map((p) => <ProductCard product={p} />)}
+    </div>
+  </section>
+
+  <section class="wrap" style="margin-top:2.4rem">
+    <h2>Хиты Sirca</h2>
+    <div class="cards cols-3">
+      {sircaHits.map((p) => <ProductCard product={p} />)}
+    </div>
+  </section>
+
+  <section class="wrap" style="margin-top:2.6rem">
+    <h2>Как работаем</h2>
+    <div class="split">
+      <div>
+        <h3>1. Задача и порода</h3>
+        <p class="muted">Фасад, терраса, окна, паркет. Хвоя, лиственница, дуб, ДПК — от этого зависит цикл, не «просто банка».</p>
+        <h3>2. Расчёт литров</h3>
+        <p class="muted">Калькулятор по нормам каталога: слой, площадь, фасовка и сумма. Потом менеджер подтверждает наличие.</p>
+      </div>
+      <div>
+        <h3>3. Отгрузка по России</h3>
+        <p class="muted">Москва и вся Россия транспортными компаниями. Адрес склада не публикуем. Самовывоз — по договорённости.</p>
+        <h3>4. Оплата по счёту</h3>
+        <p class="muted">{company.legalNameShort}, банк Точка. Реквизиты на сайте. Счёт и УПД для юрлиц.</p>
+      </div>
+    </div>
+  </section>
+</Base>

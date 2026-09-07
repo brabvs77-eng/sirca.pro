@@ -1,0 +1,54 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const colors = [
+  ['01', 'Арктический лёд', '#d9e2e6'],
+  ['02', 'Снежная пыль', '#e8e0d4'],
+  ['03', 'Утренний туман', '#c9c2b4'],
+  ['04', 'Лён', '#d4c19a'],
+  ['05', 'Песок дюны', '#c9a56b'],
+  ['06', 'Медовый', '#b8883a'],
+  ['07', 'Охра', '#a56b2b'],
+  ['08', 'Терракота', '#8d4a2b'],
+  ['09', 'Кирпич', '#7a3a28'],
+  ['10', 'Винный', '#5c2a2a'],
+  ['11', 'Графит', '#4a4a48'],
+  ['12', 'Мокрый асфальт', '#3a3a3a'],
+  ['13', 'Хвойный', '#3b5d34'],
+  ['14', 'Болотный', '#4a5340'],
+  ['15', 'Олива', '#6b6a3a'],
+  ['16', 'Тик', '#5a3d24'],
+  ['17', 'Орех', '#4a2f1c'],
+  ['18', 'Венге', '#2b1d14'],
+  ['19', 'Палисандр', '#3a221c'],
+  ['20', 'Ливанский кедр', '#6e4b2a'],
+];
+---
+
+<Base
+  title="Коллекция «Вокруг цвета» G Nature | sirca.pro"
+  description="20 интерьерных оттенков G Nature для масел 245, 475 и фасадных 280 / 425. Колеровка у дилера."
+>
+  <div class="wrap" style="padding:2rem 0 3rem">
+    <p class="crumbs"><a href="/">Главная</a> / <a href="/gnature">G Nature</a> / Вокруг цвета</p>
+    <h1>Вокруг цвета</h1>
+    <p>
+      Фирменная коллекция G Nature для интерьера и лессирующего фасада.
+      Свотчи — ориентир на экране, живой цвет подтверждаем выкрасом.
+      Колеруем 245, 475/476, 280, 425.
+    </p>
+    <div class="cards cols-3">
+      {colors.map(([n, name, hex]) => (
+        <div class="product gn">
+          <div style={`height:5.5rem;margin:-1rem -1rem 0.9rem;background:${hex};border-bottom:1px solid var(--line)`}></div>
+          <span class="brand">{n}</span>
+          <h3>{name}</h3>
+        </div>
+      ))}
+    </div>
+    <p style="margin-top:1.5rem">
+      <a class="btn btn-gn" href="/product/gnature/245">Твёрдое масло 245</a>
+      <a class="btn btn-ghost" href="/product/gnature/280">Фасад 280</a>
+    </p>
+  </div>
+</Base>

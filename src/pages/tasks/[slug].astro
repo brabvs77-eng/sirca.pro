@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { productsForTask } from '../../data/catalog';
+import { taskBySlug, tasks } from '../../data/tasks';
+
+export function getStaticPaths() {
+  return tasks.map((t) => ({ params: { slug: t.slug } }));
+}
+
+const task = taskBySlug(Astro.params.slug!);
+if (!task) throw new Error('not found');
+const products = productsForTask(task.slug);
+---
+
+<Base title={`${task.h1} — цены | sirca.pro`} description={task.lead}>
+  <div class="wrap" style="padding:2rem 0 3rem">
+    <p class="crumbs"><a href="/">Главная</a> / {task.title}</p>
+    <h1>{task.h1}</h1>
+    <p>{task.lead}</p>
+    <p>
+      <a class="btn" href="/calc/raskhod">Рассчитать расход</a>
+      <a class="btn btn-ghost" href="/contacts">Спросить технолога</a>
+    </p>
+    <div class="cards cols-3" style="margin-top:1.6rem">
+      {products.map((p) => <ProductCard product={p} />)}
+    </div>
+  </div>
+</Base>

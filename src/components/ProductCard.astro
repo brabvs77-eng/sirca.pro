@@ -1,0 +1,17 @@
+---
+import { brandLabel, productFromPrice, productHref, type AnyProduct } from '../data/catalog';
+import { formatRub } from '../data/pricing';
+
+type Props = { product: AnyProduct };
+const { product } = Astro.props;
+const from = productFromPrice(product);
+const unit = product.brand === 'sirca' ? ` / ${product.packs[0].volume}` : '';
+---
+
+<a class:list={['product', product.brand === 'gnature' ? 'gn' : 'sirca']} href={productHref(product)}>
+  <span class="brand">{brandLabel(product.brand)}</span>
+  <div class="sku">{product.sku}</div>
+  <h3>{product.brand === 'gnature' ? product.name : product.name.replace(`${product.sku} — `, '')}</h3>
+  <p class="muted" style="margin-bottom:0">{product.short}</p>
+  <div class="from price">от {formatRub(from)}{unit}</div>
+</a>
