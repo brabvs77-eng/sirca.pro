@@ -165,3 +165,17 @@ sirca или ica,compare,info,medium,/compare/ica,
 аналог sayerlack tz 58,compare,comm,low,/product/opu57,OPU57
 аналог sayerlack tl 339,compare,comm,low,/product/lpu002,LPU002
 аналог sayerlack tz 66,compare,comm,low,/product/opu60,OPU60
+масло для деревянного фасада,task,comm,high,/catalog/exterior,кластер sirca-market.ru; реальные линейки Extra Plus / Idrocolor
+укрывная эмаль для деревянного фасада,task,comm,high,/catalog/exterior,
+лессирующее масло для фасада,task,comm,medium,/catalog/exterior,
+террасное масло купить,task,comm,high,/catalog/exterior,
+масло для террасы из лиственницы,task,comm,medium,/catalog/exterior,
+пропитка антисептик для планкена,task,comm,medium,/catalog/exterior,
+гидрофобизатор для дерева,task,comm,medium,/catalog/exterior,
+краска для имитации бруса,task,comm,medium,/catalog/exterior,
+лкм для деревянного дома снаружи,task,comm,high,/catalog/exterior,
+колеровка фасадной краски ral,color,comm,medium,/color,
+расход масла на фасад м2,info,info,medium,/knowledge/consumption,
+как выбрать лкм для деревянного фасада,info,info,high,/knowledge/facade,
+водные или растворительные лкм для фасада,info,info,medium,/knowledge/water-vs-solvent,
+промышленная колеровка без разнотона,info,info,medium,/knowledge/tinting,
