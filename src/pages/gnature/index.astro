@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ProductCard from '../../components/ProductCard.astro';
-import { covers } from '../../data/media';
+import { brandVideo, covers } from '../../data/media';
 import { gnatureProducts } from '../../data/products-gnature';
 
 const groups = [
@@ -22,13 +22,17 @@ const groups = [
       <h1>G Nature</h1>
       <p>Натуральные масла и краски для дерева. Каталог А5 2026, живые банки, открытые цены.</p>
       <p>
-        <a class="btn" style="background:#fff;color:#3b5d34" href="/calc/raskhod">Рассчитать расход</a>
+        <a class="btn" style="background:#fff;color:#3b5d34" href="/calc">Рассчитать расход</a>
+        <a class="btn btn-ghost" href="/systems">Системы 26–27</a>
         <a class="btn btn-ghost" href="/colors/vokrug-cveta">Вокруг цвета</a>
-        <a class="btn btn-ghost" href="/colors/prosto-kosmos">Просто космос</a>
+        <a class="btn btn-ghost" href="/gnature/tools">Кисти</a>
       </p>
     </div>
   </div>
   <div class="wrap page-pad">
+    <video class="clip" poster={brandVideo.gnature.poster} preload="none" controls playsinline>
+      <source src={brandVideo.gnature.src} type="video/mp4" />
+    </video>
     {groups.map((g, i) => (
       <section>
         <div class="chapter">

@@ -1,0 +1,121 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import { skuHref } from '../../data/catalog';
+import { company } from '../../data/company';
+import { calcNav } from '../../data/nav';
+import {
+  effectLabels,
+  objectLabels,
+  paintSystems,
+  placeLabels,
+  woodLabels,
+} from '../../data/systems';
+
+const systems = paintSystems.map((s) => ({
+  ...s,
+  links: s.skus.map((sku) => ({ sku, href: skuHref(sku) ?? '#' })),
+}));
+---
+
+<Base
+  title="Подбор системы окраски дерева | sirca.pro"
+  description="Конфигуратор циклов G Nature со страниц 26–27 и водный цикл окон Sirca. Не оферта."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/calc">Расчёт</a> / Система</p>
+    <h1>Система под задачу</h1>
+    <ChapterNav items={calcNav} />
+    <p>Снаружи или внутри, объект, порода, эффект — получаете шаги и артикулы.</p>
+
+    <form class="calc" id="calc" style="max-width:36rem">
+      <label>
+        Место
+        <select id="place" name="place">
+          {Object.entries(placeLabels).map(([id, label]) => <option value={id}>{label}</option>)}
+        </select>
+      </label>
+      <label>
+        Объект
+        <select id="object" name="object">
+          {Object.entries(objectLabels).map(([id, label]) => <option value={id}>{label}</option>)}
+        </select>
+      </label>
+      <label>
+        Порода
+        <select id="wood" name="wood">
+          {Object.entries(woodLabels).map(([id, label]) => <option value={id}>{label}</option>)}
+        </select>
+      </label>
+      <label>
+        Эффект
+        <select id="effect" name="effect">
+          {Object.entries(effectLabels).map(([id, label]) => <option value={id}>{label}</option>)}
+        </select>
+      </label>
+      <div class="calc-out" id="out">Считаем…</div>
+      <p>
+        <button type="button" class="btn" id="share">Скопировать расчёт</button>
+        <a class="btn btn-ghost" href={`tel:${company.phoneTel}`}>{company.phoneDisplay}</a>
+        <a class="btn btn-ghost" href={company.whatsapp}>WhatsApp</a>
+      </p>
+    </form>
+    <p class="muted">Цикл — схема из каталога. Влажность, старое покрытие и колер подтверждает технолог. Не оферта.</p>
+  </div>
+</Base>
+
+<script define:vars={{ systems }}>
+  const form = document.getElementById('calc');
+  const out = document.getElementById('out');
+  const share = document.getElementById('share');
+  const q = new URLSearchParams(location.search);
+  ['place', 'object', 'wood', 'effect'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el && q.get(id)) el.value = q.get(id);
+  });
+
+  function score(s, place, object, wood, effect) {
+    let n = 0;
+    if (s.place === place) n += 3;
+    if (s.object === object) n += 4;
+    if (s.wood === wood || s.wood === 'any') n += 2;
+    if (s.effect === effect) n += 2;
+    return n;
+  }
+
+  function render() {
+    const place = document.getElementById('place').value;
+    const object = document.getElementById('object').value;
+    const wood = document.getElementById('wood').value;
+    const effect = document.getElementById('effect').value;
+    const ranked = [...systems]
+      .map((s) => ({ s, n: score(s, place, object, wood, effect) }))
+      .filter((x) => x.n >= 5)
+      .sort((a, b) => b.n - a.n);
+    const hit = ranked[0]?.s;
+    if (!hit) {
+      out.innerHTML = 'Нет точного цикла. Спросите технолога или откройте <a href="/systems">все системы</a>.';
+    } else {
+      const steps = hit.steps.map((st) => `<li>${st}</li>`).join('');
+      const skus = hit.links
+        .map((l) => (l.href !== '#' ? `<a href="${l.href}">${l.sku.toUpperCase()}</a>` : l.sku.toUpperCase()))
+        .join(' · ');
+      out.innerHTML =
+        `<strong>${hit.title}</strong><br>${hit.result}` +
+        `<ol>${steps}</ol>${skus}` +
+        `<p><a href="/calc/raskhod?sku=${hit.links[0] && hit.links[0].href.includes('/sirca/') ? 'sirca-' + hit.skus[0] : 'gn-' + hit.skus[0]}">Посчитать литры</a></p>`;
+    }
+    history.replaceState(null, '', `${location.pathname}?${new URLSearchParams({ place, object, wood, effect })}`);
+  }
+
+  form.addEventListener('input', render);
+  share.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(location.href);
+      share.textContent = 'Ссылка скопирована';
+    } catch {
+      share.textContent = 'Скопируйте адрес из строки';
+    }
+  });
+  render();
+</script>

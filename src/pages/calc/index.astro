@@ -1,3 +1,42 @@
 ---
-return Astro.redirect('/calc/raskhod');
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import { calcNav } from '../../data/nav';
 ---
+
+<Base
+  title="Калькуляторы масла и краски | sirca.pro"
+  description="Расход литров, система окраски, комплект дома и цена за м². G Nature и Sirca. Не оферта."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / Расчёт</p>
+    <h1>Калькуляторы</h1>
+    <p>
+      Считаем на этой странице по нормам каталогов. Результат можно скопировать ссылкой.
+      Это прикидка, не смета и не оферта.
+    </p>
+    <ChapterNav items={calcNav} />
+    <div class="cards cols-2" style="margin-top:1.4rem">
+      <a class="hub-card" href="/calc/raskhod">
+        <p class="eyebrow">6.1</p>
+        <h2>Сколько литров</h2>
+        <p>Площадь, слои, порода. Банки и сумма. Sirca — через мокрый слой 125 г/м².</p>
+      </a>
+      <a class="hub-card" href="/calc/sistema">
+        <p class="eyebrow">6.2</p>
+        <h2>Система под задачу</h2>
+        <p>Снаружи или внутри, объект, порода, эффект. Шаги и артикулы.</p>
+      </a>
+      <a class="hub-card" href="/calc/komplekt">
+        <p class="eyebrow">6.3</p>
+        <h2>Комплект дома</h2>
+        <p>Фасад, торцы, терраса, стены, пол — одна корзина SKU.</p>
+      </a>
+      <a class="hub-card" href="/calc/m2">
+        <p class="eyebrow">6.4</p>
+        <h2>Стоимость м²</h2>
+        <p>Цена банки / (литры × расход). 1 и 2 слоя, с грунтом и без.</p>
+      </a>
+    </div>
+  </div>
+</Base>

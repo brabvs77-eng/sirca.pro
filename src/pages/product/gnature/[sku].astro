@@ -1,10 +1,12 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import { company, priceNote } from '../../../data/company';
-import { gnPackImage } from '../../../data/media';
+import { gnLifeImage, gnPackImage, gnPackShots, gnPoster, gnVideoSrc } from '../../../data/media';
 import { formatRub } from '../../../data/pricing';
 import { gnBySlug, gnatureProducts, gnFromPrice } from '../../../data/products-gnature';
+import { systemsForSku } from '../../../data/systems';
 import { tasks } from '../../../data/tasks';
+import { vokrugCveta, prostoKosmos } from '../../../data/colors';
 import ProductCard from '../../../components/ProductCard.astro';
 
 export function getStaticPaths() {
@@ -18,22 +20,56 @@ const from = gnFromPrice(product);
 const taskLinks = tasks.filter((t) => product.tasks.includes(t.slug));
 const related = gnatureProducts.filter((p) => p.sku !== product.sku && p.use === product.use).slice(0, 3);
 const img = gnPackImage(product.sku);
+const life = gnLifeImage(product.sku);
+const video = gnVideoSrc(product.sku);
+const poster = gnPoster(product.sku);
+const shots = gnPackShots(product.sku);
+const cycles = systemsForSku(product.sku);
+const colors =
+  product.sku === '285' ? prostoKosmos.slice(0, 8) : product.tinting ? vokrugCveta.slice(0, 8) : [];
 ---
 
 <Base
   title={`${product.sku} ${product.name} — G Nature, цена от ${formatRub(from)}`}
   description={`${product.name} (${product.nameDe}). ${product.short} Купить у дилера в Москве, доставка по России.`}
 >
+  {video && poster && (
+    <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'VideoObject',
+      name: `${product.sku} ${product.name}`,
+      description: product.short,
+      thumbnailUrl: `https://sirca.pro${poster}`,
+      contentUrl: `https://sirca.pro${video}`,
+    })} />
+  )}
   <div class="wrap spread">
     <div>
       <p class="crumbs">
         <a href="/">Каталог</a> / <a href="/gnature">G Nature</a> / {product.sku}
       </p>
-      <div class="spread-photo">
-        {img ? (
+      <div class={`spread-photo${life ? ' life' : ''}`}>
+        {life ? (
+          <img src={life} alt={`${product.sku} ${product.name} на объекте`} width="1200" height="900" />
+        ) : img ? (
           <img src={img} alt={`${product.sku} ${product.name}`} width="720" height="720" />
         ) : null}
       </div>
+      {shots.length > 1 && (
+        <div class="thumbs" aria-label="Фасовки">
+          {shots.map((shot) => (
+            <figure>
+              <img src={shot.src} alt={`${product.sku}, ${shot.label}`} width="280" height="280" loading="lazy" />
+              <figcaption>{shot.label}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+      {video && (
+        <video class="clip" poster={poster} preload="none" controls playsinline>
+          <source src={video} type="video/mp4" />
+        </video>
+      )}
     </div>
     <div>
       <p class="eyebrow">G Nature · {product.nameDe}</p>
@@ -81,6 +117,16 @@ const img = gnPackImage(product.sku);
       )}
       {product.composition && <p><strong>Состав.</strong> {product.composition}</p>}
       {product.tinting && <p><strong>Колеровка:</strong> {product.tinting}</p>}
+      {cycles.length > 0 && (
+        <p>
+          Системы: {cycles.map((s, i) => (
+            <>
+              {i > 0 ? ', ' : ''}
+              <a href={`/systems#${s.id}`}>{s.title}</a>
+            </>
+          ))}
+        </p>
+      )}
       {taskLinks.length > 0 && (
         <p>
           Главы: {taskLinks.map((t, i) => (
@@ -93,10 +139,28 @@ const img = gnPackImage(product.sku);
       )}
       <p>
         <a class="btn btn-gn" href={`tel:${company.phoneTel}`}>Заказать {company.phoneDisplay}</a>
-        <a class="btn btn-ghost" href="/calc/raskhod">Посчитать литры</a>
+        <a class="btn btn-ghost" href={`/calc/raskhod?sku=gn-${product.slug}`}>Посчитать литры</a>
       </p>
     </div>
   </div>
+  {colors.length > 0 && (
+    <div class="wrap">
+      <div class="chapter">
+        <h2>{product.sku === '285' ? 'Просто космос' : 'Вокруг цвета'}</h2>
+        <a class="pg" href={product.sku === '285' ? '/colors/prosto-kosmos' : '/colors/vokrug-cveta'}>вся коллекция →</a>
+      </div>
+      <div class="rail-wrap">
+        <div class="rail">
+          {colors.map((c) => (
+            <a class="swatch" href={`/colors/${c.slug}`}>
+              <img src={c.img} alt={`G Nature, цвет ${c.name}`} width="320" height="240" loading="lazy" />
+              <span>{c.n} {c.name}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
   {related.length > 0 && (
     <div class="wrap" style="padding-bottom:3rem">
       <div class="chapter">

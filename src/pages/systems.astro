@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import ChapterNav from '../components/ChapterNav.astro';
+import { knowledgeNav } from '../data/nav';
+import { skuHref } from '../data/catalog';
+import {
+  effectLabels,
+  objectLabels,
+  paintSystems,
+  placeLabels,
+  woodLabels,
+} from '../data/systems';
+---
+
+<Base
+  title="Системы окраски G Nature и Sirca | sirca.pro"
+  description="Циклы со страниц 26–27 каталога G Nature 2026 и водный цикл окон Sirca. Грунт, финиш, число слоёв."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / Системы</p>
+    <h1>Системы окраски</h1>
+    <p>
+      Таблицы наружки и внутрянки из каталога G Nature А5 2026, плюс водный цикл окон Sirca.
+      Это схема, не смета: породу, влажность и старое покрытие подтверждает технолог.
+    </p>
+    <ChapterNav items={knowledgeNav} />
+    <p>
+      <a class="btn" href="/calc/sistema">Подобрать систему</a>
+      <a class="btn btn-ghost" href="/calc/komplekt">Комплект дома</a>
+    </p>
+    <div class="cards cols-2" style="margin-top:1.6rem">
+      {paintSystems.map((s) => (
+        <article class="sys-card" id={s.id}>
+          <p class="eyebrow">{placeLabels[s.place]} · {objectLabels[s.object]}</p>
+          <h2>{s.title}</h2>
+          <p class="muted">{s.result}. {woodLabels[s.wood]}, {effectLabels[s.effect]}.</p>
+          <ol>
+            {s.steps.map((step) => <li>{step}</li>)}
+          </ol>
+          <p>
+            {s.skus.map((sku, i) => {
+              const href = skuHref(sku);
+              return (
+                <>
+                  {i > 0 ? ' · ' : ''}
+                  {href ? <a href={href}>{sku.toUpperCase()}</a> : sku.toUpperCase()}
+                </>
+              );
+            })}
+          </p>
+        </article>
+      ))}
+    </div>
+  </div>
+</Base>

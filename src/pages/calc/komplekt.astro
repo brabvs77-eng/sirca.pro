@@ -1,0 +1,137 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import { calcMaterials, houseZones } from '../../data/calc';
+import { company } from '../../data/company';
+import { calcNav } from '../../data/nav';
+
+const materials = calcMaterials.filter((m) => m.brand === 'G Nature');
+const zones = houseZones;
+---
+
+<Base
+  title="Комплект дома — расчёт масла и краски | sirca.pro"
+  description="Фасад, торцы, терраса, стены и пол: корзина G Nature с литрами и ценой. Не оферта."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/calc">Расчёт</a> / Комплект</p>
+    <h1>Комплект дома</h1>
+    <ChapterNav items={calcNav} />
+    <p>
+      Несколько зон в одной корзине. Торцы считаем как погонные метры грани ≈ 200 мм
+      (1 м.п. ≈ 0,2 м²). Грунт входит в цикл фасада, торцов и террасы.
+    </p>
+
+    <form class="calc" id="calc" style="max-width:40rem">
+      {zones.map((z) => (
+        <label>
+          {z.label}
+          <input type="number" id={z.id} name={z.id} min="0" step="0.1" value="0" />
+        </label>
+      ))}
+      <div class="calc-out" id="out">Укажите площади.</div>
+      <p>
+        <button type="button" class="btn" id="share">Скопировать расчёт</button>
+        <a class="btn btn-ghost" href={`tel:${company.phoneTel}`}>{company.phoneDisplay}</a>
+        <a class="btn btn-ghost" href={company.whatsapp}>WhatsApp</a>
+      </p>
+    </form>
+    <p class="muted" style="max-width:40rem">
+      Корзина — ориентир по каталогу 2026. Колер, влажность и потери на кисть не внутри формулы. Не оферта.
+    </p>
+  </div>
+</Base>
+
+<script define:vars={{ materials, zones }}>
+  const form = document.getElementById('calc');
+  const out = document.getElementById('out');
+  const share = document.getElementById('share');
+  const fmt = new Intl.NumberFormat('ru-RU');
+  const q = new URLSearchParams(location.search);
+  zones.forEach((z) => {
+    const el = document.getElementById(z.id);
+    if (el && q.get(z.id)) el.value = q.get(z.id);
+  });
+
+  function bySku(sku) {
+    return materials.find((m) => m.sku === sku);
+  }
+
+  function bestPacks(liters, packs) {
+    const sorted = [...packs].sort((a, b) => b.liters - a.liters);
+    let left = liters;
+    const pick = [];
+    for (const pack of sorted) {
+      const n = Math.floor(left / pack.liters + 1e-9);
+      if (n > 0) {
+        pick.push({ ...pack, n });
+        left = +(left - n * pack.liters).toFixed(3);
+      }
+    }
+    if (left > 0 && sorted.length) {
+      const small = [...packs].sort((a, b) => a.liters - b.liters)[0];
+      const extra = Math.ceil(left / small.liters);
+      const found = pick.find((p) => p.liters === small.liters);
+      if (found) found.n += extra;
+      else pick.push({ ...small, n: extra });
+    }
+    return pick;
+  }
+
+  function addNeed(bag, sku, area, coats) {
+    const p = bySku(sku);
+    if (!p || !area) return;
+    const cov = coats === 2 ? p.coverage2 || p.coverage1 : p.coverage1;
+    const liters = (area / cov) * coats;
+    bag[sku] = (bag[sku] || 0) + liters;
+  }
+
+  function render() {
+    const values = {};
+    const next = new URLSearchParams();
+    zones.forEach((z) => {
+      const n = Number(document.getElementById(z.id).value) || 0;
+      values[z.id] = n;
+      if (n) next.set(z.id, String(n));
+    });
+    const bag = {};
+    zones.forEach((z) => {
+      const area = values[z.id] * z.areaFactor;
+      if (!area) return;
+      addNeed(bag, z.finish, area, z.coats);
+      if (z.primer) addNeed(bag, z.primer, area, 1);
+    });
+    const rows = Object.entries(bag).map(([sku, raw]) => {
+      const p = bySku(sku);
+      const liters = Math.ceil(raw * 10) / 10;
+      const pick = bestPacks(liters, p.packs);
+      const sum = pick.reduce((s, x) => s + x.n * x.price, 0);
+      return { sku, name: p.name, href: p.href, liters, packs: pick, sum };
+    });
+    if (!rows.length) {
+      out.textContent = 'Укажите хотя бы одну зону.';
+    } else {
+      const total = rows.reduce((s, r) => s + r.sum, 0);
+      out.innerHTML =
+        rows
+          .map(
+            (r) =>
+              `<div><a href="${r.href}"><strong>${r.sku}</strong> ${r.name}</a><br>${r.liters.toLocaleString('ru-RU')} л · ${r.packs.map((x) => `${x.n} × ${x.volume}`).join(', ')} · <span class="price">${fmt.format(r.sum)} ₽</span></div>`,
+          )
+          .join('<br>') +
+        `<p>Итого ориентир: <span class="price">${fmt.format(total)} ₽</span></p>`;
+    }
+    history.replaceState(null, '', next.toString() ? `${location.pathname}?${next}` : location.pathname);
+  }
+
+  form.addEventListener('input', render);
+  share.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(location.href);
+      share.textContent = 'Ссылка скопирована';
+    } catch {
+      share.textContent = 'Скопируйте адрес из строки';
+    }
+  });
+  render();
+</script>

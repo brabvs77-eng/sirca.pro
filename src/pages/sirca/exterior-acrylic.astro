@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { sircaChapterNav } from '../../data/nav';
+import { sircaProducts } from '../../data/products-sirca';
+
+const items = sircaProducts.filter((p) => p.chemistry === 'acrylic');
+---
+
+<Base
+  title="Акриловые системы Sirca для окон и столярки | sirca.pro"
+  description="Акриловый блок каталога: FPU932e, OPU979, OPA9330, FA930. Меньше желтеет на светлых конструкциях."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/sirca">Sirca</a> / Акрил</p>
+    <h1>Акрил для столярки</h1>
+    <ChapterNav items={sircaChapterNav} />
+    <div class="prose">
+      <p>
+        Страницы 40–41. Акриловый цикл берут на светлые окна и двери, где ПУ желтит, а вода
+        не даёт нужную твёрдость. Не путать с водным OWE: это другая химия и другой отвердитель.
+      </p>
+      <ul>
+        <li><a href="/product/sirca/fpu932e">FPU932e</a> — грунт.</li>
+        <li><a href="/product/sirca/opu979">OPU979</a> — акрил-полиуретановый финиш.</li>
+        <li><a href="/product/sirca/opa9330">OPA9330</a> — акриловый финиш, частый запрос.</li>
+        <li><a href="/product/sirca/fa930">FA930</a> — позиция акрилового блока.</li>
+      </ul>
+      <p>
+        Светлые RAL и NCS проверяют на образце породы: дуб с танинами может дать серый отлив.
+        Подготовка — <a href="/knowledge/wood-types">глава о породах</a>.
+      </p>
+      <p>
+        <a class="btn btn-sirca" href="/product/sirca/opa9330">OPA9330, цена</a>
+        <a class="btn btn-ghost" href="/tasks/okna-dveri">Задача: окна</a>
+      </p>
+    </div>
+    <div class="cards cols-3" style="margin-top:1.6rem">
+      {items.map((p) => <ProductCard product={p} />)}
+    </div>
+  </div>
+</Base>

@@ -1,6 +1,6 @@
 ---
 import { brandLabel, productFromPrice, productHref, type AnyProduct } from '../data/catalog';
-import { covers, gnPackImage } from '../data/media';
+import { gnPackImage, sircaCardImage } from '../data/media';
 import { formatRub } from '../data/pricing';
 
 type Props = { product: AnyProduct };
@@ -8,7 +8,9 @@ const { product } = Astro.props;
 const from = productFromPrice(product);
 const unit = product.brand === 'sirca' ? ` / ${product.packs[0].volume}` : '';
 const img =
-  product.brand === 'gnature' ? gnPackImage(product.sku) : covers.sirca;
+  product.brand === 'gnature'
+    ? gnPackImage(product.sku)
+    : sircaCardImage(product.slug, product.chemistry, product.use);
 const title = product.brand === 'gnature' ? product.name : product.name.replace(`${product.sku} — `, '');
 ---
 

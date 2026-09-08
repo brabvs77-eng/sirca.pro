@@ -1,0 +1,64 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import { sircaChapterNav } from '../../data/nav';
+
+const faqs = [
+  [
+    'Чем водный цикл отличается от ПУ?',
+    'Вода (IMW / OWE / FWE) эластичнее, проще в цехе без растворителя, быстрее сохнет. ПУ твёрже, выше химическая стойкость, обязателен отвердитель. Не мешать в одном слое.',
+  ],
+  [
+    'Можно ли красить сырой сруб?',
+    'Финиш — нет. Допустима консервация: G Nature 875 при влажности до 50%, затем пауза и финиш. Плёнка Sirca на сыром дереве отстреливает.',
+  ],
+  [
+    'Какой расход у Sirca на фасад?',
+    'Ориентир каталога 100–150 г/м² мокрого слоя на слой. В калькуляторе 125 г/м² и плотность 1,05. Пилёная доска и торец едят больше.',
+  ],
+  [
+    'Нужен ли грунт на окна?',
+    'Да. Типичная вода: IMW + OWP330 или FIW + финиш OWE / FWE. Акрил: FPU932e + OPA9330 / OPU979. ПУ: FPU16tix + OPU99G / OPP1930G.',
+  ],
+  [
+    'Чем обновить старое масло?',
+    'Если нет шелушения — мойка 110 / 170 и новый слой того же типа. Плёнку Sirca не перекрывают маслом без шлифовки до живого дерева.',
+  ],
+  [
+    'Это мебельный ColorSirca?',
+    'Нет. Этот раздел — каталог домостроения. Мебельные OPP / FPP / ColorSirca появятся отдельно, когда будут фото и прайс цеха.',
+  ],
+];
+---
+
+<Base
+  title="FAQ Sirca: циклы, расход, грунт | sirca.pro"
+  description="Ответы из блока FAQ каталога Sirca для деревянного домостроения: вода и ПУ, влажность, расход, окна."
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  })} />
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/sirca">Sirca</a> / FAQ</p>
+    <h1>Вопросы по циклам</h1>
+    <ChapterNav items={sircaChapterNav} />
+    <div class="prose faq">
+      {faqs.map(([q, a]) => (
+        <details>
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+      <p style="margin-top:1.6rem">
+        <a class="btn btn-sirca" href="/calc">Калькуляторы</a>
+        <a class="btn btn-ghost" href="/contacts">Спросить технолога</a>
+      </p>
+    </div>
+  </div>
+</Base>

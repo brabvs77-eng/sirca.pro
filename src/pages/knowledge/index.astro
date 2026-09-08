@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import { knowledgeNav, sircaChapterNav } from '../../data/nav';
+---
+
+<Base
+  title="База знаний по дереву — Sirca и G Nature | sirca.pro"
+  description="Породы, УФ, подготовка фасада, циклы G Nature 26–27 и разделы каталога Sirca для домостроения."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / Знания</p>
+    <h1>База из каталогов</h1>
+    <p>
+      HTML-версии разделов, которые поисковик индексирует лучше, чем скан PDF.
+      Sirca — брошюра «ЛКМ для деревянного домостроения». G Nature — таблицы систем А5 2026.
+      Полные PDF по запросу менеджеру: файлы тяжелее лимита хостинга.
+    </p>
+    <ChapterNav items={knowledgeNav} />
+    <div class="cards cols-2" style="margin-top:1.4rem">
+      <a class="hub-card" href="/knowledge/wood-types">
+        <p class="eyebrow">Sirca · стр. 02–05</p>
+        <h2>Породы и смола</h2>
+        <p class="muted">Хвойные, лиственница, дуб, термо, ДПК. Танины и живица.</p>
+      </a>
+      <a class="hub-card" href="/knowledge/exterior-prep">
+        <p class="eyebrow">Sirca · стр. 06–17</p>
+        <h2>УФ и подготовка</h2>
+        <p class="muted">Конструктивная защита, шлифовка, влажность, торцы.</p>
+      </a>
+      <a class="hub-card" href="/systems">
+        <p class="eyebrow">G Nature · стр. 26–27</p>
+        <h2>Системы окраски</h2>
+        <p class="muted">Фасад, терраса, торцы, стены, пол, столешница.</p>
+      </a>
+      <a class="hub-card" href="/sirca/faq">
+        <p class="eyebrow">Sirca · стр. 49–50</p>
+        <h2>FAQ</h2>
+        <p class="muted">Циклы, сушка, совместимость воды и ПУ.</p>
+      </a>
+    </div>
+    <div class="chapter">
+      <h2>Главы Sirca</h2>
+    </div>
+    <ChapterNav items={sircaChapterNav} />
+  </div>
+</Base>

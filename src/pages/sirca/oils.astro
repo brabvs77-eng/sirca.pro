@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { sircaChapterNav } from '../../data/nav';
+import { sircaProducts } from '../../data/products-sirca';
+
+const items = sircaProducts.filter((p) => p.chemistry === 'oil');
+---
+
+<Base
+  title="Масла Sirca OIL для террасы и фасада | sirca.pro"
+  description="Масляный блок каталога Sirca для деревянного дома. OIL30 — когда нужна пропитка, а не плёнка."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/sirca">Sirca</a> / Масла</p>
+    <h1>Масла OIL</h1>
+    <ChapterNav items={sircaChapterNav} />
+    <div class="prose">
+      <p>
+        Страницы 35–37 — масляная альтернатива водной плёнке. Горизонталь (настил, ступени)
+        и вертикаль, где заказчик хочет «дерево, не эмаль».
+      </p>
+      <p>
+        <a href="/product/sirca/oil30">OIL30</a> — позиция каталога домостроения. Не мебельный
+        ColorSirca и не GN 277: это итальянское масло в той же логике «пропитал — обновил».
+        Рядом по задаче часто берут G Nature <a href="/product/gnature/277">277</a> на террасу
+        и <a href="/product/gnature/280">280</a> на фасад — если важнее натуральный состав.
+      </p>
+      <p>
+        Обновление: очистка, сушка, новый тонкий слой. Не наслаивать как лак.
+        Расход в калькуляторе — через 125 г/м², технолог может сузить до 80–100 г на плотной лиственнице.
+      </p>
+      <p>
+        <a class="btn btn-sirca" href="/product/sirca/oil30">OIL30, цена</a>
+        <a class="btn btn-ghost" href="/tasks/terrassa">Задача: терраса</a>
+      </p>
+    </div>
+    <div class="cards cols-3" style="margin-top:1.6rem">
+      {items.map((p) => <ProductCard product={p} />)}
+    </div>
+  </div>
+</Base>

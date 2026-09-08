@@ -1,0 +1,136 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import { calcMaterials, calcPrimers } from '../../data/calc';
+import { company } from '../../data/company';
+import { calcNav } from '../../data/nav';
+
+const options = calcMaterials.filter((m) => m.kind === 'coverage');
+const primers = calcPrimers.map((p) => {
+  const mat = calcMaterials.find((m) => m.sku === p.sku);
+  return { ...p, price: mat ? mat.packs[0].price : 0, liters: mat ? mat.packs[0].liters : 0 };
+});
+---
+
+<Base
+  title="Стоимость окраски дерева за м² | sirca.pro"
+  description="Цена G Nature за квадратный метр: 1 и 2 слоя, с грунтом и без. Не оферта."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/calc">Расчёт</a> / ₽/м²</p>
+    <h1>Сколько стоит м²</h1>
+    <ChapterNav items={calcNav} />
+    <p>
+      Формула как на витринах: цена выбранной банки / (литры × расход м²/л).
+      Грунт добавляем отдельной строкой.
+    </p>
+
+    <form class="calc" id="calc" style="max-width:36rem">
+      <label>
+        Финиш
+        <select id="sku" name="sku">
+          {options.map((o) => (
+            <option value={o.id}>{o.sku} — {o.name}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Фасовка
+        <select id="pack" name="pack"></select>
+      </label>
+      <label>
+        Слои финиша
+        <select id="coats" name="coats">
+          <option value="1">1 слой</option>
+          <option value="2" selected>2 слоя</option>
+        </select>
+      </label>
+      <label>
+        Грунт
+        <select id="primer" name="primer">
+          {primers.map((p) => (
+            <option value={p.id}>{p.label}</option>
+          ))}
+        </select>
+      </label>
+      <div class="calc-out" id="out">Считаем…</div>
+      <p>
+        <button type="button" class="btn" id="share">Скопировать расчёт</button>
+        <a class="btn btn-ghost" href={`tel:${company.phoneTel}`}>{company.phoneDisplay}</a>
+        <a class="btn btn-ghost" href={company.whatsapp}>WhatsApp</a>
+      </p>
+    </form>
+    <p class="muted">Без колеровки, доставки и работы маляра. Не оферта.</p>
+  </div>
+</Base>
+
+<script define:vars={{ options, primers }}>
+  const skuEl = document.getElementById('sku');
+  const packEl = document.getElementById('pack');
+  const coatsEl = document.getElementById('coats');
+  const primerEl = document.getElementById('primer');
+  const out = document.getElementById('out');
+  const share = document.getElementById('share');
+  const fmt = new Intl.NumberFormat('ru-RU');
+  const q = new URLSearchParams(location.search);
+
+  function material() {
+    return options.find((o) => o.id === skuEl.value);
+  }
+
+  function fillPacks(keep) {
+    const p = material();
+    packEl.innerHTML = (p?.packs || [])
+      .map((pack, i) => `<option value="${i}">${pack.volume} — ${fmt.format(pack.price)} ₽</option>`)
+      .join('');
+    if (keep && Number(keep) < packEl.options.length) packEl.value = keep;
+  }
+
+  if (q.get('sku')) skuEl.value = q.get('sku');
+  fillPacks(q.get('pack'));
+  if (q.get('coats')) coatsEl.value = q.get('coats');
+  if (q.get('primer')) primerEl.value = q.get('primer');
+
+  function render() {
+    const p = material();
+    if (!p) return;
+    const pack = p.packs[Number(packEl.value)] || p.packs[0];
+    const coats = Number(coatsEl.value);
+    const cov = coats === 2 ? p.coverage2 : p.coverage1;
+    const finish = pack.price / (pack.liters * cov);
+    const pr = primers.find((x) => x.id === primerEl.value);
+    let primer = 0;
+    if (pr && pr.coverage) primer = pr.price / (pr.liters * pr.coverage);
+    const sum = finish + primer;
+    out.innerHTML =
+      `<strong>от ${fmt.format(Math.round(sum / 10) * 10)} ₽/м²</strong>` +
+      `<br>Финиш: ${fmt.format(Math.round(finish))} ₽/м² при ${cov} м²/л, ${coats} сл.` +
+      (primer ? `<br>Грунт ${pr.label}: ${fmt.format(Math.round(primer))} ₽/м²` : '<br>Без грунта') +
+      `<br><a href="${p.href}">Карточка ${p.sku}</a>`;
+    history.replaceState(
+      null,
+      '',
+      `${location.pathname}?${new URLSearchParams({
+        sku: skuEl.value,
+        pack: packEl.value,
+        coats: String(coats),
+        primer: primerEl.value,
+      })}`,
+    );
+  }
+
+  skuEl.addEventListener('change', () => {
+    fillPacks();
+    render();
+  });
+  document.getElementById('calc').addEventListener('input', render);
+  share.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(location.href);
+      share.textContent = 'Ссылка скопирована';
+    } catch {
+      share.textContent = 'Скопируйте адрес из строки';
+    }
+  });
+  render();
+</script>

@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import { allColors, colorBySlug } from '../../data/colors';
+import { company } from '../../data/company';
+
+export function getStaticPaths() {
+  return allColors.map((c) => ({ params: { slug: c.slug } }));
+}
+
+const color = colorBySlug(Astro.params.slug!);
+if (!color) throw new Error('not found');
+
+const collectionHref = color.collection === 'prosto-kosmos' ? '/colors/prosto-kosmos' : '/colors/vokrug-cveta';
+const collectionName = color.collection === 'prosto-kosmos' ? 'Просто космос' : 'Вокруг цвета';
+const sku = color.collection === 'prosto-kosmos' ? '285' : '245';
+const skuName = color.collection === 'prosto-kosmos' ? 'масло 285 металлик' : 'твёрдое масло 245';
+---
+
+<Base
+  title={`${color.name} — ${collectionName} G Nature | sirca.pro`}
+  description={`Выкрас G Nature «${color.name}». Коллекция ${collectionName}. Колеровка у дилера, доставка по Москве и России.`}
+>
+  <div class="wrap spread">
+    <div>
+      <p class="crumbs">
+        <a href="/">Каталог</a> / <a href={collectionHref}>{collectionName}</a> / {color.name}
+      </p>
+      <div class="spread-photo life">
+        <img src={color.img} alt={`G Nature, цвет ${color.name}`} width="960" height="720" />
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow">G Nature · {color.n}</p>
+      <h1>{color.name}</h1>
+      <p>
+        Живой выкрас коллекции «{collectionName}». Экран искажает тон: перед заказом смотрите веер
+        или закажите выкрас у менеджера.
+      </p>
+      <p>
+        Колеруем в этот цвет {skuName} и соседние позиции линейки
+        {color.collection === 'vokrug-cveta' ? ' (475, 280, 425).' : '.'}
+      </p>
+      <p>
+        <a class="btn btn-gn" href={`/product/gnature/${sku}`}>К {sku}, цены</a>
+        <a class="btn btn-ghost" href={`tel:${company.phoneTel}`}>Выкрас {company.phoneDisplay}</a>
+      </p>
+    </div>
+  </div>
+</Base>

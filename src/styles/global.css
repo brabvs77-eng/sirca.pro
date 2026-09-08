@@ -179,6 +179,10 @@ p {
   background: linear-gradient(90deg, transparent, var(--sirca-gold), transparent);
 }
 
+button.btn {
+  cursor: pointer;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -249,6 +253,7 @@ p {
 }
 
 .chips a:hover,
+.chips a.is-on,
 .chip.is-on {
   background: var(--ink);
   color: var(--paper);
@@ -262,6 +267,12 @@ p {
 
 @media (min-width: 720px) {
   .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 800px) {
+  .cards.cols-2 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -295,6 +306,7 @@ p {
   border-bottom-color: rgba(201, 163, 90, 0.35);
 }
 
+.has-cover .logo-stack small,
 .has-cover .logo span,
 .has-cover .nav a,
 .has-cover .header-phone {
@@ -311,12 +323,27 @@ p {
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
   font-family: var(--display);
   font-size: 1.45rem;
   letter-spacing: 0.08em;
   text-decoration: none;
 }
 
+.logo-mark {
+  width: 1.7rem;
+  height: 1.7rem;
+  object-fit: contain;
+}
+
+.logo-stack {
+  display: block;
+  line-height: 1.05;
+}
+
+.logo-stack small,
 .logo span {
   display: block;
   color: var(--muted);
@@ -624,9 +651,12 @@ p {
   box-shadow: 0 10px 28px rgba(20, 23, 20, 0.08);
 }
 
-.swatch i {
+.swatch i,
+.swatch img {
   display: block;
+  width: 100%;
   height: 6.4rem;
+  object-fit: cover;
 }
 
 .swatch span {
@@ -870,4 +900,125 @@ p {
 
 .has-cover .page-pad-cover {
   padding-top: 0;
+}
+
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.55rem;
+  margin: 0.85rem 0 0;
+}
+
+.thumbs figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: var(--white);
+}
+
+.thumbs img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  padding: 0.35rem;
+}
+
+.thumbs figcaption {
+  padding: 0 0.4rem 0.45rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.clip {
+  display: block;
+  width: 100%;
+  margin-top: 0.9rem;
+  border-radius: 1.1rem;
+  background: #111;
+}
+
+.product .shot.color-shot img {
+  object-fit: cover;
+  padding: 0;
+}
+
+.sys-card,
+.hub-card,
+.prose-card {
+  padding: 1.15rem 1.2rem 1.25rem;
+  border-radius: 1.15rem;
+  background: var(--white);
+  box-shadow: 0 14px 36px rgba(20, 23, 20, 0.07);
+}
+
+.sys-card h2,
+.hub-card h2,
+.prose h2 {
+  font-size: 1.45rem;
+  margin: 0.2rem 0 0.45rem;
+}
+
+.sys-card ol,
+.prose ol,
+.prose ul {
+  padding-left: 1.15rem;
+}
+
+.hub-card {
+  text-decoration: none;
+  display: block;
+}
+
+.hub-card:hover {
+  box-shadow: 0 20px 46px rgba(20, 23, 20, 0.12);
+}
+
+.tool-shot {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 1.15rem;
+  background: var(--white);
+}
+
+.tool-shot img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  padding: 0.8rem;
+}
+
+.tool-shot figcaption {
+  padding: 0 1rem 1rem;
+}
+
+.prose {
+  max-width: 46rem;
+}
+
+.prose h2 {
+  margin-top: 1.8rem;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.prose th,
+.prose td {
+  padding: 0.55rem 0.35rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.faq details {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.faq summary {
+  cursor: pointer;
+  font-weight: 600;
 }
