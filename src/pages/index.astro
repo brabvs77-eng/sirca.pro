@@ -78,7 +78,7 @@ const benefits = [
         </p>
         <p>
           <a class="btn" href={`tel:${company.phoneTel}`}>{company.phoneDisplay}</a>
-          <a class="btn btn-ghost" href="/calc/raskhod">Рассчитать литры</a>
+          <a class="btn btn-ghost" href="/calc">Рассчитать литры</a>
         </p>
       </div>
       <aside class="note">
@@ -139,7 +139,7 @@ const benefits = [
       <div class="rail">
         {colorRail.map((c) => (
           <a class="swatch" href="/colors/vokrug-cveta">
-            <i style={`background:${c.hex}`}></i>
+            <img src={c.img} alt={`G Nature, цвет ${c.name}`} width="320" height="240" loading="lazy" />
             <span>{c.n} {c.name}</span>
           </a>
         ))}
@@ -157,10 +157,39 @@ const benefits = [
     </div>
   </section>
 
+  <section class="wrap">
+    <div class="chapter">
+      <h2>Расчёт и знания</h2>
+      <span class="pg">глава 07</span>
+    </div>
+    <div class="cards cols-4">
+      <a class="hub-card" href="/calc/raskhod">
+        <p class="eyebrow">Калькулятор</p>
+        <h2>Литры</h2>
+        <p class="muted">Площадь, слои и коэффициент породы.</p>
+      </a>
+      <a class="hub-card" href="/calc/sistema">
+        <p class="eyebrow">Калькулятор</p>
+        <h2>Система</h2>
+        <p class="muted">Грунт и финиш по задаче, как на с. 26–27.</p>
+      </a>
+      <a class="hub-card" href="/systems">
+        <p class="eyebrow">G Nature</p>
+        <h2>Циклы</h2>
+        <p class="muted">Фасад, терраса, торцы, пол, столешница.</p>
+      </a>
+      <a class="hub-card" href="/knowledge">
+        <p class="eyebrow">Sirca</p>
+        <h2>Каталог HTML</h2>
+        <p class="muted">Породы, УФ, вода, масло, ПУ, паркет.</p>
+      </a>
+    </div>
+  </section>
+
   <section class="wrap" style="padding-bottom:3rem">
     <div class="chapter">
       <h2>Почему эти системы</h2>
-      <span class="pg">глава 07</span>
+      <span class="pg">глава 08</span>
     </div>
     <div class="benefits">
       {benefits.map(([t, d]) => (

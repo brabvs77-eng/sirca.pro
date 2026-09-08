@@ -1,7 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
 import { covers } from '../../data/media';
+import { sircaChapterNav } from '../../data/nav';
 import { sircaProducts } from '../../data/products-sirca';
 
 const groups = [
@@ -23,6 +25,7 @@ const groups = [
     </div>
   </div>
   <div class="wrap page-pad">
+    <ChapterNav items={sircaChapterNav} />
     <p class="note">
       Цена за 1 л / 1 кг, если не указано иное. Комплект с отвердителем — в счёте.
       Ориентир Woodperfect минус около 10%. Не оферта.

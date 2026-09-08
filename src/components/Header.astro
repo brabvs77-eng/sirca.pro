@@ -6,22 +6,30 @@ const path = Astro.url.pathname;
 const links = [
   { href: '/gnature', label: 'G Nature' },
   { href: '/sirca', label: 'Sirca' },
-  { href: '/calc/raskhod', label: 'Расчёт' },
-  { href: '/b2b', label: 'Опт' },
+  { href: '/systems', label: 'Системы' },
+  { href: '/knowledge', label: 'Знания' },
+  { href: '/calc', label: 'Расчёт' },
   { href: '/contacts', label: 'Контакты' },
 ];
+
+function current(href: string) {
+  return path === href || (href !== '/' && path.startsWith(`${href}/`));
+}
 ---
 
 <header class="site-header">
   <div class="wrap header-row">
     <a class="logo" href="/">
-      SIRCA.PRO
-      <span>Каталог дилера · {company.legalNameShort}</span>
+      <img class="logo-mark" src="/img/logo-gn.webp" alt="" width="36" height="36" />
+      <span class="logo-stack">
+        SIRCA.PRO
+        <small>Каталог дилера · {company.legalNameShort}</small>
+      </span>
     </a>
     <nav class="nav" aria-label="Основное">
       {
         links.map((l) => (
-          <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>
+          <a href={l.href} aria-current={current(l.href) ? 'page' : undefined}>
             {l.label}
           </a>
         ))

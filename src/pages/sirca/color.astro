@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import { sircaChapterNav } from '../../data/nav';
+---
+
+<Base
+  title="Цвет Sirca Colour Passion и виды отделки | sirca.pro"
+  description="Лессирь, укрыв и веер Colour Passion из каталога Sirca для деревянного домостроения, стр. 18–21."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/sirca">Sirca</a> / Цвет</p>
+    <h1>Виды отделки и Colour Passion</h1>
+    <ChapterNav items={sircaChapterNav} />
+    <div class="prose">
+      <p>
+        Страницы 18–21 каталога делят отделку на лессирующую, укрывную и спецэффекты.
+        Цвет задаёт уже пропитка IMW, финиш его закрепляет и выбирает блеск.
+      </p>
+      <h2>Лессирь</h2>
+      <p>
+        Текстура видна. На сосне сучки и живица читаются сильнее. Южная стена без пигмента сереет.
+        Типичный водный путь: IMW цвета + грунт + тонкий OWE.
+      </p>
+      <h2>Укрыв</h2>
+      <p>
+        Синева и ремонт скрываются эмалью FWE / FWP. Для G Nature это 460 / 461.
+        Светлые укрывы на дубе проверяют на танины.
+      </p>
+      <h2>Colour Passion и RAL / NCS</h2>
+      <p>
+        Фирменный веер Sirca для домостроения — не мебельная карта ColorSirca.
+        Колеруем IMW и финиши в RAL / NCS по запросу. Экран врёт: нужен выкрас на вашей породе.
+      </p>
+      <p>
+        Интерьерный веер G Nature — отдельно: <a href="/colors/vokrug-cveta">Вокруг цвета</a>
+        и металлик <a href="/colors/prosto-kosmos">Просто космос</a>.
+      </p>
+      <p>
+        <a class="btn btn-sirca" href="/product/sirca/imw4800">IMW4800</a>
+        <a class="btn btn-ghost" href="/contacts">Заказать выкрас</a>
+      </p>
+    </div>
+  </div>
+</Base>

@@ -21,6 +21,19 @@ export function brandLabel(brand: 'gnature' | 'sirca'): string {
   return brand === 'gnature' ? 'G Nature' : 'Sirca';
 }
 
+export function productBySkuToken(sku: string): AnyProduct | undefined {
+  const key = sku.toLowerCase();
+  return (
+    gnatureProducts.find((p) => p.sku.toLowerCase() === key || p.slug.toLowerCase() === key) ??
+    sircaProducts.find((p) => p.sku.toLowerCase() === key || p.slug.toLowerCase() === key)
+  );
+}
+
+export function skuHref(sku: string): string | undefined {
+  const product = productBySkuToken(sku);
+  return product ? productHref(product) : undefined;
+}
+
 export const calcProducts = [
   ...gnatureProducts
     .filter((p) => p.coverage1)

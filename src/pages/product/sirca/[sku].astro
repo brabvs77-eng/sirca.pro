@@ -6,6 +6,14 @@ import { formatRub } from '../../../data/pricing';
 import { sircaBySlug, sircaFromPrice, sircaProducts } from '../../../data/products-sirca';
 import { tasks } from '../../../data/tasks';
 
+const chapterByUse: Record<string, { href: string; label: string }> = {
+  exterior: { href: '/sirca/exterior-water', label: 'Водный экстерьер' },
+  windows: { href: '/sirca/exterior-water', label: 'Окна и вода' },
+  oils: { href: '/sirca/oils', label: 'Масла OIL' },
+  parquet: { href: '/sirca/parquet', label: 'Паркет' },
+  furniture: { href: '/sirca', label: 'Столярка' },
+};
+
 export function getStaticPaths() {
   return sircaProducts.map((p) => ({ params: { sku: p.slug } }));
 }
@@ -15,6 +23,12 @@ if (!product) throw new Error('not found');
 
 const from = sircaFromPrice(product);
 const taskLinks = tasks.filter((t) => product.tasks.includes(t.slug));
+const chapter =
+  product.chemistry === 'pu' && product.use !== 'parquet' && product.use !== 'furniture'
+    ? { href: '/sirca/exterior-pu', label: 'ПУ экстерьер' }
+    : product.chemistry === 'acrylic'
+      ? { href: '/sirca/exterior-acrylic', label: 'Акрил' }
+      : chapterByUse[product.use];
 const chem =
   product.chemistry === 'water'
     ? 'вода'
@@ -80,6 +94,13 @@ const chem =
       <ul class="features">
         {product.features.map((f) => <li>{f}</li>)}
       </ul>
+      {chapter && (
+        <p>
+          Раздел каталога: <a href={chapter.href}>{chapter.label}</a>
+          · <a href="/sirca/faq">FAQ</a>
+          · <a href={`/calc/raskhod?sku=sirca-${product.slug}`}>Расход</a>
+        </p>
+      )}
       {taskLinks.length > 0 && (
         <p>
           Главы: {taskLinks.map((t, i) => (

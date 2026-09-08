@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { sircaChapterNav } from '../../data/nav';
+import { sircaProducts } from '../../data/products-sirca';
+
+const items = sircaProducts.filter((p) => p.chemistry === 'water' && p.use !== 'parquet');
+---
+
+<Base
+  title="Водный экстерьер Sirca IMW / FWE / OWE | sirca.pro"
+  description="Водоразбавимые системы Sirca для сруба, фасада и окон: IMW4800, FIW, FWE, FWP, OWE, OWP330. Цены на витрине."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/sirca">Sirca</a> / Вода</p>
+    <h1>Водоразбавимый экстерьер</h1>
+    <ChapterNav items={sircaChapterNav} />
+    <div class="prose">
+      <p>
+        Страницы 22–34 каталога домостроения — основной блок для российского сруба и столярки.
+        Цикл короткий: цветная пропитка → грунт → финиш. Мокрый слой ориентир 100–150 г/м²,
+        в калькуляторе берём 125 г/м².
+      </p>
+      <h2>Пропитка IMW</h2>
+      <p>
+        <a href="/product/sirca/imw4800">IMW4800</a> и <a href="/product/sirca/imw4400">IMW4400</a> —
+        водные пропитки Colour Passion. Задают тон лессири, не создают толстую плёнку.
+        Для хвойных и лиственницы, если конструктив сухой.
+      </p>
+      <h2>Грунты FIW и OWP</h2>
+      <p>
+        <a href="/product/sirca/fiw350">FIW350</a>, <a href="/product/sirca/fiw470">FIW470</a> —
+        фасадный грунт. <a href="/product/sirca/owp330">OWP330</a> чаще на окнах и дверях:
+        выравнивает впитываемость перед OWE.
+      </p>
+      <h2>Финиши FWE, FWP, OWE</h2>
+      <p>
+        Эмали <a href="/product/sirca/fwe600">FWE600</a> / <a href="/product/sirca/fwe801">FWE801</a>,
+        грунт-эмали FWP630 / FWP830, финиши OWE500 / 501 / 505. Блеск и базу подтверждает технолог.
+        Плёнка эластичнее ПУ, ремонт проще, сушка быстрее в цехе с водой.
+      </p>
+      <p>
+        <a class="btn btn-sirca" href="/calc/sistema?place=exterior&object=okna&wood=any&effect=lazur">Цикл окон</a>
+        <a class="btn btn-ghost" href="/calc/raskhod?sku=sirca-imw4800">Расход IMW</a>
+      </p>
+    </div>
+    <div class="cards cols-3" style="margin-top:1.6rem">
+      {items.map((p) => <ProductCard product={p} />)}
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { sircaChapterNav } from '../../data/nav';
+import { sircaProducts } from '../../data/products-sirca';
+
+const items = sircaProducts.filter((p) => p.chemistry === 'pu' && ['exterior', 'windows'].includes(p.use));
+---
+
+<Base
+  title="Полиуретан Sirca для экстерьера и окон | sirca.pro"
+  description="ПУ-цикл домостроения: FPU16tix, OPU99G, OPP1930G. Отвердитель по TDS. Цены на витрине."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/sirca">Sirca</a> / ПУ</p>
+    <h1>Полиуретан снаружи</h1>
+    <ChapterNav items={sircaChapterNav} />
+    <div class="prose">
+      <p>
+        Страницы 38–39. ПУ нужен, когда водной эластичной плёнки мало: столярка, твёрдый износ,
+        заданный глянец. Комплект всегда с отвердителем линейки CTN / TH — без него это не тот материал.
+      </p>
+      <ul>
+        <li><a href="/product/sirca/fpu16tix">FPU16tix</a> — тиксотропный грунт на вертикаль, меньше потёков.</li>
+        <li><a href="/product/sirca/opu99g">OPU99G</a> — финиш экстерьера, ориентир цены OPU99G30.</li>
+        <li><a href="/product/sirca/opp1930g">OPP1930G</a> — грунт/финиш столярки.</li>
+      </ul>
+      <p>
+        Жизнеспособность смеси и процент отвердителя — только из TDS на партию, не из памяти.
+        На витрине цена за кг основы; отвердитель в счёте отдельно.
+      </p>
+      <p>
+        <a class="btn btn-sirca" href="/calc/raskhod?sku=sirca-opu99g">Расход OPU99G</a>
+        <a class="btn btn-ghost" href="/sirca/faq">FAQ по циклам</a>
+      </p>
+    </div>
+    <div class="cards cols-3" style="margin-top:1.6rem">
+      {items.map((p) => <ProductCard product={p} />)}
+    </div>
+  </div>
+</Base>

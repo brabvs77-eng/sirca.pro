@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { gnatureProducts } from '../../data/products-gnature';
+import { gnPackImage } from '../../data/media';
+
+const brushes = gnatureProducts.filter((p) => p.use === 'tools');
+---
+
+<Base
+  title="Кисти G Nature 50 / 70 / 100 мм | sirca.pro"
+  description="Фирменные комбинированные кисти G Nature под масла и лазури. 50, 70 и 100 мм. Цены на витрине."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/gnature">G Nature</a> / Кисти</p>
+    <h1>Кисти под масла G Nature</h1>
+    <p>
+      Спиралевидный и комбинированный ворс держит масло, меньше полос на фасаде и стенах.
+      70 мм — основной размер, 100 мм — сруб и потолок, 50 мм — торцы, рамы, мебель.
+    </p>
+    <div class="cards cols-3">
+      {brushes.map((p) => <ProductCard product={p} />)}
+    </div>
+    <div class="cards cols-3" style="margin-top:1.4rem">
+      {brushes.map((p) => {
+        const img = gnPackImage(p.sku);
+        return (
+          <figure class="tool-shot">
+            {img && <img src={img} alt={p.name} width="640" height="480" loading="lazy" />}
+            <figcaption>{p.name}</figcaption>
+          </figure>
+        );
+      })}
+    </div>
+    <p style="margin-top:1.6rem">
+      <a class="btn btn-gn" href="/product/gnature/280">Масло 280</a>
+      <a class="btn btn-ghost" href="/systems">Системы окраски</a>
+    </p>
+  </div>
+</Base>

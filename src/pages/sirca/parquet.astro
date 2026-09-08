@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { sircaChapterNav } from '../../data/nav';
+import { sircaProducts } from '../../data/products-sirca';
+
+const items = sircaProducts.filter((p) => p.use === 'parquet');
+---
+
+<Base
+  title="Паркетные лаки Sirca OW1fG40, OPU60G | sirca.pro"
+  description="Водный и ПУ паркет из каталога домостроения: OW1fG40, OPU60G, OPU379G. Цены за литр и килограмм."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/sirca">Sirca</a> / Паркет</p>
+    <h1>Паркет и лестница</h1>
+    <ChapterNav items={sircaChapterNav} />
+    <div class="prose">
+      <p>
+        Страницы 42–43: Idrofloor / Sportfloor и полиуретановые лаки. Для жилого пола, где нужна
+        плёнка, а не масло. Если плёнка не нужна — G Nature <a href="/product/gnature/255">255</a>
+        и <a href="/product/gnature/266">266</a>.
+      </p>
+      <ul>
+        <li><a href="/product/sirca/ow1fg40">OW1fG40</a> — водный паркетный лак.</li>
+        <li><a href="/product/sirca/opu60g">OPU60G</a> — ПУ, выше износ.</li>
+        <li><a href="/product/sirca/opu379g">OPU379G</a> — второй ПУ каталога, блеск по TDS.</li>
+      </ul>
+      <p>
+        Отвердитель в процентах от основы — в карточке партии. Расход в калькуляторе: 125 г/м²
+        мокрого слоя на слой, обычно 2 слоя. Спортзал и коммерция — отдельный цикл Sportfloor, не бытовой.
+      </p>
+      <p>
+        <a class="btn btn-sirca" href="/calc/raskhod?sku=sirca-ow1fg40">Расход OW1fG40</a>
+        <a class="btn btn-ghost" href="/tasks/parket">Задача: паркет</a>
+      </p>
+    </div>
+    <div class="cards cols-3" style="margin-top:1.6rem">
+      {items.map((p) => <ProductCard product={p} />)}
+    </div>
+  </div>
+</Base>
