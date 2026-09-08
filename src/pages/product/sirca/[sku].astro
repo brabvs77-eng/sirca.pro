@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import { company, priceNote } from '../../../data/company';
-import { covers } from '../../../data/media';
+import { sircaCardImage } from '../../../data/media';
 import { formatRub } from '../../../data/pricing';
 import { sircaBySlug, sircaFromPrice, sircaProducts } from '../../../data/products-sirca';
 import { tasks } from '../../../data/tasks';
@@ -23,6 +23,7 @@ if (!product) throw new Error('not found');
 
 const from = sircaFromPrice(product);
 const taskLinks = tasks.filter((t) => product.tasks.includes(t.slug));
+const image = sircaCardImage(product.slug, product.chemistry, product.use);
 const chapter =
   product.chemistry === 'pu' && product.use !== 'parquet' && product.use !== 'furniture'
     ? { href: '/sirca/exterior-pu', label: 'ПУ экстерьер' }
@@ -45,7 +46,7 @@ const chem =
 >
   <div class="wrap spread">
     <div class="spread-photo life">
-      <img src={covers.sirca} alt="Sirca, деревянное домостроение" width="1400" height="900" />
+      <img src={image} alt={`${product.sku} Sirca — ${product.name}`} width="720" height="540" />
     </div>
     <div>
       <p class="crumbs">
