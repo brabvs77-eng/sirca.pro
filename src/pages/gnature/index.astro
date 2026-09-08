@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { covers } from '../../data/media';
+import { gnatureProducts } from '../../data/products-gnature';
+
+const groups = [
+  { id: 'exterior', title: 'Наружные работы', items: gnatureProducts.filter((p) => p.use === 'exterior') },
+  { id: 'interior', title: 'Внутренние работы', items: gnatureProducts.filter((p) => p.use === 'interior') },
+  { id: 'care', title: 'Уход и грунт', items: gnatureProducts.filter((p) => p.use === 'care') },
+  { id: 'tools', title: 'Кисти', items: gnatureProducts.filter((p) => p.use === 'tools') },
+];
+---
+
+<Base
+  title="Каталог G Nature — масла и краски | sirca.pro"
+  description="Разворот G Nature: 280, 425, 460, 277, 245, 870. Цены ниже витрины gnature.ru. Доставка по Москве и России."
+>
+  <div class="panel gn" style={`min-height:18rem;border-radius:0;background-image:url('${covers.gn}')`}>
+    <div class="wrap" style="padding:4.5rem 0 1.6rem">
+      <p class="eyebrow" style="color:#e8f5dc">Глава · Gnature · Гнатур</p>
+      <h1>G Nature</h1>
+      <p>Натуральные масла и краски для дерева. Каталог А5 2026, живые банки, открытые цены.</p>
+      <p>
+        <a class="btn" style="background:#fff;color:#3b5d34" href="/calc/raskhod">Рассчитать расход</a>
+        <a class="btn btn-ghost" href="/colors/vokrug-cveta">Вокруг цвета</a>
+        <a class="btn btn-ghost" href="/colors/prosto-kosmos">Просто космос</a>
+      </p>
+    </div>
+  </div>
+  <div class="wrap page-pad">
+    {groups.map((g, i) => (
+      <section>
+        <div class="chapter">
+          <h2 id={g.id}>{g.title}</h2>
+          <span class="pg">0{i + 1}</span>
+        </div>
+        <div class="cards cols-3">
+          {g.items.map((p) => <ProductCard product={p} />)}
+        </div>
+      </section>
+    ))}
+  </div>
+</Base>

@@ -1,0 +1,32 @@
+---
+import { company } from '../data/company';
+
+const path = Astro.url.pathname;
+
+const links = [
+  { href: '/gnature', label: 'G Nature' },
+  { href: '/sirca', label: 'Sirca' },
+  { href: '/calc/raskhod', label: 'Расчёт' },
+  { href: '/b2b', label: 'Опт' },
+  { href: '/contacts', label: 'Контакты' },
+];
+---
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="logo" href="/">
+      SIRCA.PRO
+      <span>Каталог дилера · {company.legalNameShort}</span>
+    </a>
+    <nav class="nav" aria-label="Основное">
+      {
+        links.map((l) => (
+          <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+    <a class="header-phone" href={`tel:${company.phoneTel}`}>{company.phoneDisplay}</a>
+  </div>
+</header>

@@ -1,0 +1,30 @@
+---
+import { brandLabel, productFromPrice, productHref, type AnyProduct } from '../data/catalog';
+import { covers, gnPackImage } from '../data/media';
+import { formatRub } from '../data/pricing';
+
+type Props = { product: AnyProduct };
+const { product } = Astro.props;
+const from = productFromPrice(product);
+const unit = product.brand === 'sirca' ? ` / ${product.packs[0].volume}` : '';
+const img =
+  product.brand === 'gnature' ? gnPackImage(product.sku) : covers.sirca;
+const title = product.brand === 'gnature' ? product.name : product.name.replace(`${product.sku} — `, '');
+---
+
+<a class:list={['product', product.brand === 'gnature' ? 'gn' : 'sirca']} href={productHref(product)}>
+  <div class="shot">
+    {img ? (
+      <img src={img} alt={`${product.sku} ${title}`} loading="lazy" width="720" height="540" />
+    ) : (
+      <div style="height:100%"></div>
+    )}
+  </div>
+  <div class="body">
+    <span class="brand">{brandLabel(product.brand)}</span>
+    <div class="sku">{product.sku}</div>
+    <h3>{title}</h3>
+    <p class="muted" style="margin-bottom:0">{product.short}</p>
+    <div class="from price">от {formatRub(from)}{unit}</div>
+  </div>
+</a>

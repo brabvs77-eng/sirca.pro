@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import { company } from '../data/company';
+---
+
+<Base
+  title="Контакты дилера Sirca и G Nature | sirca.pro"
+  description={`Связаться с ${company.legalNameShort}: ${company.phoneDisplay}, ${company.director}. Доставка по Москве и России.`}
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / Контакты</p>
+    <h1>Контакты</h1>
+    <p>
+      {company.legalNameShort}. Контакт: {company.director}.
+      Доставка по Москве и всей России. Адрес склада не публикуем.
+    </p>
+    <dl class="dl">
+      <dt>Телефон</dt>
+      <dd><a href={`tel:${company.phoneTel}`}>{company.phoneDisplay}</a></dd>
+      <dt>WhatsApp</dt>
+      <dd><a href={company.whatsapp}>написать</a></dd>
+      <dt>Регион</dt>
+      <dd>{company.delivery}</dd>
+      <dt>Юр. адрес</dt>
+      <dd>{company.legalAddress} — это не склад и не пункт выдачи</dd>
+    </dl>
+    <p>
+      <a class="btn" href={`tel:${company.phoneTel}`}>Позвонить</a>
+      <a class="btn btn-ghost" href="/requisites">Реквизиты для счёта</a>
+    </p>
+  </div>
+</Base>

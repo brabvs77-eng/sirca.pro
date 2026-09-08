@@ -1,0 +1,107 @@
+---
+import Base from '../../layouts/Base.astro';
+import { calcProducts } from '../../data/catalog';
+import { company } from '../../data/company';
+
+const options = calcProducts.map((p) => ({
+  id: p.id,
+  label: `${p.brand} ${p.sku} — ${p.name}`,
+  coverage1: p.coverage1,
+  coverage2: p.coverage2 ?? p.coverage1,
+  packs: p.packs.map((pack) => ({ volume: pack.volume, liters: pack.liters, price: pack.price })),
+}));
+---
+
+<Base
+  title="Калькулятор расхода масла и краски | sirca.pro"
+  description="Расчёт литров G Nature по нормам каталога: площадь, число слоёв, фасовка и сумма. Не оферта."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / Расчёт</p>
+    <h1>Сколько литров нужно</h1>
+    <p>
+      Нормы расхода — из каталога G Nature 2026 (м²/л). Результат округляем вверх.
+      Sirca считаем через технолога: граммы мокрого слоя зависят от цикла.
+    </p>
+
+    <form class="calc" id="calc" style="max-width:36rem">
+      <label>
+        Материал
+        <select name="sku" id="sku">
+          {options.map((o) => (
+            <option value={o.id}>{o.label}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Площадь, м²
+        <input type="number" name="area" id="area" min="1" step="0.1" value="80" />
+      </label>
+      <label>
+        Слои
+        <select name="coats" id="coats">
+          <option value="1">1 слой</option>
+          <option value="2" selected>2 слоя</option>
+        </select>
+      </label>
+      <div class="calc-out" id="out">Считаем…</div>
+      <p>
+        <a class="btn" href={`tel:${company.phoneTel}`}>Подтвердить у менеджера</a>
+      </p>
+    </form>
+    <p class="muted" style="max-width:36rem">
+      Калькулятор не учитывает впитываемость породы, торцы и потери на кисть.
+      Это прикидка, не оферта и не смета.
+    </p>
+  </div>
+</Base>
+
+<script define:vars={{ options }}>
+  const form = document.getElementById('calc');
+  const out = document.getElementById('out');
+  const fmt = new Intl.NumberFormat('ru-RU');
+
+  function bestPacks(liters, packs) {
+    const sorted = [...packs].sort((a, b) => b.liters - a.liters);
+    let left = liters;
+    const pick = [];
+    for (const pack of sorted) {
+      const n = Math.floor(left / pack.liters + 1e-9);
+      if (n > 0) {
+        pick.push({ ...pack, n });
+        left = +(left - n * pack.liters).toFixed(3);
+      }
+    }
+    if (left > 0 && sorted.length) {
+      const small = [...packs].sort((a, b) => a.liters - b.liters)[0];
+      const extra = Math.ceil(left / small.liters);
+      const found = pick.find((p) => p.liters === small.liters);
+      if (found) found.n += extra;
+      else pick.push({ ...small, n: extra });
+    }
+    return pick;
+  }
+
+  function render() {
+    const id = document.getElementById('sku').value;
+    const area = Number(document.getElementById('area').value);
+    const coats = Number(document.getElementById('coats').value);
+    const p = options.find((o) => o.id === id);
+    if (!p || !area) {
+      out.textContent = 'Укажите площадь.';
+      return;
+    }
+    const cov = coats === 2 ? p.coverage2 : p.coverage1;
+    const liters = Math.ceil((area / cov) * 10) / 10;
+    const pick = bestPacks(liters, p.packs);
+    const sum = pick.reduce((s, x) => s + x.n * x.price, 0);
+    const packs = pick.map((x) => `${x.n} × ${x.volume}`).join(', ');
+    out.innerHTML =
+      `<strong>${liters.toLocaleString('ru-RU')} л</strong> при ${cov} м²/л` +
+      `<br>Банки: ${packs}` +
+      `<br>Сумма ориентир: <span class="price">${fmt.format(sum)} ₽</span>`;
+  }
+
+  form.addEventListener('input', render);
+  render();
+</script>

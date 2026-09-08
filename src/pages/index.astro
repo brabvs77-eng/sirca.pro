@@ -1,0 +1,177 @@
+---
+import Base from '../layouts/Base.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { company } from '../data/company';
+import { colorRail, covers } from '../data/media';
+import { formatRub } from '../data/pricing';
+import { gnatureProducts, gnFromPrice } from '../data/products-gnature';
+import { sircaProducts, sircaFromPrice } from '../data/products-sirca';
+import { tasks } from '../data/tasks';
+
+const gnHits = ['280', '277', '245', '870']
+  .map((sku) => gnatureProducts.find((p) => p.sku === sku)!)
+  .filter(Boolean);
+const sircaHits = ['imw4800', 'owp330', 'oil30', 'opu60g']
+  .map((slug) => sircaProducts.find((p) => p.slug === slug)!)
+  .filter(Boolean);
+
+const gn280 = gnFromPrice(gnatureProducts.find((p) => p.sku === '280')!);
+const imw = sircaFromPrice(sircaProducts.find((p) => p.slug === 'imw4800')!);
+
+const benefits = [
+  ['Европейское качество', 'G Nature — Германия, Sirca — Италия. Официальный дилер.'],
+  ['До 10 лет без полной перешлифовки', 'Масла обновляются новым слоем, плёнка Sirca держит климат.'],
+  ['Безопасно для дома и детей', 'Натуральные масла и воски. Водные циклы для окон и паркета.'],
+  ['2000+ цветов', 'RAL, NCS, «Вокруг цвета» и металлик «Просто космос».'],
+];
+---
+
+<Base
+  cover
+  title="Каталог Sirca и G Nature — официальный дилер | sirca.pro"
+  description={`Глянцевый каталог красок и масел для дерева. Цены на витрине. Доставка по Москве и России. ${company.legalNameShort}, ${company.phoneDisplay}.`}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: company.legalNameShort,
+    url: company.site,
+    telephone: company.phoneTel,
+    address: { '@type': 'PostalAddress', addressLocality: 'Москва', addressCountry: 'RU' },
+    areaServed: 'RU',
+  })} />
+
+  <section class="cover">
+    <a class="cover-pane sirca" href="/sirca" style={`background-image:url('${covers.sirca}')`}>
+      <span class="cover-page">01 · SIRCA</span>
+      <svg class="cover-mark" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+        <circle cx="100" cy="100" r="92" stroke="#c9a35a" stroke-width="1"/>
+        <circle cx="100" cy="100" r="68" stroke="#c9a35a" stroke-width="1"/>
+        <circle cx="100" cy="100" r="44" stroke="#c9a35a" stroke-width="1"/>
+        <path d="M20 100h160M100 20v160" stroke="#c9a35a" stroke-width="0.6" opacity="0.7"/>
+      </svg>
+      <p class="cover-kicker">Профессиональные ЛК системы</p>
+      <h2>Sirca</h2>
+      <p>Италия. Домостроение, окна, паркет. Артикулы из каталога, цены открыты.</p>
+      <p><span class="btn btn-gold">Открыть главу</span></p>
+    </a>
+    <a class="cover-pane gn" href="/gnature" style={`background-image:url('${covers.gn}')`}>
+      <span class="cover-page">02 · G NATURE</span>
+      <svg class="cover-mark" viewBox="0 0 160 220" aria-hidden="true">
+        <path d="M80 8c44 48 64 88 64 124a64 64 0 1 1-128 0C16 96 36 56 80 8z" fill="none" stroke="#fff" stroke-width="2"/>
+      </svg>
+      <p class="cover-kicker">Натуральные масла и краски для дерева</p>
+      <h2>G Nature</h2>
+      <p>Германия, biopin. Фасад, терраса, дом внутри, баня. Колеровка 2000+.</p>
+      <p><span class="btn" style="background:#fff;color:#3b5d34">Открыть главу</span></p>
+    </a>
+  </section>
+
+  <div class="wrap catalog-intro">
+    <p class="eyebrow">Официальный дилер · {company.delivery}</p>
+    <div class="split" style="align-items:end">
+      <div>
+        <h1>Листайте как каталог</h1>
+        <p>
+          Два бренда — два разворота. Слева итальянские системы Sirca, справа немецкие масла G&nbsp;Nature.
+          Цены на каждой карточке. Сайт не оферта.
+        </p>
+        <p>
+          <a class="btn" href={`tel:${company.phoneTel}`}>{company.phoneDisplay}</a>
+          <a class="btn btn-ghost" href="/calc/raskhod">Рассчитать литры</a>
+        </p>
+      </div>
+      <aside class="note">
+        <strong>Прайс ниже открытой витрины.</strong>
+        Ориентир gnature.ru и Woodperfect, наша цена ≈ −10%.
+        280 — от {formatRub(gn280)}, IMW4800 — от {formatRub(imw)}/л.
+      </aside>
+    </div>
+  </div>
+
+  <section class="wrap">
+    <div class="chapter">
+      <h2>Что красите</h2>
+      <span class="pg">глава 03</span>
+    </div>
+    <ul class="chips">
+      {tasks.map((t) => (
+        <li><a href={`/tasks/${t.slug}`}>{t.title}</a></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="wrap">
+    <div class="chapter">
+      <h2>Два разворота</h2>
+      <span class="pg">глава 04</span>
+    </div>
+    <div class="split">
+      <a class="panel gn" href="/gnature" style={`background-image:url('${covers.family}')`}>
+        <p class="eyebrow" style="color:#e8f5dc">Германия · biopin · 1982</p>
+        <h2>G Nature</h2>
+        <p>Фасад, терраса, баня, пол, столешница. Каталог А5 2026.</p>
+      </a>
+      <a class="panel sirca" href="/sirca" style={`background-image:url('${covers.sirca}')`}>
+        <p class="eyebrow" style="color:var(--sirca-gold)">Италия · домостроение</p>
+        <h2>Sirca</h2>
+        <p>IMW, OWE, окна, паркет. Без вымышленных имён.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="chapter">
+      <h2>Хиты G Nature</h2>
+      <span class="pg">глава 05</span>
+    </div>
+    <div class="cards cols-4">
+      {gnHits.map((p) => <ProductCard product={p} />)}
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="chapter">
+      <h2>Вокруг цвета</h2>
+      <a class="pg" href="/colors/vokrug-cveta">вся коллекция →</a>
+    </div>
+    <div class="rail-wrap">
+      <div class="rail">
+        {colorRail.map((c) => (
+          <a class="swatch" href="/colors/vokrug-cveta">
+            <i style={`background:${c.hex}`}></i>
+            <span>{c.n} {c.name}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="chapter">
+      <h2>Хиты Sirca</h2>
+      <span class="pg">глава 06</span>
+    </div>
+    <div class="cards cols-4">
+      {sircaHits.map((p) => <ProductCard product={p} />)}
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:3rem">
+    <div class="chapter">
+      <h2>Почему эти системы</h2>
+      <span class="pg">глава 07</span>
+    </div>
+    <div class="benefits">
+      {benefits.map(([t, d]) => (
+        <div class="benefit">
+          <b aria-hidden="true">◆</b>
+          <div>
+            <strong>{t}</strong>
+            <p class="muted" style="margin:0.25rem 0 0">{d}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>

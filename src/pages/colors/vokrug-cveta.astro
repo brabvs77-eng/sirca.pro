@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import { covers } from '../../data/media';
+
+const colors = [
+  ['01', 'Арктический лёд', '#d9e2e6'],
+  ['02', 'Китайский фарфор', '#e8e0d4'],
+  ['03', 'Бельгийские сливки', '#c9c2b4'],
+  ['04', 'Вьетнамский лотос', '#d4c19a'],
+  ['05', 'Турецкая халва', '#c9a56b'],
+  ['06', 'Итальянский латте', '#b8883a'],
+  ['07', 'Эфиопский кофе', '#a56b2b'],
+  ['08', 'Швейцарский шоколад', '#5a3d24'],
+  ['09', 'Французское крем-брюле', '#c4a36b'],
+  ['10', 'Тибетское плато', '#8d4a2b'],
+  ['11', 'Австрийские Альпы', '#d8c4a0'],
+  ['12', 'Шотландский вереск', '#7a6a78'],
+  ['13', 'Венецианский дворик', '#8a3a28'],
+  ['14', 'Греческая олива', '#6b6a3a'],
+  ['15', 'Калифорнийский залив', '#3a5a6e'],
+  ['16', 'Карибская лагуна', '#2a5348'],
+  ['17', 'Индийский чай', '#6e4b2a'],
+  ['18', 'Байкальская гладь', '#3a5348'],
+  ['19', 'Новозеландский мох', '#3b5d34'],
+  ['20', 'Ливанский кедр', '#4a2f1c'],
+];
+---
+
+<Base
+  title="Коллекция «Вокруг цвета» G Nature | sirca.pro"
+  description="20 интерьерных оттенков G Nature. Колеровка 245, 475, 280, 425 у дилера."
+>
+  <div class="panel gn" style={`min-height:16rem;border-radius:0;background-image:url('${covers.family}')`}>
+    <div class="wrap" style="padding:4.2rem 0 1.4rem">
+      <p class="eyebrow" style="color:#e8f5dc">Коллекция · каталог А5</p>
+      <h1>Вокруг цвета</h1>
+      <p>Фирменный веер G Nature. Свотч на экране — ориентир, живой цвет на выкрасе.</p>
+    </div>
+  </div>
+  <div class="wrap page-pad">
+    <div class="cards cols-4">
+      {colors.map(([n, name, hex]) => (
+        <div class="product gn">
+          <div class="shot" style={`background:${hex}`}></div>
+          <div class="body">
+            <span class="brand">{n}</span>
+            <h3>{name}</h3>
+          </div>
+        </div>
+      ))}
+    </div>
+    <p style="margin-top:1.6rem">
+      <a class="btn btn-gn" href="/product/gnature/245">Твёрдое масло 245</a>
+      <a class="btn btn-ghost" href="/product/gnature/280">Фасад 280</a>
+    </p>
+  </div>
+</Base>
