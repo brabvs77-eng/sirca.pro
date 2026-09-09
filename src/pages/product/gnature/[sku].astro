@@ -8,6 +8,7 @@ import { systemsForSku } from '../../../data/systems';
 import { tasks } from '../../../data/tasks';
 import { vokrugCveta, prostoKosmos } from '../../../data/colors';
 import ProductCard from '../../../components/ProductCard.astro';
+import ReelPlayer from '../../../components/ReelPlayer.astro';
 
 export function getStaticPaths() {
   return gnatureProducts.map((p) => ({ params: { sku: p.slug } }));
@@ -65,13 +66,7 @@ const colors =
           ))}
         </div>
       )}
-      {video && (
-        <figure class="clip-wrap">
-          <video class="clip" poster={poster} preload="none" controls playsinline>
-            <source src={video} type="video/mp4" />
-          </video>
-        </figure>
-      )}
+      {video && poster && <ReelPlayer src={video} poster={poster} title={product.sku} />}
     </div>
     <div>
       <p class="eyebrow">G Nature · {product.nameDe}</p>

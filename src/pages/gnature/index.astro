@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import ReelPlayer from '../../components/ReelPlayer.astro';
 import { covers, gnCatalogReels } from '../../data/media';
 import { gnatureProducts } from '../../data/products-gnature';
 
@@ -32,12 +33,7 @@ const groups = [
   <div class="wrap page-pad">
     <div class="clip-row" aria-label="Видео G Nature">
       {gnCatalogReels.map((reel) => (
-        <figure class="clip-wrap">
-          <video class="clip" poster={reel.poster} preload="none" controls playsinline>
-            <source src={reel.src} type="video/mp4" />
-          </video>
-          <figcaption>{reel.title}</figcaption>
-        </figure>
+        <ReelPlayer src={reel.src} poster={reel.poster} title={reel.title} />
       ))}
     </div>
     {groups.map((g, i) => (

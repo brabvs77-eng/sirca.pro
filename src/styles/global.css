@@ -961,6 +961,31 @@ button.btn {
   margin: 0;
 }
 
+.reel-player {
+  position: relative;
+  width: 100%;
+}
+
+.reel-expand {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.45rem;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 0.55rem;
+  background: rgba(0, 0, 0, 0.62);
+  color: #fff;
+  cursor: pointer;
+}
+
+.reel-expand:hover {
+  background: rgba(0, 0, 0, 0.82);
+}
+
 .clip-wrap figcaption {
   color: var(--muted);
   font-size: 0.78rem;
