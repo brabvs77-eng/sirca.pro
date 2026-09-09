@@ -1,5 +1,5 @@
 export const covers = {
-  gn: '/img/covers/gn.webp',
+  gn: '/img/covers/gn-hero.webp',
   sirca: '/img/covers/sirca.webp',
   family: '/img/covers/family.webp',
   house: '/img/life/house.webp',
@@ -128,6 +128,12 @@ export const brandVideo = {
   fasad: { src: '/video/fasad.mp4', poster: '/img/posters/fasad.webp' },
   terrassa: { src: '/video/terrassa.mp4', poster: '/img/posters/terrassa.webp' },
 };
+
+export const gnCatalogReels = [
+  { title: 'G Nature', ...brandVideo.gnature },
+  { title: 'Фасад', ...brandVideo.fasad },
+  { title: 'Терраса', ...brandVideo.terrassa },
+] as const;
 
 const gnVideo = new Set([
   '110',

@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ProductCard from '../../components/ProductCard.astro';
-import { brandVideo, covers } from '../../data/media';
+import { covers, gnCatalogReels } from '../../data/media';
 import { gnatureProducts } from '../../data/products-gnature';
 
 const groups = [
@@ -16,7 +16,7 @@ const groups = [
   title="Каталог G Nature — масла и краски | sirca.pro"
   description="Разворот G Nature: 280, 425, 460, 277, 245, 870. Масла и лазури для фасада, террасы и интерьера. Доставка по Москве и России."
 >
-  <div class="panel gn" style={`min-height:18rem;border-radius:0;background-image:url('${covers.gn}')`}>
+  <div class="panel gn gn-hero" style={`min-height:18rem;border-radius:0;background-image:url('${covers.gn}')`}>
     <div class="wrap" style="padding:4.5rem 0 1.6rem">
       <p class="eyebrow" style="color:#e8f5dc">Глава · Gnature · Гнатур</p>
       <h1>G Nature</h1>
@@ -30,11 +30,16 @@ const groups = [
     </div>
   </div>
   <div class="wrap page-pad">
-    <figure class="clip-wrap">
-      <video class="clip" poster={brandVideo.gnature.poster} preload="none" controls playsinline>
-        <source src={brandVideo.gnature.src} type="video/mp4" />
-      </video>
-    </figure>
+    <div class="clip-row" aria-label="Видео G Nature">
+      {gnCatalogReels.map((reel) => (
+        <figure class="clip-wrap">
+          <video class="clip" poster={reel.poster} preload="none" controls playsinline>
+            <source src={reel.src} type="video/mp4" />
+          </video>
+          <figcaption>{reel.title}</figcaption>
+        </figure>
+      ))}
+    </div>
     {groups.map((g, i) => (
       <section>
         <div class="chapter">
