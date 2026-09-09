@@ -30,9 +30,11 @@ const groups = [
     </div>
   </div>
   <div class="wrap page-pad">
-    <video class="clip" poster={brandVideo.gnature.poster} preload="none" controls playsinline>
-      <source src={brandVideo.gnature.src} type="video/mp4" />
-    </video>
+    <figure class="clip-wrap">
+      <video class="clip" poster={brandVideo.gnature.poster} preload="none" controls playsinline>
+        <source src={brandVideo.gnature.src} type="video/mp4" />
+      </video>
+    </figure>
     {groups.map((g, i) => (
       <section>
         <div class="chapter">

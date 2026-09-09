@@ -66,9 +66,11 @@ const colors =
         </div>
       )}
       {video && (
-        <video class="clip" poster={poster} preload="none" controls playsinline>
-          <source src={video} type="video/mp4" />
-        </video>
+        <figure class="clip-wrap">
+          <video class="clip" poster={poster} preload="none" controls playsinline>
+            <source src={video} type="video/mp4" />
+          </video>
+        </figure>
       )}
     </div>
     <div>
