@@ -133,6 +133,9 @@ export const gnCatalogReels = [
   { title: 'G Nature', ...brandVideo.gnature },
   { title: 'Фасад', ...brandVideo.fasad },
   { title: 'Терраса', ...brandVideo.terrassa },
+  { title: 'Масло 280', src: '/video/280.mp4', poster: '/img/posters/280.webp' },
+  { title: 'Масло 277', src: '/video/277.mp4', poster: '/img/posters/277.webp' },
+  { title: 'Лазурь 425', src: '/video/425.mp4', poster: '/img/posters/425.webp' },
 ] as const;
 
 const gnVideo = new Set([
