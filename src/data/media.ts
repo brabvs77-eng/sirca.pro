@@ -166,37 +166,8 @@ export function gnPoster(sku: string): string | undefined {
   return gnVideo.has(sku) ? `/img/posters/${sku}.webp` : gnPacks[sku];
 }
 
-const sircaCardGroups: Record<string, string> = {
-  imw4800: 'imw',
-  imw4400: 'imw',
-  fiw350: 'water-barrier',
-  fiw470: 'water-barrier',
-  fwe600: 'water-barrier',
-  fwe801: 'water-barrier',
-  fwp630: 'water-white',
-  fwp830: 'water-white',
-  owe500: 'water-lacquer',
-  owe501: 'water-lacquer',
-  owe505: 'water-lacquer',
-  owp330: 'water-enamel',
-  oil30: 'oil',
-  opu99g: 'pu',
-  opp1930g: 'pu',
-  fpu16tix: 'pu',
-  opa9330: 'acrylic',
-  opu979: 'acrylic',
-  fpu932e: 'acrylic',
-  fa930: 'acrylic',
-  ow1fg40: 'parquet',
-  opu60g: 'parquet',
-  opu379g: 'parquet',
-};
-
-export function sircaCardImage(slug: string, chemistry?: string, use?: string): string {
-  const group =
-    sircaCardGroups[slug] ??
-    (use === 'parquet' ? 'parquet' : chemistry === 'pu' ? 'pu' : chemistry === 'acrylic' ? 'acrylic' : 'catalog');
-  return `/img/sirca/${group}.webp`;
+export function sircaCardImage(slug: string): string {
+  return `/img/sirca/${slug}.webp`;
 }
 
 export const colorRail = [

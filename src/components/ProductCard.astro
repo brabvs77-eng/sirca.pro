@@ -10,7 +10,7 @@ const unit = product.brand === 'sirca' ? ` / ${product.packs[0].volume}` : '';
 const img =
   product.brand === 'gnature'
     ? gnPackImage(product.sku)
-    : sircaCardImage(product.slug, product.chemistry, product.use);
+    : sircaCardImage(product.slug);
 const title = product.brand === 'gnature' ? product.name : product.name.replace(`${product.sku} — `, '');
 ---
 
