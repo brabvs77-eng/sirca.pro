@@ -12,7 +12,7 @@ import { company } from '../data/company';
     <h1>Контакты</h1>
     <p>
       {company.legalNameShort}. Контакт: {company.director}.
-      Доставка по Москве и всей России. Адрес склада не публикуем.
+      Доставка по Москве и всей России.
     </p>
     <dl class="dl">
       <dt>Телефон</dt>
@@ -22,7 +22,7 @@ import { company } from '../data/company';
       <dt>Регион</dt>
       <dd>{company.delivery}</dd>
       <dt>Юр. адрес</dt>
-      <dd>{company.legalAddress} — это не склад и не пункт выдачи</dd>
+      <dd>{company.legalAddress}</dd>
     </dl>
     <p>
       <a class="btn" href={`tel:${company.phoneTel}`}>Позвонить</a>

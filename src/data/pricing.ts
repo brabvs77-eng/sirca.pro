@@ -3,7 +3,7 @@ export function round10(value: number): number {
   return Math.round(value / 10) * 10;
 }
 
-/** Наша цена: ≈ −10% к открытой витрине конкурента. */
+/** Розничная цена дилера с округлением до 10 ₽. */
 export function belowMarket(market: number): number {
   return round10(market * 0.9);
 }

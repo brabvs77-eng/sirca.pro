@@ -9,7 +9,7 @@ import { tasks } from '../data/tasks';
       <p class="serif" style="font-size:1.6rem;margin:0 0 0.4rem;color:var(--sirca-gold-2)">sirca.pro</p>
       <p class="muted" style="color:#d8cfbf">
         Глянцевый каталог официального дилера Sirca и G Nature.<br />
-        {company.legalNameShort}. Доставка: {company.delivery}. Склад не публикуем.
+        {company.legalNameShort}. Доставка: {company.delivery}.
       </p>
       <p>
         <a href={`tel:${company.phoneTel}`}>{company.phoneDisplay}</a>
@@ -46,8 +46,7 @@ import { tasks } from '../data/tasks';
     </div>
   </div>
   <div class="wrap footer-disclaimer">
-    <strong>Не является офертой.</strong>
     {offerDisclaimer}
-    Юридический адрес (не склад): {company.legalAddress}.
+    Юридический адрес: {company.legalAddress}.
   </div>
 </footer>

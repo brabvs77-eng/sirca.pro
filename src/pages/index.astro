@@ -29,7 +29,7 @@ const benefits = [
 <Base
   cover
   title="Каталог Sirca и G Nature — официальный дилер | sirca.pro"
-  description={`Глянцевый каталог красок и масел для дерева. Цены на витрине. Доставка по Москве и России. ${company.legalNameShort}, ${company.phoneDisplay}.`}
+  description={`Каталог красок и масел Sirca и G Nature. Цены на карточках. Доставка по Москве и России. ${company.legalNameShort}, ${company.phoneDisplay}.`}
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify({
     '@context': 'https://schema.org',
@@ -52,7 +52,7 @@ const benefits = [
       </svg>
       <p class="cover-kicker">Профессиональные ЛК системы</p>
       <h2>Sirca</h2>
-      <p>Италия. Домостроение, окна, паркет. Артикулы из каталога, цены открыты.</p>
+      <p>Италия. Домостроение, окна, паркет. Водные, ПУ и акриловые системы.</p>
       <p><span class="btn btn-gold">Открыть главу</span></p>
     </a>
     <a class="cover-pane gn" href="/gnature" style={`background-image:url('${covers.gn}')`}>
@@ -73,8 +73,8 @@ const benefits = [
       <div>
         <h1>Листайте как каталог</h1>
         <p>
-          Два бренда — два разворота. Слева итальянские системы Sirca, справа немецкие масла G&nbsp;Nature.
-          Цены на каждой карточке. Сайт не оферта.
+          Два бренда — два разворота. Sirca и G&nbsp;Nature закрывают одни задачи: фасад, терраса, пол, окна, мебель.
+          Разница в технологии и цене за м², не в «чужих» зонах применения.
         </p>
         <p>
           <a class="btn" href={`tel:${company.phoneTel}`}>{company.phoneDisplay}</a>
@@ -82,9 +82,9 @@ const benefits = [
         </p>
       </div>
       <aside class="note">
-        <strong>Прайс ниже открытой витрины.</strong>
-        Ориентир gnature.ru и Woodperfect, наша цена ≈ −10%.
+        <strong>Цены на карточках.</strong>
         280 — от {formatRub(gn280)}, IMW4800 — от {formatRub(imw)}/л.
+        Подбор системы — по телефону или в калькуляторе.
       </aside>
     </div>
   </div>
@@ -115,7 +115,7 @@ const benefits = [
       <a class="panel sirca" href="/sirca" style={`background-image:url('${covers.sirca}')`}>
         <p class="eyebrow" style="color:var(--sirca-gold)">Италия · домостроение</p>
         <h2>Sirca</h2>
-        <p>IMW, OWE, окна, паркет. Без вымышленных имён.</p>
+        <p>IMW, OWE, окна, паркет. Плёночные системы, часто ниже за м².</p>
       </a>
     </div>
   </section>

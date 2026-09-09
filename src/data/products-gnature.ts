@@ -19,7 +19,7 @@ export type GnProduct = {
   tinting?: string;
 };
 
-const SRC = 'gnature.ru, открытая витрина, сентябрь 2026';
+const SRC = 'прайс дилера, сентябрь 2026';
 
 export const gnatureProducts: GnProduct[] = [
   {

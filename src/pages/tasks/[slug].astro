@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ProductCard from '../../components/ProductCard.astro';
-import { productsForTask } from '../../data/catalog';
+import { brandLabel, productsForTask } from '../../data/catalog';
 import { taskBySlug, tasks } from '../../data/tasks';
 
 export function getStaticPaths() {
@@ -10,7 +10,7 @@ export function getStaticPaths() {
 
 const task = taskBySlug(Astro.params.slug!);
 if (!task) throw new Error('not found');
-const products = productsForTask(task.slug);
+const products = productsForTask(task.slug).sort((a, b) => a.brand.localeCompare(b.brand));
 ---
 
 <Base title={`${task.h1} — цены | sirca.pro`} description={task.lead}>
@@ -18,13 +18,24 @@ const products = productsForTask(task.slug);
     <p class="crumbs"><a href="/">Каталог</a> / {task.title}</p>
     <h1>{task.h1}</h1>
     <p>{task.lead}</p>
+    <p class="muted">На странице — оба бренда для одной задачи. G Nature обычно дороже за литр, Sirca — плёночные системы, часто ниже за м².</p>
     <p>
       <a class="btn" href="/calc/raskhod">Рассчитать расход</a>
       <a class="btn btn-ghost" href="/calc/sistema">Подобрать систему</a>
       <a class="btn btn-ghost" href="/contacts">Спросить технолога</a>
     </p>
-    <div class="cards cols-3" style="margin-top:1.6rem">
-      {products.map((p) => <ProductCard product={p} />)}
-    </div>
+    {['gnature', 'sirca'].map((brand) => {
+      const items = products.filter((p) => p.brand === brand);
+      return items.length ? (
+        <section style="margin-top:1.6rem">
+          <div class="chapter">
+            <h2>{brandLabel(brand as 'gnature' | 'sirca')}</h2>
+          </div>
+          <div class="cards cols-3">
+            {items.map((p) => <ProductCard product={p} />)}
+          </div>
+        </section>
+      ) : null;
+    })}
   </div>
 </Base>
