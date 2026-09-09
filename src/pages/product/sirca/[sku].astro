@@ -23,7 +23,7 @@ if (!product) throw new Error('not found');
 
 const from = sircaFromPrice(product);
 const taskLinks = tasks.filter((t) => product.tasks.includes(t.slug));
-const image = sircaCardImage(product.slug, product.chemistry, product.use);
+const image = sircaCardImage(product.slug);
 const chapter =
   product.chemistry === 'pu' && product.use !== 'parquet' && product.use !== 'furniture'
     ? { href: '/sirca/exterior-pu', label: 'ПУ экстерьер' }

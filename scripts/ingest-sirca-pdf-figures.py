@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+"""Extract PDF catalog figures for knowledge-base articles and blog — not product cards."""
 """Render authentic card imagery from the Sirca house-building catalog."""
 
 from __future__ import annotations
