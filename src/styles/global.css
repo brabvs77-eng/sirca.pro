@@ -936,17 +936,28 @@ button.btn {
 
 .clip-row {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: center;
   gap: 1rem;
   margin-top: 0.9rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scroll-snap-type: x proximity;
 }
 
 .clip-wrap {
   display: flex;
+  flex: 0 0 auto;
   flex-direction: column;
   align-items: center;
   gap: 0.35rem;
+  width: 11rem;
+  margin: 0.9rem auto 0;
+  scroll-snap-align: center;
+}
+
+.clip-row .clip-wrap {
   margin: 0;
 }
 
@@ -962,6 +973,10 @@ button.btn {
   height: auto;
   border-radius: 1.1rem;
   background: #111;
+}
+
+.clip-row .clip {
+  width: 100%;
 }
 
 .product .shot.color-shot img {
