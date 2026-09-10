@@ -89,7 +89,7 @@ html {
 body {
   margin: 0;
   background-color: var(--paper);
-  background-image: url('/img/textures/deck.webp');
+  background-image: url('/img/textures/deck-rain.webp');
   background-size: 420px 420px;
   background-repeat: repeat;
   color: var(--ink);
