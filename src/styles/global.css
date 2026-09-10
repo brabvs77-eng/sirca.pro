@@ -75,6 +75,11 @@
   --font: Onest, "Segoe UI", system-ui, sans-serif;
   --display: Cormorant, "Iowan Old Style", Georgia, serif;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --chrome-bg: rgba(14, 24, 19, 0.78);
+  --chrome-fg: #fff;
+  --chrome-muted: rgba(255, 255, 255, 0.76);
+  --chrome-line: rgba(201, 163, 90, 0.35);
+  --chrome-blur: 14px;
 }
 
 *,
@@ -305,24 +310,21 @@ button.btn {
   position: sticky;
   top: 0;
   z-index: 40;
-  border-bottom: 1px solid var(--line);
-  background: rgba(255, 248, 238, 0.97);
-  color: var(--ink);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 1px 0 rgba(16, 18, 16, 0.06);
+  border-bottom: 1px solid var(--chrome-line);
+  background: var(--chrome-bg);
+  color: var(--chrome-fg);
+  backdrop-filter: blur(var(--chrome-blur));
 }
 
-.has-cover .site-header {
-  background: rgba(14, 24, 19, 0.78);
-  color: #fff;
-  border-bottom-color: rgba(201, 163, 90, 0.35);
+.site-header .logo-stack small,
+.site-header .logo span,
+.site-header .nav a,
+.site-header .header-phone {
+  color: var(--chrome-fg);
 }
 
-.has-cover .logo-stack small,
-.has-cover .logo span,
-.has-cover .nav a,
-.has-cover .header-phone {
-  color: #fff;
+.site-header .logo-stack small {
+  color: var(--chrome-muted);
 }
 
 .header-row {
@@ -873,11 +875,10 @@ button.btn {
   z-index: 30;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid var(--line);
-  background: rgba(255, 248, 238, 0.97);
-  color: var(--ink);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 -4px 20px rgba(16, 18, 16, 0.08);
+  border-top: 1px solid var(--chrome-line);
+  background: var(--chrome-bg);
+  color: var(--chrome-fg);
+  backdrop-filter: blur(var(--chrome-blur));
 }
 
 .bottom-nav a {
@@ -885,6 +886,7 @@ button.btn {
   place-items: center;
   min-height: 3.4rem;
   padding: 0.35rem;
+  color: var(--chrome-fg);
   font-size: 0.76rem;
   text-decoration: none;
   text-align: center;
