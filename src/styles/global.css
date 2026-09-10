@@ -62,8 +62,8 @@
   --sirca-deep: #0e1813;
   --sirca-gold: #c9a35a;
   --sirca-gold-2: #e4c57a;
-  --paper: #f6f1e8;
-  --paper-2: #efe7d8;
+  --paper: #d9c4a8;
+  --paper-2: #cfba9e;
   --white: #fffcf7;
   --ink: #141714;
   --muted: #5c6158;
@@ -88,7 +88,10 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
+  background-color: var(--paper);
+  background-image: url('/img/textures/deck.webp');
+  background-size: 420px 420px;
+  background-repeat: repeat;
   color: var(--ink);
   font-family: var(--font);
   font-size: 1.02rem;
@@ -296,7 +299,7 @@ button.btn {
   top: 0;
   z-index: 40;
   border-bottom: 1px solid rgba(201, 163, 90, 0.35);
-  background: rgba(246, 241, 232, 0.86);
+  background: rgba(217, 196, 168, 0.9);
   backdrop-filter: blur(16px);
 }
 
@@ -860,7 +863,7 @@ button.btn {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid var(--line);
-  background: rgba(246, 241, 232, 0.94);
+  background: rgba(217, 196, 168, 0.94);
   backdrop-filter: blur(12px);
 }
 
@@ -966,7 +969,7 @@ button.btn {
   width: 100%;
 }
 
-.reel-expand {
+.reel-pip {
   position: absolute;
   top: 0.45rem;
   right: 0.45rem;
@@ -982,8 +985,12 @@ button.btn {
   cursor: pointer;
 }
 
-.reel-expand:hover {
+.reel-pip:hover {
   background: rgba(0, 0, 0, 0.82);
+}
+
+.reel-pip[hidden] {
+  display: none;
 }
 
 .clip-wrap figcaption {
