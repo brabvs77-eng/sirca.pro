@@ -64,7 +64,7 @@
   --sirca-gold-2: #e4c57a;
   --paper: #b8956e;
   --paper-2: #a98660;
-  --surface: rgba(255, 248, 238, 0.94);
+  --surface-scrim: rgba(255, 248, 238, 0.38);
   --surface-solid: #fff8ee;
   --white: #fffcf7;
   --ink: #101210;
@@ -92,10 +92,11 @@ body {
   margin: 0;
   background-color: var(--paper);
   background-image:
-    linear-gradient(var(--surface), var(--surface)),
+    linear-gradient(var(--surface-scrim), var(--surface-scrim)),
     url('/img/textures/deck-rain.webp');
-  background-size: auto, 420px 420px;
-  background-repeat: repeat, repeat;
+  background-size: 100% 100%, 420px 420px;
+  background-repeat: no-repeat, repeat;
+  background-attachment: fixed, fixed;
   color: var(--ink);
   font-family: var(--font);
   font-size: 1.02rem;
