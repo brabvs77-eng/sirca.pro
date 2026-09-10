@@ -64,10 +64,12 @@
   --sirca-gold-2: #e4c57a;
   --paper: #b8956e;
   --paper-2: #a98660;
+  --surface: rgba(255, 248, 238, 0.94);
+  --surface-solid: #fff8ee;
   --white: #fffcf7;
-  --ink: #141714;
-  --muted: #5c6158;
-  --line: #d9d0bf;
+  --ink: #101210;
+  --muted: #343a32;
+  --line: #c9b89f;
   --price: #9a3412;
   --max: 76rem;
   --font: Onest, "Segoe UI", system-ui, sans-serif;
@@ -89,13 +91,17 @@ html {
 body {
   margin: 0;
   background-color: var(--paper);
-  background-image: url('/img/textures/deck-rain.webp');
-  background-size: 420px 420px;
-  background-repeat: repeat;
+  background-image:
+    linear-gradient(var(--surface), var(--surface)),
+    url('/img/textures/deck-rain.webp');
+  background-size: auto, 420px 420px;
+  background-repeat: repeat, repeat;
   color: var(--ink);
   font-family: var(--font);
   font-size: 1.02rem;
   line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 img {
@@ -298,9 +304,11 @@ button.btn {
   position: sticky;
   top: 0;
   z-index: 40;
-  border-bottom: 1px solid rgba(201, 163, 90, 0.35);
-  background: rgba(168, 134, 96, 0.9);
-  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 248, 238, 0.97);
+  color: var(--ink);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 rgba(16, 18, 16, 0.06);
 }
 
 .has-cover .site-header {
@@ -802,7 +810,7 @@ button.btn {
   padding: 0.4rem 0.6rem;
   border: 1px solid var(--line);
   border-radius: 0.7rem;
-  background: var(--paper);
+  background: var(--white);
   color: var(--ink);
   font: inherit;
 }
@@ -822,9 +830,11 @@ button.btn {
 
 .legal-banner {
   padding: 0.9rem 0;
-  background: var(--paper-2);
+  background: var(--surface-solid);
   color: var(--ink);
   font-size: 0.86rem;
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -1px 0 rgba(16, 18, 16, 0.05);
 }
 
 .site-footer {
@@ -863,8 +873,10 @@ button.btn {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid var(--line);
-  background: rgba(168, 134, 96, 0.94);
+  background: rgba(255, 248, 238, 0.97);
+  color: var(--ink);
   backdrop-filter: blur(12px);
+  box-shadow: 0 -4px 20px rgba(16, 18, 16, 0.08);
 }
 
 .bottom-nav a {
@@ -899,6 +911,12 @@ button.btn {
 
 .page-pad {
   padding: 2.1rem 0 3.2rem;
+}
+
+.chapter h2,
+.page-pad > .note,
+.page-pad > p {
+  text-shadow: 0 1px 0 rgba(255, 248, 238, 0.65);
 }
 
 .has-cover .page-pad-cover {
@@ -994,8 +1012,9 @@ button.btn {
 }
 
 .clip-wrap figcaption {
-  color: var(--muted);
+  color: var(--ink);
   font-size: 0.78rem;
+  font-weight: 500;
   text-align: center;
 }
 
