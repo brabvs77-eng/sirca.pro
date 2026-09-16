@@ -1,5 +1,8 @@
 import { gnatureProducts } from './products-gnature';
 import { sircaProducts } from './products-sirca';
+import tdsData from './sirca-tds.json';
+
+const sircaTdsBySku = new Map(tdsData.map((row) => [row.sku.toUpperCase(), row]));
 
 export type CalcPack = { volume: string; liters: number; price: number };
 
@@ -39,19 +42,20 @@ export const calcMaterials: CalcMaterial[] = [
     ),
   ...sircaProducts
     .filter((p) => ['exterior', 'windows', 'oils', 'parquet'].includes(p.use))
-    .map(
-      (p): CalcMaterial => ({
+    .map((p): CalcMaterial => {
+      const tds = sircaTdsBySku.get(p.sku.toUpperCase());
+      return {
         id: `sirca-${p.slug}`,
         brand: 'Sirca',
         sku: p.sku,
         name: p.name,
         href: `/product/sirca/${p.slug}`,
         kind: 'wet',
-        wetGsm: 125,
+        wetGsm: p.wetGsm ?? tds?.wetGsm ?? 125,
         density: 1.05,
         packs: packsOf(p.packs),
-      }),
-    ),
+      };
+    }),
 ];
 
 export const calcPrimers = [
