@@ -42,3 +42,12 @@ export const ir17OilSwatches: SircaSwatch[] = [
 ];
 
 export const sircaPaletteImage = '/img/sirca/palette-imw4800.jpg';
+
+/** Фото образцов ES1013 из sources/sirca/specs/photo_ES1013*.jpg */
+export const es1013SamplePhotos = [
+  { code: 's05', src: '/img/sirca/photos/es1013s05.webp', label: 'ES1013 s05' },
+  { code: 's07', src: '/img/sirca/photos/es1013s07.webp', label: 'ES1013 s07' },
+  { code: 's08', src: '/img/sirca/photos/es1013s08.webp', label: 'ES1013 s08' },
+  { code: 's09', src: '/img/sirca/photos/es1013s09.webp', label: 'ES1013 s09' },
+  { code: 's304', src: '/img/sirca/photos/es1013s304.webp', label: 'ES1013 s304' },
+];

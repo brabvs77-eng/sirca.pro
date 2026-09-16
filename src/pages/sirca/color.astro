@@ -1,7 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ChapterNav from '../../components/ChapterNav.astro';
-import { imw4800Swatches, ir17OilSwatches, sircaPaletteImage } from '../../data/sirca-colors';
+import { es1013SamplePhotos, imw4800Swatches, ir17OilSwatches, sircaPaletteImage } from '../../data/sirca-colors';
+import { sircaFmColors } from '../../data/sirca-fm-colors';
 import { sircaChapterNav } from '../../data/nav';
 ---
 
@@ -66,6 +67,46 @@ import { sircaChapterNav } from '../../data/nav';
     </section>
 
     <section style="margin-top:2rem">
+      <h2>ES1013 — эпоксидные оттенки</h2>
+      <p class="muted">Образцы линейки ES1013 из TDS. Точный код уточняет технолог.</p>
+      <div class="photo-rail" style="margin-top:1rem">
+        {es1013SamplePhotos.map((ph) => (
+          <figure>
+            <img src={ph.src} alt={ph.label} width="360" height="240" loading="lazy" />
+            <figcaption class="muted">{ph.label}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-top:2rem">
+      <h2>Ferro Micacei — мебельные металлики</h2>
+      <p class="muted">
+        Формулы из Cartella colori FM: крупная / мелкая фракция и акрил 1k. Колеровка по базе F4FMGG, F404FM или F7FMGG.
+      </p>
+      <table class="table" style="margin-top:1rem;font-size:0.88rem">
+        <thead>
+          <tr>
+            <th>Цвет</th>
+            <th>Крупная фракция</th>
+            <th>Мелкая фракция</th>
+            <th>Акрил 1k</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sircaFmColors.map((c) => (
+            <tr>
+              <td><strong>{c.name}</strong></td>
+              <td>{c.systems.grossa?.formula ?? '—'}</td>
+              <td>{c.systems.fine?.formula ?? '—'}</td>
+              <td>{c.systems.acr?.formula ?? '—'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <section style="margin-top:2rem">
       <h2>IR17xx — масляные оттенки</h2>
       <p class="muted">15 масел для террасы, фасада и интерьера. Коды уточняет технолог.</p>
       <div class="color-rail" style="margin-top:1rem">
@@ -116,5 +157,19 @@ import { sircaChapterNav } from '../../data/nav';
     display: block;
     font-size: 0.72rem;
     opacity: 0.7;
+  }
+  .photo-rail {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    gap: 0.85rem;
+  }
+  .photo-rail img {
+    width: 100%;
+    border-radius: 0.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .photo-rail figcaption {
+    font-size: 0.78rem;
+    margin-top: 0.3rem;
   }
 </style>
