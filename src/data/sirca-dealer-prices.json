@@ -1,0 +1,405 @@
+[
+  {
+    "sku": "AK102",
+    "price": 1550,
+    "unit": "л",
+    "title": "AK102 - Прозрачный полиуретановый быстросохнущий грунт (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "C254",
+    "price": 1810,
+    "unit": "л",
+    "title": "C254 - Патина на растворителе (500мл.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "CR16",
+    "price": 3100,
+    "unit": "л",
+    "title": "CR16 - Акриловый спецэффект 1л.",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "ES101",
+    "price": 2690,
+    "unit": "л",
+    "title": "Патина металлизированная - ES101 (500мл.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "F303",
+    "price": 3770,
+    "unit": "кг",
+    "title": "F 303 Акриловый грунт для окраски  металла, пластика и стекла  (1 кг)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "F3D",
+    "price": 2670,
+    "unit": "л",
+    "title": "F3D - Акриловый белый конвертер для окраски металла и пластика (1кг.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "F4S",
+    "price": 3850,
+    "unit": "л",
+    "title": "F4S - Высокоглянцевый акриловый  лак для металла (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "FE216",
+    "price": 1430,
+    "unit": "кг",
+    "title": "FE216 - Белый полиуретановый  грунт для ППУ (1 кг)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "FL3100",
+    "price": 2330,
+    "unit": "л",
+    "title": "FL 3100 Высокоглянцевый полиэфирный лак (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "FP32",
+    "price": 2170,
+    "unit": "л",
+    "title": "FP32 - Грунт акриловый прозрачный",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "FP3506",
+    "price": 2290,
+    "unit": "л",
+    "title": "FP 3506 - Барьерный грунт для  экзотических пород дерева (1кг.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "FPP20",
+    "price": 1720,
+    "unit": "л",
+    "title": "FPP20 - Грунт полиуретановый чёрный для МДФ (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "FPP26",
+    "price": 1295,
+    "unit": "л",
+    "title": "FPP26 Белый тиксотропный  полиуретановый грунт для МДФ (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "FPP47",
+    "price": 1190,
+    "unit": "л",
+    "title": "FPP 47 - Грунт-изолятор для МДФ",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "FPU15",
+    "price": 1340,
+    "unit": "л",
+    "title": "FPU15 Грунт полиуретановый прозрачный (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "FPU35",
+    "price": 1475,
+    "unit": "л",
+    "title": "FPU 35 - Грунт полиуретановый  прозрачный 1кг.",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "FV2019",
+    "price": 2190,
+    "unit": "л",
+    "title": "FV 2019 - Полиэфирный прозрачный грунт (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "FV2030",
+    "price": 2090,
+    "unit": "л",
+    "title": "FV 2030 - Полиэфирный белый грунт (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "IMW4800",
+    "price": 1500,
+    "unit": "л",
+    "title": "MW 4800 Водоразбавимая пропитка для мягких пород дерева - 1л.",
+    "source": "woodperfect.ru",
+    "aliasOf": "MW4800"
+  },
+  {
+    "sku": "LPP030",
+    "price": 2140,
+    "unit": "л",
+    "title": "LPP 030 - Высокоглянцевая белая  полиуретановая эмаль (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "LPU002",
+    "price": 2950,
+    "unit": "л",
+    "title": "LPU002 - Акриловый  высокоглянцевый лак (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "LPU003",
+    "price": 2950,
+    "unit": "кг",
+    "title": "LPU003 - Акриловый  высокоглянцевый лак (1 кг)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "MA01",
+    "price": 6740,
+    "unit": "л",
+    "title": "MA01 - Мелкозернистый металлик (Жидкая поталь) 1 кг.",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "MW4800",
+    "price": 1500,
+    "unit": "л",
+    "title": "MW 4800 Водоразбавимая пропитка для мягких пород дерева - 1л.",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "NC10",
+    "price": 1800,
+    "unit": "л",
+    "title": "NC10",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OP1930",
+    "price": 2750,
+    "unit": "л",
+    "title": "OP 1930 - Белая полиуретановая  эмаль для экстерьера (1кг.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OPP053",
+    "price": 1975,
+    "unit": "л",
+    "title": "OPP053 - Полиуретановая белая эмаль (1кг.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OPP1930G",
+    "price": 2750,
+    "unit": "л",
+    "title": "OP 1930 - Белая полиуретановая  эмаль для экстерьера (1кг.)",
+    "source": "woodperfect.ru",
+    "aliasOf": "OP1930"
+  },
+  {
+    "sku": "OPU277",
+    "price": 2250,
+    "unit": "л",
+    "title": "OPU277 Акриловый матовый  самогрунтующийся лак   ( 1 кг )",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OPU379",
+    "price": 2530,
+    "unit": "л",
+    "title": "OPU379 Акриловый паркетный  самогрунтующийся лак",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OPU57",
+    "price": 1579,
+    "unit": "л",
+    "title": "OPU57 Лак самогрунтующийся матовый 5% (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OPU59",
+    "price": 1590,
+    "unit": "л",
+    "title": "OPU59 - Самогрунтующийся тиксотропный полиуретановый лак (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OPU60",
+    "price": 2639,
+    "unit": "л",
+    "title": "OPU60 Лак самогрунтующийся паркетный (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OPU77",
+    "price": 1660,
+    "unit": "л",
+    "title": "OPU 77 - Полиуретановый лак (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OPU79",
+    "price": 2449,
+    "unit": "кг",
+    "title": "OPU79 - Акриловый лак (1 кг)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OPU91",
+    "price": 2340,
+    "unit": "л",
+    "title": "OPU91 Акрил-уретановый лак для столешниц (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OPU99",
+    "price": 1975,
+    "unit": "л",
+    "title": "OPU 99 - Матовый тиксотропный  ПУ лак для экстерьера (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OPU99G30",
+    "price": 1890,
+    "unit": "л",
+    "title": "OPU99G30 Полиуретановая эмаль для экстерьера ( для наружных работ)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OW102",
+    "price": 2590,
+    "unit": "л",
+    "title": "OW 102 - Самогрунтующийся  водоразбавимый лак (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OW5",
+    "price": 2190,
+    "unit": "л",
+    "title": "OW 5 - Прозрачный водоразбавимый лак для экстерьера (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "OWPI130G",
+    "price": 1985,
+    "unit": "л",
+    "title": "WP 130 - Белый водоразбавимый грунт для МДФ (1 кг.)",
+    "source": "woodperfect.ru",
+    "aliasOf": "WP130"
+  },
+  {
+    "sku": "OWPI2130G",
+    "price": 2250,
+    "unit": "л",
+    "title": "WP 2130 - Белая водоразбавимая эмаль (1л.)",
+    "source": "woodperfect.ru",
+    "aliasOf": "WP2130"
+  },
+  {
+    "sku": "PH",
+    "price": 210,
+    "unit": "л",
+    "title": "PH Ускоритель для полиэфирного лака и грунта (50мл.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "TH158",
+    "price": 534,
+    "unit": "л",
+    "title": "TH 158 - Отвердитель (0.2 кг)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "TH20",
+    "price": 1098,
+    "unit": "л",
+    "title": "TH 20 - Отвердитель (500мл.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "TH23",
+    "price": 1160,
+    "unit": "л",
+    "title": "TH 23 - Отвердитель (500мл.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "TH3",
+    "price": 1355,
+    "unit": "л",
+    "title": "TH 3 - Отвердитель (500мл.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "TH35",
+    "price": 1970,
+    "unit": "л",
+    "title": "TH 35 - Отвердитель (1л.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "TH43",
+    "price": 2677,
+    "unit": "кг",
+    "title": "TH 43 - Отвердитель (1 кг)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "TH46",
+    "price": 1569,
+    "unit": "л",
+    "title": "TH 46 - Отвердитель для глянцевых эмалей (500 гр)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "TH49",
+    "price": 790,
+    "unit": "л",
+    "title": "TH 49 - Отвердитель (300мл.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "TH52",
+    "price": 1390,
+    "unit": "л",
+    "title": "TH 52 - Отвердитель (500мл.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "TH58",
+    "price": 805,
+    "unit": "л",
+    "title": "TH 58 - Отвердитель (500мл.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "TH7",
+    "price": 1005,
+    "unit": "л",
+    "title": "TH 7 - Отвердитель (500мл.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "TH901",
+    "price": 1920,
+    "unit": "л",
+    "title": "Отвердитель -TH 901 (500мл.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "WP130",
+    "price": 1985,
+    "unit": "л",
+    "title": "WP 130 - Белый водоразбавимый грунт для МДФ (1 кг.)",
+    "source": "woodperfect.ru"
+  },
+  {
+    "sku": "WP2130",
+    "price": 2250,
+    "unit": "л",
+    "title": "WP 2130 - Белая водоразбавимая эмаль (1л.)",
+    "source": "woodperfect.ru"
+  }
+]

@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from normalize_sirca_sku import slugify
+from sirca_price_resolver import PriceResolver
 TDS_PATH = ROOT / "src/data/sirca-tds.json"
 CATALOG_PATH = ROOT / "src/data/products-sirca.ts"
 OUT_PATH = ROOT / "src/data/products-sirca-tds.ts"
@@ -25,7 +26,9 @@ def classify(sku: str, use: str, chem: str) -> tuple[str, str, list[str], int, s
     p = re.match(r"^([A-Z0-9]+)", sku.upper())
     prefix = p.group(1) if p else sku.upper()
 
-    if re.match(r"^(TH|CT|F912|F915|F921|ADTS|ADTW|CTE|DPN)", sku.upper()) or "отвердител" in u:
+    if re.match(r"^(ADTS|ADTW)", sku.upper()):
+        return "furniture", "pu", ["mebel"], 0, "кг"
+    if re.match(r"^(TH|CT|F912|F915|F921|CTE|DPN)", sku.upper()) or "отвердител" in u:
         return "furniture", "pu", ["mebel"], 0, "кг"
     if re.match(r"^(FDE|FDL|FBU|GDV)", sku.upper()) or "растворител" in u or "разбавител" in u:
         return "furniture", "pu", ["mebel"], 890, "л"
@@ -146,19 +149,26 @@ def main() -> None:
         "export const sircaTdsProducts: SircaProduct[] = [",
     ]
 
+    resolver = PriceResolver()
     added = 0
+    priced = 0
     for row in sorted(tds_list, key=lambda r: r["sku"]):
         sku = row["sku"]
         if sku.upper() in existing or sku.upper() in SKIP:
             continue
         use_text = row.get("use", "")
         chem = row.get("chem", "")
-        use, chemistry, tasks, price, unit = classify(sku, use_text, chem)
+        use, chemistry, tasks, fallback_price, unit = classify(sku, use_text, chem)
+        price, unit, price_on_request = resolver.resolve(sku, unit)
+        if price_on_request and fallback_price > 0:
+            price = fallback_price
+            price_on_request = False
+        if price > 0:
+            priced += 1
         slug = slugify(sku)
         desc = row.get("description", "")[:280] or f"{sku} — материал Sirca. Подбор цикла по TDS."
         short = short_name(use_text)
         name = product_name(sku, use_text)
-        price_on_request = price == 0
 
         extra = ""
         if row.get("wetGsm"):
@@ -194,7 +204,7 @@ def main() -> None:
 
     lines.append("];\n")
     OUT_PATH.write_text("\n".join(lines), encoding="utf-8")
-    print(f"Wrote {added} products to {OUT_PATH}")
+    print(f"Wrote {added} products ({priced} with dealer/core price) to {OUT_PATH}")
 
 
 if __name__ == "__main__":
