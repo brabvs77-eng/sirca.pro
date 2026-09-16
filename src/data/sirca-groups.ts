@@ -33,8 +33,8 @@ const FAMILIES: Array<SircaFamily & { test: (sku: string) => boolean }> = [
   {
     id: 'furniture-pu',
     label: 'Мебель ПУ / полиэфир',
-    href: '/sirca',
-    test: (s) => /^(OPU|OPP05|FPP|FPU|FL|LPU|TH)/.test(s) && !/^(OPU99|OPP19|FPU16|FPU93)/.test(s),
+    href: '/sirca/furniture-pu',
+    test: (s) => /^(OPU|OPP05|FPP|FPU|FL|LPU|TH)/.test(s) && !/^(OPU99|OPP19|FPU16|FPU93|OPU60|OPU379)/.test(s),
   },
 ];
 

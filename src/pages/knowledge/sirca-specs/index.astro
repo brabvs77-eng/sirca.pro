@@ -29,6 +29,10 @@ const familyOrder = Object.keys(families).sort((a, b) => families[b].length - fa
         {tdsData.length} TDS из официальных файлов Sirca S.p.A. Источник: <code>sources/sirca/specs/</code>.
         На сайте — {sircaProducts.length} карточек с ценами; здесь — сухие данные для технолога.
       </p>
+      <p class="note">
+        ПУ/акриловый блок (OPU, FPP, OPU979…) — TDS в репо пока нет. Расход на карточках — ориентир из
+        каталога <code>sirca-domostroenie.pdf</code>. Догрузите .doc — попадут в эту базу автоматически.
+      </p>
     </div>
 
     {familyOrder.map((fam) => (

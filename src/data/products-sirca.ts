@@ -1,16 +1,18 @@
 import { belowMarket, type Pack } from './pricing';
 import { sircaTdsProducts } from './products-sirca-tds';
 import tdsData from './sirca-tds.json';
+import { sircaPuSpecs } from './sirca-pu-specs';
 
 const tdsBySku = new Map(tdsData.map((row) => [row.sku.toUpperCase(), row]));
 
 function enrichFromTds(product: SircaProduct): SircaProduct {
-  const tds = tdsBySku.get(product.sku.toUpperCase());
-  if (!tds) return product;
+  const key = product.sku.toUpperCase();
+  const tds = tdsBySku.get(key);
+  const pu = sircaPuSpecs[key];
   return {
     ...product,
-    wetGsm: product.wetGsm ?? tds.wetGsm,
-    coats: product.coats ?? tds.coats,
+    wetGsm: product.wetGsm ?? tds?.wetGsm ?? pu?.wetGsm,
+    coats: product.coats ?? tds?.coats ?? pu?.coats,
   };
 }
 

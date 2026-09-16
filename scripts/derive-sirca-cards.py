@@ -56,6 +56,22 @@ def slugs_from_catalog() -> list[str]:
 
 def source_for_slug(slug: str) -> str:
     sku = slug.upper().replace("-", "")
+    # specific rules before broad prefixes
+    rules: list[tuple[str, str]] = [
+        (r"^OPU99|^OPP193|^FPU16", "sirca-pu-exterior-alt"),
+        (r"^OPU60|^OPU379", "sirca-parquet-bedroom"),
+        (r"^OPU\d|^OPU277", "sirca-pu-furniture"),
+        (r"^OPP053", "sirca-white-enamel"),
+        (r"^FPP", "sirca-fpp-mdf"),
+        (r"^FPU93|^OPU979", "sirca-acrylic-exterior"),
+        (r"^OPA|^FA930", "sirca-acrylic-exterior"),
+        (r"^FPU15", "sirca-fpu15"),
+        (r"^FL|^LPU", "sirca-polyester"),
+        (r"^TH", "sirca-hardener"),
+    ]
+    for pattern, stem in rules:
+        if re.match(pattern, sku):
+            return stem
     for key in sorted(FAMILY_SOURCE, key=len, reverse=True):
         if sku.startswith(key.replace("-", "")) or slug.upper().startswith(key):
             return FAMILY_SOURCE[key]

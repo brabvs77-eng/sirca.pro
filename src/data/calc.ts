@@ -41,7 +41,8 @@ export const calcMaterials: CalcMaterial[] = [
       }),
     ),
   ...sircaProducts
-    .filter((p) => ['exterior', 'windows', 'oils', 'parquet'].includes(p.use))
+    .filter((p) => ['exterior', 'windows', 'oils', 'parquet', 'furniture'].includes(p.use))
+    .filter((p) => (p.wetGsm ?? sircaTdsBySku.get(p.sku.toUpperCase())?.wetGsm ?? 125) > 0)
     .map((p): CalcMaterial => {
       const tds = sircaTdsBySku.get(p.sku.toUpperCase());
       return {

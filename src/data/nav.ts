@@ -23,6 +23,7 @@ export const sircaChapterNav = [
   { href: '/sirca/exterior-acrylic', label: 'Акрил' },
   { href: '/sirca/parquet', label: 'Паркет' },
   { href: '/sirca/furniture-water', label: 'Мебель вода' },
+  { href: '/sirca/furniture-pu', label: 'Мебель ПУ' },
   { href: '/sirca/color', label: 'Colour Passion' },
   { href: '/sirca/faq', label: 'FAQ' },
 ];
