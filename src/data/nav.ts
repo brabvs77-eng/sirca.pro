@@ -10,6 +10,7 @@ export const knowledgeNav = [
   { href: '/knowledge', label: 'База' },
   { href: '/knowledge/wood-types', label: 'Породы' },
   { href: '/knowledge/exterior-prep', label: 'Подготовка' },
+  { href: '/knowledge/sirca-specs', label: 'TDS Sirca' },
   { href: '/systems', label: 'Системы GN' },
   { href: '/sirca/color', label: 'Цвет Sirca' },
 ];
@@ -21,6 +22,8 @@ export const sircaChapterNav = [
   { href: '/sirca/exterior-pu', label: 'ПУ' },
   { href: '/sirca/exterior-acrylic', label: 'Акрил' },
   { href: '/sirca/parquet', label: 'Паркет' },
+  { href: '/sirca/furniture-water', label: 'Мебель вода' },
+  { href: '/sirca/furniture-pu', label: 'Мебель ПУ' },
   { href: '/sirca/color', label: 'Colour Passion' },
   { href: '/sirca/faq', label: 'FAQ' },
 ];

@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { sircaChapterNav } from '../../data/nav';
+import { productsInFamily } from '../../data/sirca-groups';
+import { sircaProducts } from '../../data/products-sirca';
+
+const items = productsInFamily(sircaProducts, 'furniture-pu');
+---
+
+<Base
+  title="ПУ-лаки Sirca для мебели и MDF | sirca.pro"
+  description="OPU57, OPU77, OPU91, FPP20/26/47 — полиуретановые лаки и грунты для столярки, МДФ и столешниц."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/sirca">Sirca</a> / Мебель ПУ</p>
+    <h1>Мебель и столярка — полиуретан</h1>
+    <ChapterNav items={sircaChapterNav} />
+    <div class="prose">
+      <p>
+        Страницы 44–48 каталога домостроения — ПУ и полиэфир для серийной мебели, МДФ, столешниц.
+        Всегда с отвердителем TH43 / TH52. Жизнеспособность смеси и % отвердителя — только из TDS на партию.
+      </p>
+      <h2>Лаки OPU</h2>
+      <ul>
+        <li><a href="/product/sirca/opu57">OPU57</a> — мат 5%, самогрунтующийся.</li>
+        <li><a href="/product/sirca/opu77">OPU77</a> — глянец.</li>
+        <li><a href="/product/sirca/opu91">OPU91</a> — столешницы, акрил-уретан.</li>
+        <li><a href="/product/sirca/opu277">OPU277</a> — матовый самогрунтующийся.</li>
+      </ul>
+      <h2>Грунты FPP для МДФ</h2>
+      <ul>
+        <li><a href="/product/sirca/fpp26">FPP26</a> — белый тиксотропный.</li>
+        <li><a href="/product/sirca/fpp20">FPP20</a> — чёрный.</li>
+        <li><a href="/product/sirca/fpp47">FPP47</a> — изолятор.</li>
+      </ul>
+      <h2>Эмали OPP053</h2>
+      <p>
+        Готовые <a href="/product/sirca/opp053-white">белая</a> и
+        <a href="/product/sirca/opp053-black">чёрная</a> ПУ-эмали.
+      </p>
+      <p>
+        <a class="btn btn-sirca" href="/calc/raskhod?sku=sirca-opu57">Расход OPU57</a>
+        <a class="btn btn-ghost" href="/tasks/mebel">Задача: мебель</a>
+      </p>
+    </div>
+    <div class="cards cols-3" style="margin-top:1.6rem">
+      {items.map((p) => <ProductCard product={p} />)}
+    </div>
+  </div>
+</Base>

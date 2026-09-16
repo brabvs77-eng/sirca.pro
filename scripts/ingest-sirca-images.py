@@ -52,6 +52,10 @@ SLUG_IMAGES: dict[str, str] = {
     "fl3100": "sirca-furniture-lacquer",
     "th52": "sirca-hardener",
     "th43": "sirca-th43",
+    "iwc1800": "sirca-iwc-deck",
+    "idrofloor": "sirca-fwpi-floor",
+    "so-wood": "sirca-furniture-water",
+    "owe1000": "sirca-owe-window",
 }
 
 

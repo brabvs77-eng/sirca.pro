@@ -1,12 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ChapterNav from '../../components/ChapterNav.astro';
+import { imw4800Swatches, ir17OilSwatches, sircaPaletteImage } from '../../data/sirca-colors';
 import { sircaChapterNav } from '../../data/nav';
 ---
 
 <Base
   title="Цвет Sirca Colour Passion и виды отделки | sirca.pro"
-  description="Лессирь, укрыв и веер Colour Passion из каталога Sirca для деревянного домостроения, стр. 18–21."
+  description="Палитра IMW4800 и масла IR17xx, лессирь и укрыв Colour Passion из каталога Sirca для деревянного домостроения."
 >
   <div class="wrap page-pad">
     <p class="crumbs"><a href="/">Каталог</a> / <a href="/sirca">Sirca</a> / Цвет</p>
@@ -32,14 +33,88 @@ import { sircaChapterNav } from '../../data/nav';
         Фирменный веер Sirca для домостроения — не мебельная карта ColorSirca.
         Колеруем IMW и финиши в RAL / NCS по запросу. Экран врёт: нужен выкрас на вашей породе.
       </p>
-      <p>
-        Интерьерный веер G Nature — отдельно: <a href="/colors/vokrug-cveta">Вокруг цвета</a>
-        и металлик <a href="/colors/prosto-kosmos">Просто космос</a>.
-      </p>
-      <p>
-        <a class="btn btn-sirca" href="/product/sirca/imw4800">IMW4800</a>
-        <a class="btn btn-ghost" href="/contacts">Заказать выкрас</a>
-      </p>
     </div>
+
+    <figure style="margin:1.6rem 0">
+      <img
+        src={sircaPaletteImage}
+        alt="Палитра пропиток IMW4800 и масел IR17xx Sirca"
+        width="640"
+        height="378"
+        loading="lazy"
+        style="width:100%;max-width:42rem;border-radius:0.35rem"
+      />
+      <figcaption class="muted" style="margin-top:0.5rem;font-size:0.9rem">
+        Физические образцы IMW4800 (верх) и масел IR17xx (низ). Источник: LAKPRO.RU.
+      </figcaption>
+    </figure>
+
+    <section style="margin-top:2rem">
+      <h2>IMW4800 — водные пропитки</h2>
+      <p class="muted">14 готовых оттенков Colour Passion для хвойных и лиственницы.</p>
+      <div class="color-rail" style="margin-top:1rem">
+        {imw4800Swatches.map((sw) => (
+          <div class="color-chip">
+            <span class="swatch" style={`background:${sw.hex}`}></span>
+            <span class="swatch-label">
+              <strong>{sw.sku}</strong>
+              {sw.name}
+            </span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-top:2rem">
+      <h2>IR17xx — масляные оттенки</h2>
+      <p class="muted">15 масел для террасы, фасада и интерьера. Коды уточняет технолог.</p>
+      <div class="color-rail" style="margin-top:1rem">
+        {ir17OilSwatches.map((sw) => (
+          <div class="color-chip">
+            <span class="swatch" style={`background:${sw.hex}`}></span>
+            <span class="swatch-label">{sw.name}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <p style="margin-top:2rem">
+      <a class="btn btn-sirca" href="/product/sirca/imw4800">IMW4800</a>
+      <a class="btn btn-ghost" href="/product/sirca/iwc1800">IWC1800 терраса</a>
+      <a class="btn btn-ghost" href="/contacts">Заказать выкрас</a>
+    </p>
+    <p class="muted" style="font-size:0.88rem;margin-top:1rem">
+      Интерьерный веер G Nature — отдельно:
+      <a href="/colors/vokrug-cveta">Вокруг цвета</a>
+      и металлик <a href="/colors/prosto-kosmos">Просто космос</a>.
+    </p>
   </div>
 </Base>
+
+<style>
+  .color-rail {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+    gap: 0.75rem;
+  }
+  .color-chip {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .swatch {
+    display: block;
+    height: 2.6rem;
+    border-radius: 0.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  .swatch-label {
+    font-size: 0.78rem;
+    line-height: 1.25;
+  }
+  .swatch-label strong {
+    display: block;
+    font-size: 0.72rem;
+    opacity: 0.7;
+  }
+</style>

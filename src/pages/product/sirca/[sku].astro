@@ -69,6 +69,18 @@ const chem =
           <small>раздел</small>
           <strong>{product.use === 'parquet' ? 'паркет' : product.use === 'windows' ? 'окна' : product.use === 'oils' ? 'масло' : product.use === 'furniture' ? 'мебель' : 'экстерьер'}</strong>
         </div>
+        {product.wetGsm && (
+          <div>
+            <small>мокрый слой</small>
+            <strong>~{product.wetGsm} г/м²</strong>
+          </div>
+        )}
+        {product.coats && (
+          <div>
+            <small>слоёв</small>
+            <strong>{product.coats}</strong>
+          </div>
+        )}
       </div>
       <table class="table">
         <thead>

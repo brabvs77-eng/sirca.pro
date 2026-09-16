@@ -1,0 +1,79 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ChapterNav from '../../../components/ChapterNav.astro';
+import { knowledgeNav } from '../../../data/nav';
+import tdsData from '../../../data/sirca-tds.json';
+import { sircaProducts } from '../../../data/products-sirca';
+
+const slugBySku = new Map(sircaProducts.map((p) => [p.sku.toUpperCase(), p.slug]));
+
+const families: Record<string, typeof tdsData> = {};
+for (const row of tdsData) {
+  const prefix = row.sku.match(/^[A-Z]+/)?.[0] ?? 'OTHER';
+  (families[prefix] ??= []).push(row);
+}
+
+const familyOrder = Object.keys(families).sort((a, b) => families[b].length - families[a].length);
+---
+
+<Base
+  title="Технические спецификации Sirca (TDS) | sirca.pro"
+  description="84 TDS Sirca для деревянного домостроения: расход, назначение, сухой остаток. Водные системы IMW, FIW, OWE, паркет, мебель."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/knowledge">Знания</a> / TDS Sirca</p>
+    <h1>Технические спецификации Sirca</h1>
+    <ChapterNav items={knowledgeNav} />
+    <div class="prose">
+      <p>
+        {tdsData.length} TDS из официальных файлов Sirca S.p.A. Источник: <code>sources/sirca/specs/</code>.
+        На сайте — {sircaProducts.length} карточек с ценами; здесь — сухие данные для технолога.
+      </p>
+      <p class="note">
+        ПУ/акриловый блок (OPU, FPP, OPU979…) — TDS в репо пока нет. Расход на карточках — ориентир из
+        каталога <code>sirca-domostroenie.pdf</code>. Догрузите .doc — попадут в эту базу автоматически.
+      </p>
+    </div>
+
+    {familyOrder.map((fam) => (
+      <section style="margin-top:2rem">
+        <h2>{fam}</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Назначение</th>
+              <th>г/м²</th>
+              <th>Слои</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {families[fam]
+              .sort((a, b) => a.sku.localeCompare(b.sku))
+              .map((row) => {
+                const slug = slugBySku.get(row.sku.toUpperCase());
+                return (
+                  <tr>
+                    <td><strong>{row.sku}</strong></td>
+                    <td class="muted" style="font-size:0.88rem;max-width:28rem">
+                      {(row.use ?? '').split('Способ')[0].trim()}
+                    </td>
+                    <td>{row.wetGsm ?? '—'}</td>
+                    <td>{row.coats ?? '—'}</td>
+                    <td>
+                      {slug ? (
+                        <a href={`/product/sirca/${slug}`}>Карточка</a>
+                      ) : (
+                        <span class="muted">—</span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      </section>
+    ))}
+  </div>
+</Base>

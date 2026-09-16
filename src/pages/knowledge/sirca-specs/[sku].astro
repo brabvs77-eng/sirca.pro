@@ -1,0 +1,55 @@
+---
+import Base from '../../../layouts/Base.astro';
+import tdsData from '../../../data/sirca-tds.json';
+import { sircaBySlug, sircaProducts } from '../../../data/products-sirca';
+
+export function getStaticPaths() {
+  const slugBySku = new Map(sircaProducts.map((p) => [p.sku.toUpperCase(), p.slug]));
+  return tdsData.map((row) => ({
+    params: { sku: row.sku.toLowerCase() },
+    props: { row, productSlug: slugBySku.get(row.sku.toUpperCase()) },
+  }));
+}
+
+const { row, productSlug } = Astro.props;
+const product = productSlug ? sircaBySlug(productSlug) : undefined;
+const use = (row.use ?? '').split('Способ')[0].trim();
+---
+
+<Base
+  title={`${row.sku} — TDS Sirca`}
+  description={`Техническая спецификация ${row.sku}: ${use}`}
+>
+  <div class="wrap page-pad prose">
+    <p class="crumbs">
+      <a href="/">Каталог</a> /
+      <a href="/knowledge">Знания</a> /
+      <a href="/knowledge/sirca-specs">TDS</a> /
+      {row.sku}
+    </p>
+    <h1>{row.sku}</h1>
+    <p class="muted">Источник: sources/sirca/specs/{row.sku}.doc</p>
+
+    {row.chem && <p><strong>Химический тип:</strong> {row.chem.split('Назначение')[0].trim()}</p>}
+    {use && <p><strong>Назначение:</strong> {use}</p>}
+    {row.gloss && <p><strong>Блеск:</strong> {row.gloss.split('Назначение')[0].trim()}</p>}
+    {row.solids && <p><strong>Сухой остаток:</strong> {row.solids}%</p>}
+    {row.wetGsm && <p><strong>Мокрый слой:</strong> ~{row.wetGsm} г/м²</p>}
+    {row.coats && <p><strong>Слоёв:</strong> {row.coats}</p>}
+
+    {row.description && (
+      <>
+        <h2>Описание</h2>
+        <p>{row.description}</p>
+      </>
+    )}
+
+    <p>
+      {product && <a class="btn btn-sirca" href={`/product/sirca/${product.slug}`}>Карточка {row.sku}</a>}
+      {row.wetGsm && product && (
+        <a class="btn btn-ghost" href={`/calc/raskhod?sku=sirca-${product.slug}`}>Расход</a>
+      )}
+      <a class="btn btn-ghost" href="/knowledge/sirca-specs">Все TDS</a>
+    </p>
+  </div>
+</Base>
