@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create visually distinct, family-relevant WebP card images for Sirca catalog."""
+"""Create visually distinct, semantically relevant WebP card images for Sirca catalog."""
 
 from __future__ import annotations
 
@@ -16,7 +16,85 @@ DEST_DIR = ROOT / "public" / "img" / "sirca"
 CATALOG = ROOT / "src/data/products-sirca.ts"
 TDS_CATALOG = ROOT / "src/data/products-sirca-tds.ts"
 
-# Family regex → lifestyle PNG stems (multiple per family for visual variety)
+# Catalog use → lifestyle stems (only relevant scenes)
+USE_POOLS: dict[str, list[str]] = {
+    "windows": [
+        "sirca-owe-window",
+        "sirca-spray-window",
+        "sirca-owe501",
+        "sirca-green-house",
+        "sirca-enamel",
+        "sirca-white-enamel",
+    ],
+    "glass": [
+        "sirca-glass-coating",
+        "sirca-glass-frosted",
+        "sirca-glass-spray",
+    ],
+    "parquet": [
+        "sirca-parquet-bedroom",
+        "sirca-parquet-matte",
+        "sirca-parquet-sport",
+        "sirca-fwpi-floor",
+        "sirca-pcv-floor",
+    ],
+    "exterior": [
+        "sirca-imw",
+        "sirca-log-cabin",
+        "sirca-deck",
+        "sirca-fwe801",
+        "sirca-green-house",
+        "sirca-pu-exterior",
+        "sirca-pu-exterior-alt",
+        "sirca-owe-window",
+        "sirca-hardwood",
+        "sirca-primer",
+        "sirca-white-primer",
+        "sirca-acrylic-exterior",
+    ],
+    "furniture": [
+        "sirca-furniture-lacquer",
+        "sirca-furniture-water",
+        "sirca-mdf-primer",
+        "sirca-mdf-isolator",
+        "sirca-countertop",
+        "sirca-pu-furniture",
+        "sirca-fpp-mdf",
+        "sirca-fpp20",
+        "sirca-converter-colors",
+        "sirca-polyester",
+        "sirca-toned-lacquer",
+        "sirca-opu277",
+        "sirca-opu57",
+        "sirca-opu79",
+        "sirca-stairs",
+        "sirca-es-effect",
+        "sirca-es-cement",
+        "sirca-es-copper",
+        "sirca-metal-primer",
+        "sirca-primer",
+        "sirca-white-primer",
+        "sirca-acrylic",
+        "sirca-black-enamel",
+        "sirca-white-enamel",
+        "sirca-enamel",
+        "sirca-opp1930g",
+        "sirca-uv-line",
+        "sirca-uv-curing",
+        "sirca-uv-roller",
+    ],
+    "oils": ["sirca-oil", "sirca-iwc-deck", "sirca-deck", "sirca-hardwood"],
+    "interior": [
+        "sirca-furniture-lacquer",
+        "sirca-furniture-water",
+        "sirca-mdf-primer",
+        "sirca-countertop",
+        "sirca-enamel",
+        "sirca-white-enamel",
+    ],
+}
+
+# Family regex overrides (checked before use pools; first match wins)
 FAMILY_POOLS: list[tuple[str, list[str]]] = [
     (
         r"^es",
@@ -44,7 +122,7 @@ FAMILY_POOLS: list[tuple[str, list[str]]] = [
             "sirca-polyester",
         ],
     ),
-    (r"^wetro", ["sirca-wetro-deck", "sirca-deck", "sirca-iwc-deck", "sirca-hardwood", "sirca-oil"]),
+    (r"^wetro", ["sirca-glass-coating", "sirca-glass-frosted", "sirca-glass-spray"]),
     (r"^lpp", ["sirca-lpp-enamel", "sirca-white-enamel", "sirca-furniture-lacquer", "sirca-mdf-primer"]),
     (r"^pcv|^puv", ["sirca-pcv-floor", "sirca-parquet-sport", "sirca-fwpi-floor", "sirca-parquet-bedroom"]),
     (
@@ -52,10 +130,12 @@ FAMILY_POOLS: list[tuple[str, list[str]]] = [
         ["sirca-metal-primer", "sirca-primer", "sirca-white-primer", "sirca-acrylic", "sirca-additives"],
     ),
     (
-        r"^adts|^adtw|^ct|^cte|^dpn|^fde|^fdl|^fbu|^gdv|^f912|^f915|^f921|^otvep|^pm$",
+        r"^adts|^adtw|^ct|^cte|^dpn|^fde|^fdl|^fbu|^gdv|^f912|^f915|^f921|^otvep",
         ["sirca-additives", "sirca-hardener", "sirca-th43"],
     ),
-    (r"^cr(?!w)", ["sirca-converter-colors", "sirca-imw", "sirca-deck", "sirca-iwc-deck"]),
+    (r"^pm$", ["sirca-parquet-bedroom", "sirca-parquet-matte", "sirca-fwpi-floor", "sirca-primer"]),
+    (r"^cr(?!w)", ["sirca-converter-colors", "sirca-polyester", "sirca-metal-primer", "sirca-primer"]),
+    (r"^crw", ["sirca-converter-colors", "sirca-furniture-lacquer", "sirca-mdf-primer", "sirca-primer"]),
     (r"^opu99|^opp19|^fpu16", ["sirca-pu-exterior-alt", "sirca-pu-exterior", "sirca-green-house"]),
     (r"^opu60|^opu379", ["sirca-parquet-bedroom", "sirca-parquet-matte", "sirca-fwpi-floor"]),
     (r"^opu", ["sirca-pu-furniture", "sirca-opu277", "sirca-opu57", "sirca-opu79", "sirca-furniture-lacquer"]),
@@ -72,12 +152,13 @@ FAMILY_POOLS: list[tuple[str, list[str]]] = [
     (r"^fwe", ["sirca-deck", "sirca-fwe801", "sirca-log-cabin", "sirca-owe-window"]),
     (r"^fwp", ["sirca-white-primer", "sirca-fwp830", "sirca-enamel"]),
     (r"^fwpi|^idrofloor|^sportfloor", ["sirca-fwpi-floor", "sirca-parquet-sport", "sirca-parquet-bedroom"]),
-    (r"^owe", ["sirca-owe-window", "sirca-owe501", "sirca-spray-window", "sirca-enamel"]),
-    (r"^owp|^wop", ["sirca-enamel", "sirca-green-house", "sirca-fwp830"]),
-    (r"^owpi|^so|^crw", ["sirca-furniture-water", "sirca-furniture-lacquer", "sirca-mdf-primer"]),
+    (r"^owpi", ["sirca-furniture-water", "sirca-furniture-lacquer", "sirca-mdf-primer", "sirca-white-enamel"]),
     (r"^owb", ["sirca-parquet-bedroom", "sirca-parquet-matte", "sirca-fwpi-floor"]),
+    (r"^owe", ["sirca-owe-window", "sirca-owe501", "sirca-spray-window", "sirca-green-house"]),
+    (r"^owp|^wop", ["sirca-spray-window", "sirca-owe-window", "sirca-owe501", "sirca-green-house"]),
+    (r"^so", ["sirca-furniture-water", "sirca-furniture-lacquer", "sirca-mdf-primer"]),
     (r"^ow", ["sirca-parquet-matte", "sirca-parquet-bedroom", "sirca-hardwood"]),
-    (r"^siw", ["sirca-enamel", "sirca-spray-window", "sirca-owe-window"]),
+    (r"^siw", ["sirca-spray-window", "sirca-owe-window", "sirca-enamel"]),
     (r"^oil", ["sirca-oil", "sirca-iwc-deck", "sirca-deck"]),
     (r"^fw", ["sirca-furniture-lacquer", "sirca-furniture-water", "sirca-toned-lacquer"]),
 ]
@@ -96,6 +177,18 @@ def slugs_from_catalog() -> list[str]:
     return sorted(set(re.findall(r"slug: '([^']+)'", text)))
 
 
+def catalog_uses() -> dict[str, str]:
+    uses: dict[str, str] = {}
+    for path in (CATALOG, TDS_CATALOG):
+        text = path.read_text(encoding="utf-8")
+        for block in re.split(r"\n  \{", text):
+            m_slug = re.search(r"slug: '([^']+)'", block)
+            m_use = re.search(r"use: '([^']+)'", block)
+            if m_slug and m_use:
+                uses[m_slug.group(1)] = m_use.group(1)
+    return uses
+
+
 def digest(slug: str, salt: str = "") -> int:
     return int(hashlib.md5(f"{slug}:{salt}".encode()).hexdigest(), 16)
 
@@ -109,15 +202,30 @@ def lifestyle_paths(stems: list[str]) -> list[Path]:
     return out
 
 
-def family_stems(slug: str) -> list[str]:
+def family_stems(slug: str) -> list[str] | None:
     key = slug.lower().replace("_", "-")
     for pattern, stems in FAMILY_POOLS:
         if re.match(pattern, key):
             return stems
-    return ["sirca-imw", "sirca-deck", "sirca-primer", "sirca-log-cabin"]
+    return None
 
 
-def build_pool(slug: str) -> list[Path]:
+def use_stems(slug: str, uses: dict[str, str]) -> list[str]:
+    key = slug.lower()
+    if key.startswith("wetro"):
+        return USE_POOLS["glass"]
+    use = uses.get(slug, "furniture")
+    return USE_POOLS.get(use, USE_POOLS["furniture"])
+
+
+def relevant_stems(slug: str, uses: dict[str, str]) -> list[str]:
+    family = family_stems(slug)
+    if family:
+        return family
+    return use_stems(slug, uses)
+
+
+def build_pool(slug: str, uses: dict[str, str]) -> list[Path]:
     pool: list[Path] = []
     seen: set[str] = set()
 
@@ -131,34 +239,20 @@ def build_pool(slug: str) -> list[Path]:
         if code.upper() in sku:
             add(SAMPLE_DIR / filename)
 
-    for path in lifestyle_paths(family_stems(slug)):
+    for path in lifestyle_paths(relevant_stems(slug, uses)):
         add(path)
 
-    # One packshot per SKU — lifestyle images carry most of the visual variety
-    packshots = sorted(PACKSHOT_DIR.glob("*.jpg"))
-    if packshots:
-        add(packshots[digest(slug, "pack") % len(packshots)])
-
-    # Extra lifestyle stems from other families (slug-hash pick) for more scene variety
-    all_stems = sorted({stem for _, stems in FAMILY_POOLS for stem in stems})
-    start = digest(slug, "extra") % max(1, len(all_stems))
-    for i in range(min(4, len(all_stems))):
-        for path in lifestyle_paths([all_stems[(start + i) % len(all_stems)]]):
+    if re.match(r"^es", slug, re.I):
+        for path in sorted(SAMPLE_DIR.glob("*.jpg")):
             add(path)
-
-    samples = sorted(SAMPLE_DIR.glob("*.jpg"))
-    if samples and re.match(r"^es", slug, re.I):
-        start = digest(slug, "es") % len(samples)
-        for i in range(len(samples)):
-            add(samples[(start + i) % len(samples)])
 
     if not pool:
         add(LIFESTYLE_DIR / "sirca-imw.png")
     return pool
 
 
-def resolve_source(slug: str) -> Path:
-    pool = build_pool(slug)
+def resolve_source(slug: str, uses: dict[str, str]) -> Path:
+    pool = build_pool(slug, uses)
     return pool[digest(slug) % len(pool)]
 
 
@@ -171,8 +265,8 @@ def derive(src: Path, dest: Path, slug: str, salt: str = "") -> None:
     w, h = 720, 540
 
     flip = "hflip," if d % 2 == 0 else ""
-    angle = ((d >> 4) % 11) - 5  # -5..+5 degrees
-    zoom = 1.08 + ((d >> 8) % 45) / 100  # 1.08..1.52
+    angle = ((d >> 4) % 11) - 5
+    zoom = 1.08 + ((d >> 8) % 45) / 100
     hue = ((d >> 12) % 81) - 40
     sat = 0.75 + ((d >> 18) % 41) / 100
     bright = ((d >> 22) % 31) - 15
@@ -223,11 +317,14 @@ def derive(src: Path, dest: Path, slug: str, salt: str = "") -> None:
 
 
 def main() -> None:
+    from collections import Counter
+
     DEST_DIR.mkdir(parents=True, exist_ok=True)
+    uses = catalog_uses()
     slugs = slugs_from_catalog()
 
     for slug in slugs:
-        derive(resolve_source(slug), DEST_DIR / f"{slug}.webp", slug)
+        derive(resolve_source(slug, uses), DEST_DIR / f"{slug}.webp", slug)
 
     hashes: dict[str, list[str]] = {}
     for webp in DEST_DIR.glob("*.webp"):
@@ -239,7 +336,7 @@ def main() -> None:
         for names in dupes.values():
             for name in names:
                 slug = name.removesuffix(".webp")
-                derive(resolve_source(slug), DEST_DIR / name, slug, salt="retry")
+                derive(resolve_source(slug, uses), DEST_DIR / name, slug, salt="retry")
         hashes = {}
         for webp in DEST_DIR.glob("*.webp"):
             hh = hashlib.md5(webp.read_bytes()).hexdigest()
@@ -249,10 +346,7 @@ def main() -> None:
             sample = next(iter(dupes.values()))
             raise SystemExit(f"duplicate card images remain, e.g. {sample[:5]}")
 
-    # Report source spread
-    from collections import Counter
-
-    src_count = Counter(resolve_source(s).name for s in slugs)
+    src_count = Counter(resolve_source(s, uses).stem for s in slugs)
     top = src_count.most_common(3)
     print(f"derived {len(slugs)} cards, max shared source: {top[0][1]}× {top[0][0]}")
 
