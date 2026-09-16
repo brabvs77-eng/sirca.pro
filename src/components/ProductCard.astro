@@ -6,7 +6,8 @@ import { formatRub } from '../data/pricing';
 type Props = { product: AnyProduct };
 const { product } = Astro.props;
 const from = productFromPrice(product);
-const unit = product.brand === 'sirca' ? ` / ${product.packs[0].volume}` : '';
+const onRequest = product.brand === 'sirca' && (product.priceOnRequest || product.packs.length === 0);
+const unit = product.brand === 'sirca' && product.packs[0] ? ` / ${product.packs[0].volume}` : '';
 const img =
   product.brand === 'gnature'
     ? gnPackImage(product.sku)
@@ -27,6 +28,6 @@ const title = product.brand === 'gnature' ? product.name : product.name.replace(
     <div class="sku">{product.sku}</div>
     <h3>{title}</h3>
     <p class="muted" style="margin-bottom:0">{product.short}</p>
-    <div class="from price">от {formatRub(from)}{unit}</div>
+    <div class="from price">{onRequest ? 'цена по запросу' : `от ${formatRub(from)}${unit}`}</div>
   </div>
 </a>

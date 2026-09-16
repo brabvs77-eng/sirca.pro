@@ -1,4 +1,4 @@
-# OW1fG40 — техническая спецификация Sirca
+# OW1FG40 — техническая спецификация Sirca
 
 > Источник: `sources/sirca/specs/OW1fG40.doc`
 

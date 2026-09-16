@@ -1,4 +1,4 @@
-# IMW42xx — техническая спецификация Sirca
+# IMW42XX — техническая спецификация Sirca
 
 > Источник: `sources/sirca/specs/IMW42xx.doc`
 

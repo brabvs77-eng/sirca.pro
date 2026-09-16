@@ -1,4 +1,4 @@
-# OWP930g — техническая спецификация Sirca
+# OWP930G — техническая спецификация Sirca
 
 > Источник: `sources/sirca/specs/OWP930g.doc`
 

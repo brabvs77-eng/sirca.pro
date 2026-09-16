@@ -1060,5 +1060,6 @@ export function sircaBySlug(slug: string): SircaProduct | undefined {
 }
 
 export function sircaFromPrice(product: SircaProduct): number {
+  if (product.priceOnRequest || product.packs.length === 0) return 0;
   return Math.min(...product.packs.map((p) => p.price));
 }

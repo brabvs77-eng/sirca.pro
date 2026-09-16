@@ -1,67 +1,106 @@
 #!/usr/bin/env python3
-"""Generate src/data/products-sirca-tds.ts from TDS JSON for SKUs not yet in catalog."""
+"""Generate src/data/products-sirca-tds.ts from TDS JSON for SKUs not in core catalog."""
 
 from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from normalize_sirca_sku import slugify
 TDS_PATH = ROOT / "src/data/sirca-tds.json"
 CATALOG_PATH = ROOT / "src/data/products-sirca.ts"
 OUT_PATH = ROOT / "src/data/products-sirca-tds.ts"
 
 SRC = "прайс дилера, сентябрь 2026"
-
-# slug -> skip (already on site under different sku)
-SKIP = {"OWE500G"}  # covered by OWE500
+SKIP = {"OWE500G"}  # alias of OWE500 on site
 
 
-def slugify(sku: str) -> str:
-    s = sku.lower().replace("..", "").replace(".", "-")
-    s = re.sub(r"[^a-z0-9-]", "", s.replace("_", "-"))
-    s = re.sub(r"-+", "-", s).strip("-")
-    return s
+def classify(sku: str, use: str, chem: str) -> tuple[str, str, list[str], int, str]:
+    u = (use or "").lower()
+    c = (chem or "").lower()
+    p = re.match(r"^([A-Z0-9]+)", sku.upper())
+    prefix = p.group(1) if p else sku.upper()
+
+    if re.match(r"^(TH|CT|F912|F915|F921|ADTS|ADTW|CTE|DPN)", sku.upper()) or "отвердител" in u:
+        return "furniture", "pu", ["mebel"], 0, "кг"
+    if re.match(r"^(FDE|FDL|FBU|GDV)", sku.upper()) or "растворител" in u or "разбавител" in u:
+        return "furniture", "pu", ["mebel"], 890, "л"
+    if sku.upper().startswith("ES") or "эпоксид" in c:
+        return "furniture", "pu", ["mebel", "okna-dveri"], 2400, "кг"
+    if sku.upper().startswith("UV"):
+        return "furniture", "pu", ["mebel"], 2800, "кг"
+    if re.match(r"^(CR|ADTS)", sku.upper()) or "конвертер" in u or "колеровочн" in u:
+        return "furniture", "water", ["mebel"], 1900, "л"
+    if re.match(r"^(OPU|OPP|FPP|FPU|FL|LPU)", sku.upper()) and "экстерьер" not in u:
+        if "паркет" in u or "пол" in u:
+            return "parquet", "pu", ["parket", "pol"], 2550, "л"
+        return "furniture", "pu", ["mebel"], 2200, "кг"
+    if re.match(r"^(OPA|FA|FPU93)", sku.upper()) or "акрил" in c:
+        return "windows", "acrylic", ["okna-dveri"], 2100, "кг"
+    if "паркет" in u or "пол" in u or "настил" in u or prefix.startswith("FWPI") or prefix == "OWB":
+        return "parquet", "water", ["parket", "pol"], 2550, "л"
+    if "мебел" in u or prefix.startswith("OWPI") or prefix.startswith("SO"):
+        return "furniture", "water", ["mebel"], 2350, "л"
+    if "окон" in u or "двер" in u or prefix.startswith("OWP") or prefix.startswith("SIW"):
+        return "windows", "water", ["okna-dveri"], 2000, "л"
+    if prefix.startswith("IMW") or prefix.startswith("IWJ") or "пропит" in u:
+        return "exterior", "water", ["fasad", "okna-dveri"], 1500, "л"
+    if prefix.startswith("IWC") or "лазур" in u or "воск" in u:
+        return "oils", "water", ["terrassa", "fasad"], 1650, "л"
+    if prefix.startswith("FIW") or prefix.startswith("FWBP") or "грунт" in u:
+        return "exterior", "water", ["fasad", "okna-dveri"], 1400, "л"
+    if prefix.startswith("FWE") or "эмаль" in u:
+        return "exterior", "water", ["fasad"], 1850, "л"
+    if prefix.startswith("FWP") or prefix.startswith("OWE") or prefix.startswith("WOP"):
+        return "exterior", "water", ["fasad", "okna-dveri"], 2100, "л"
+    if prefix.startswith("OW"):
+        return "parquet", "water", ["parket", "pol"], 2450, "л"
+    if prefix.startswith("F4") or prefix.startswith("F3") or prefix.startswith("FO"):
+        return "furniture", "pu", ["mebel"], 2100, "кг"
+    return "exterior", "water", ["fasad"], 1800, "л"
 
 
-def classify(sku: str, use: str) -> tuple[str, str, list[str], int]:
-    u = use.lower()
-    prefix = re.match(r"^([A-Z]+)", sku.upper())
-    p = prefix.group(1) if prefix else ""
-
-    if p == "CRW" or ("интерьер" in u and "паркет" not in u):
-        return "furniture", "water", ["mebel"], 1900
-    if "паркет" in u or "пол" in u or "настил" in u or p in ("FWPI", "OWB"):
-        tasks = ["parket", "pol"] if "спорт" not in u else ["parket", "pol"]
-        return "parquet", "water", tasks, 2550
-    if "мебел" in u or ("фасад" in u and "панел" in u) or p == "OWPI":
-        return "furniture", "water", ["mebel"], 2350
-    if "окон" in u or "двер" in u or "ставен" in u or p in ("OWP", "SIW"):
-        return "windows", "water", ["okna-dveri"], 2000
-    if "стул" in u or "mdf" in u or p.startswith("FW") and p not in ("FWP", "FWE", "FIW", "FWPI"):
-        return "furniture", "water", ["mebel"], 2100
-    if p in ("FIW", "FWE", "FWP", "FWBP"):
-        return "exterior", "water", ["fasad", "okna-dveri"], 1450
-    if p.startswith("OWE") or p == "WOP":
-        return "exterior", "water", ["fasad", "okna-dveri"], 2100
-    if p.startswith("OW"):
-        return "parquet", "water", ["parket", "pol"], 2450
-    return "exterior", "water", ["fasad"], 1800
+def product_name(sku: str, use: str) -> str:
+    u = (use or "").lower()
+    if "отвердител" in u:
+        return f"{sku} — отвердитель"
+    if "растворител" in u or "разбавител" in u:
+        return f"{sku} — растворитель"
+    if "грунт" in u:
+        return f"{sku} — грунт"
+    if "лак" in u or "финиш" in u:
+        return f"{sku} — лак"
+    if "эмаль" in u:
+        return f"{sku} — эмаль"
+    if "пропит" in u:
+        return f"{sku} — пропитка"
+    if sku.upper().startswith("ES"):
+        return f"{sku} — эпоксидная система"
+    if sku.upper().startswith("UV"):
+        return f"{sku} — УФ-лак"
+    return f"{sku} — Sirca"
 
 
-def short_name(sku: str, use: str) -> str:
-    u = use[:80].strip()
-    if u.endswith("Способ"):
+def short_name(use: str) -> str:
+    u = (use or "")[:90].strip()
+    if "Способ" in u:
         u = u.split("Способ")[0].strip()
-    return u or f"Позиция {sku} из каталога домостроения"
+    return u or "Позиция из каталога Sirca"
 
 
 def features_from(sku: str, use: str, row: dict) -> list[str]:
-    feats = ["Водоразбавимая"]
-    u = use.lower()
+    feats: list[str] = []
+    u = (use or "").lower()
+    if row.get("parseError"):
+        feats.append("TDS уточняется")
+    else:
+        feats.append("TDS Sirca")
     if row.get("gloss"):
-        g = row["gloss"].split("Назначение")[0].strip()[:20]
+        g = row["gloss"].split("Назначение")[0].strip()[:18]
         if g:
             feats.append(f"Блеск {g}")
     if "паркет" in u:
@@ -70,23 +109,21 @@ def features_from(sku: str, use: str, row: dict) -> list[str]:
         feats.append("Мебель")
     elif "окон" in u or "двер" in u:
         feats.append("Окна и двери")
-    elif "фасад" in u or "экстерьер" in u:
+    elif "экстерьер" in u or "фасад" in u:
         feats.append("Экстерьер")
-    elif "спорт" in u:
-        feats.append("Спортивные полы")
-    if "mdf" in u:
-        feats.append("MDF")
     if row.get("wetGsm"):
         feats.append(f"~{row['wetGsm']} г/м²")
     return feats[:4]
 
 
+def esc(s: str) -> str:
+    return s.replace("\\", "\\\\").replace("'", "\\'")
+
+
 def main() -> None:
-    catalog_text = CATALOG_PATH.read_text(encoding="utf-8")
-    core_part = catalog_text.split("export const sircaProducts")[0]
+    core_part = CATALOG_PATH.read_text(encoding="utf-8").split("export const sircaProducts")[0]
     existing = {m.group(1).upper() for m in re.finditer(r"sku: '([^']+)'", core_part)}
     tds_list = json.loads(TDS_PATH.read_text(encoding="utf-8"))
-    tds = {row["sku"]: row for row in tds_list}
 
     lines = [
         "import { belowMarket, type Pack } from './pricing';",
@@ -94,7 +131,7 @@ def main() -> None:
         "",
         f"const SRC = '{SRC}';",
         "",
-        "function pack(unit: 'л' | 'кг', liters: number, market: number): Pack & { source: string; unit: 'л' | 'кг' } {",
+        "function pack(unit: 'л' | 'кг', liters: number, market: number): (Pack & { source: string; unit: 'л' | 'кг' }) {",
         "  return {",
         "    volume: `1 ${unit}`,",
         "    liters,",
@@ -110,48 +147,47 @@ def main() -> None:
     ]
 
     added = 0
-    for sku in sorted(tds):
-        if sku.upper() in existing or sku in SKIP:
+    for row in sorted(tds_list, key=lambda r: r["sku"]):
+        sku = row["sku"]
+        if sku.upper() in existing or sku.upper() in SKIP:
             continue
-        row = tds[sku]
         use_text = row.get("use", "")
-        use, chem, tasks, price = classify(sku, use_text)
+        chem = row.get("chem", "")
+        use, chemistry, tasks, price, unit = classify(sku, use_text, chem)
         slug = slugify(sku)
-        desc = row.get("description", "")[:280] or f"{sku} — водоразбавимый материал Sirca. Подбор цикла по TDS."
-        desc = desc.replace("'", "\\'")
-        short = short_name(sku, use_text).replace("'", "\\'")
-        name = f"{sku} — водный материал Sirca"
-        if "грунт" in use_text.lower():
-            name = f"{sku} — водный грунт"
-        elif "лак" in use_text.lower() or "финиш" in use_text.lower():
-            name = f"{sku} — водный лак"
-        elif "эмаль" in use_text.lower():
-            name = f"{sku} — водная эмаль"
-        elif "пропит" in use_text.lower():
-            name = f"{sku} — водная пропитка"
-        elif "гермет" in use_text.lower():
-            name = f"{sku} — герметик"
+        desc = row.get("description", "")[:280] or f"{sku} — материал Sirca. Подбор цикла по TDS."
+        short = short_name(use_text)
+        name = product_name(sku, use_text)
+        price_on_request = price == 0
 
         extra = ""
         if row.get("wetGsm"):
             extra += f"\n    wetGsm: {row['wetGsm']},"
         if row.get("coats"):
             extra += f"\n    coats: {row['coats']},"
+        if price_on_request:
+            extra += "\n    priceOnRequest: true,"
 
         task_str = ", ".join(f"'{t}'" for t in tasks)
-        feat_str = ", ".join(f"'{f}'" for f in features_from(sku, use_text, row))
+        feat_str = ", ".join(f"'{esc(f)}'" for f in features_from(sku, use_text, row))
+        pack_line = (
+            "packs: [],"
+            if price_on_request
+            else f"packs: [pack('{unit}', 1, {price})],"
+        )
+
         lines.append(f"""  {{
-    sku: '{sku}',
+    sku: '{esc(sku)}',
     slug: '{slug}',
     brand: 'sirca',
-    name: '{name}',
-    short: '{short}.',
-    description: '{desc}',
+    name: '{esc(name)}',
+    short: '{esc(short)}.',
+    description: '{esc(desc)}',
     tasks: [{task_str}],
     use: '{use}',
-    chemistry: '{chem}',
-    unit: 'л',
-    packs: [pack('л', 1, {price})],
+    chemistry: '{chemistry}',
+    unit: '{unit}',
+    {pack_line}
     features: [{feat_str}],{extra}
   }},""")
         added += 1

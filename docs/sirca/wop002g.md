@@ -1,4 +1,4 @@
-# WOP002g — техническая спецификация Sirca
+# WOP002G — техническая спецификация Sirca
 
 > Источник: `sources/sirca/specs/WOP002g.doc`
 

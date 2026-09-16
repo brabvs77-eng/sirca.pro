@@ -28,7 +28,7 @@ const use = (row.use ?? '').split('Способ')[0].trim();
       {row.sku}
     </p>
     <h1>{row.sku}</h1>
-    <p class="muted">Источник: sources/sirca/specs/{row.sku}.doc</p>
+    <p class="muted">Источник: sources/sirca/specs/{row.file ?? `${row.sku}.doc`}</p>
 
     {row.chem && <p><strong>Химический тип:</strong> {row.chem.split('Назначение')[0].trim()}</p>}
     {use && <p><strong>Назначение:</strong> {use}</p>}

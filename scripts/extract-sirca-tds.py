@@ -11,6 +11,8 @@ from pathlib import Path
 import olefile
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from normalize_sirca_sku import normalize_sku_from_stem, slugify
 SPECS = ROOT / "sources/sirca/specs"
 DOCS = ROOT / "docs/sirca"
 OUT_JSON = ROOT / "src/data/sirca-tds.json"
@@ -30,8 +32,8 @@ def extract_text(path: Path) -> str:
     return re.sub(r"\s+", " ", "".join(out)).strip()
 
 
-def parse_tds(text: str, sku: str) -> dict:
-    info: dict = {"sku": sku}
+def parse_tds(text: str, sku: str, source_file: str) -> dict:
+    info: dict = {"sku": sku, "file": source_file}
 
     m = re.search(r"Назначение:\s*([^\.]{15,160})", text, re.I)
     if m:
@@ -66,15 +68,19 @@ def parse_tds(text: str, sku: str) -> dict:
     if m:
         info["description"] = m.group(1).strip()
 
+    if len(text) < 100:
+        info["parseError"] = "empty or unreadable"
+
     return info
 
 
-def to_markdown(info: dict, text: str) -> str:
+def to_markdown(info: dict) -> str:
     sku = info["sku"]
+    src = info.get("file", f"{sku}.doc")
     lines = [
         f"# {sku} — техническая спецификация Sirca",
         "",
-        f"> Источник: `sources/sirca/specs/{sku}.doc`",
+        f"> Источник: `sources/sirca/specs/{src}`",
         "",
     ]
     if info.get("chem"):
@@ -96,17 +102,26 @@ def to_markdown(info: dict, text: str) -> str:
 
 def main() -> int:
     DOCS.mkdir(parents=True, exist_ok=True)
-    catalog: list[dict] = []
+    by_sku: dict[str, dict] = {}
 
     for path in sorted(SPECS.glob("*.doc")):
-        sku = path.stem
+        sku = normalize_sku_from_stem(path.stem)
         text = extract_text(path)
-        info = parse_tds(text, sku)
+        info = parse_tds(text, sku, path.name)
+        prev = by_sku.get(sku)
+        if not prev or len(text) > prev.get("_textLen", 0):
+            info["_textLen"] = len(text)
+            by_sku[sku] = info
+
+    catalog = []
+    for sku in sorted(by_sku):
+        info = by_sku[sku]
+        info.pop("_textLen", None)
         catalog.append(info)
-        (DOCS / f"{sku.lower()}.md").write_text(to_markdown(info, text), encoding="utf-8")
+        (DOCS / f"{slugify(sku)}.md").write_text(to_markdown(info), encoding="utf-8")
 
     OUT_JSON.write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Parsed {len(catalog)} TDS → {DOCS} and {OUT_JSON}")
+    print(f"Parsed {len(catalog)} unique TDS → {DOCS} and {OUT_JSON}")
     return 0
 
 

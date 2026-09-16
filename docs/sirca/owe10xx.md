@@ -1,4 +1,4 @@
-# OWE10xx — техническая спецификация Sirca
+# OWE10XX — техническая спецификация Sirca
 
 > Источник: `sources/sirca/specs/OWE10xx.doc`
 

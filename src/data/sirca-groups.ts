@@ -34,7 +34,23 @@ const FAMILIES: Array<SircaFamily & { test: (sku: string) => boolean }> = [
     id: 'furniture-pu',
     label: 'Мебель ПУ / полиэфир',
     href: '/sirca/furniture-pu',
-    test: (s) => /^(OPU|OPP05|FPP|FPU|FL|LPU|TH)/.test(s) && !/^(OPU99|OPP19|FPU16|FPU93|OPU60|OPU379)/.test(s),
+    test: (s) =>
+      /^(OPU|OPP05|FPP|FPU|FL|LPU|TH|F3|F4|FO|FOP|HX|LPP|PCV|PUV|UPX|VOPU)/.test(s) &&
+      !/^(OPU99|OPP19|FPU16|FPU93|OPU60|OPU379)/.test(s),
+  },
+  { id: 'epoxy', label: 'Эпоксид ES', href: '/sirca/furniture-pu', test: (s) => /^ES/.test(s) },
+  { id: 'uv', label: 'УФ-лаки UV', href: '/sirca/furniture-pu', test: (s) => /^UV/.test(s) },
+  {
+    id: 'hardeners',
+    label: 'Отвердители / растворители',
+    href: '/sirca/furniture-pu',
+    test: (s) => /^(TH|CT|F912|F915|F921|ADTS|ADTW|CTE|DPN|FDE|FDL|FBU|GDV)/.test(s),
+  },
+  {
+    id: 'converters',
+    label: 'Конвертеры / колеровка',
+    href: '/sirca/furniture-water',
+    test: (s) => /^CR/.test(s) && !/^CRW/.test(s),
   },
 ];
 

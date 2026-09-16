@@ -1,4 +1,4 @@
-# OW109tixG35 — техническая спецификация Sirca
+# OW109TIXG35 — техническая спецификация Sirca
 
 > Источник: `sources/sirca/specs/OW109tixG35.doc`
 

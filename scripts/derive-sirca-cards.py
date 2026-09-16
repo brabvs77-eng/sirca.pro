@@ -46,6 +46,21 @@ FAMILY_SOURCE: dict[str, str] = {
     "FL": "sirca-furniture-lacquer",
     "LPU": "sirca-polyester",
     "TH": "sirca-hardener",
+    "CT": "sirca-hardener",
+    "F912": "sirca-hardener",
+    "F915": "sirca-hardener",
+    "F921": "sirca-hardener",
+    "ADTS": "sirca-hardener",
+    "ADTW": "sirca-hardener",
+    "CTE": "sirca-hardener",
+    "DPN": "sirca-hardener",
+    "FDE": "sirca-hardener",
+    "FDL": "sirca-hardener",
+    "FBU": "sirca-hardener",
+    "GDV": "sirca-hardener",
+    "ES": "sirca-polyester",
+    "UV": "sirca-furniture-lacquer",
+    "CR": "sirca-furniture-water",
 }
 
 

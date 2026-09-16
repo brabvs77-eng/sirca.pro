@@ -41,7 +41,7 @@ const chem =
 ---
 
 <Base
-  title={`${product.sku} — Sirca, цена от ${formatRub(from)}`}
+  title={`${product.sku} — Sirca${product.priceOnRequest || product.packs.length === 0 ? '' : `, цена от ${formatRub(from)}`}`}
   description={`${product.name}. ${product.short} Официальный дилер, доставка по Москве и России.`}
 >
   <div class="wrap spread">
@@ -54,7 +54,9 @@ const chem =
       </p>
       <p class="eyebrow">Sirca · {chem}</p>
       <h1>{product.name}</h1>
-      <p class="price" style="font-size:2.1rem;margin-top:-0.35rem">от {formatRub(from)}</p>
+      <p class="price" style="font-size:2.1rem;margin-top:-0.35rem">
+        {product.priceOnRequest || product.packs.length === 0 ? 'цена по запросу' : `от ${formatRub(from)}`}
+      </p>
       <p>{product.description}</p>
       <div class="specs">
         <div>
@@ -82,22 +84,26 @@ const chem =
           </div>
         )}
       </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Фасовка</th>
-            <th>Цена</th>
-          </tr>
-        </thead>
-        <tbody>
-          {product.packs.map((pack) => (
+      {product.packs.length > 0 ? (
+        <table class="table">
+          <thead>
             <tr>
-              <td>{pack.volume}</td>
-              <td class="price">{formatRub(pack.price)}</td>
+              <th>Фасовка</th>
+              <th>Цена</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {product.packs.map((pack) => (
+              <tr>
+                <td>{pack.volume}</td>
+                <td class="price">{formatRub(pack.price)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p class="muted">Цена и фасовка — по запросу у технолога.</p>
+      )}
       <p class="muted" style="font-size:0.88rem">
         {priceNote}
         {product.hardener ? ` Отвердитель: ${product.hardener}.` : ''}

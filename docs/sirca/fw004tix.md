@@ -1,4 +1,4 @@
-# FW004tix — техническая спецификация Sirca
+# FW004TIX — техническая спецификация Sirca
 
 > Источник: `sources/sirca/specs/FW004tix.doc`
 

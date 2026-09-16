@@ -1,4 +1,4 @@
-# OWPI530tix — техническая спецификация Sirca
+# OWPI530TIX — техническая спецификация Sirca
 
 > Источник: `sources/sirca/specs/OWPI530tix.doc`
 
