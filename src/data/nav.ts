@@ -10,6 +10,7 @@ export const knowledgeNav = [
   { href: '/knowledge', label: 'База' },
   { href: '/knowledge/wood-types', label: 'Породы' },
   { href: '/knowledge/exterior-prep', label: 'Подготовка' },
+  { href: '/knowledge/sirca-specs', label: 'TDS Sirca' },
   { href: '/systems', label: 'Системы GN' },
   { href: '/sirca/color', label: 'Цвет Sirca' },
 ];

@@ -1,4 +1,18 @@
 import { belowMarket, type Pack } from './pricing';
+import { sircaTdsProducts } from './products-sirca-tds';
+import tdsData from './sirca-tds.json';
+
+const tdsBySku = new Map(tdsData.map((row) => [row.sku.toUpperCase(), row]));
+
+function enrichFromTds(product: SircaProduct): SircaProduct {
+  const tds = tdsBySku.get(product.sku.toUpperCase());
+  if (!tds) return product;
+  return {
+    ...product,
+    wetGsm: product.wetGsm ?? tds.wetGsm,
+    coats: product.coats ?? tds.coats,
+  };
+}
 
 const SRC = 'прайс дилера, сентябрь 2026';
 
@@ -34,7 +48,7 @@ function pack(unit: 'л' | 'кг', liters: number, market: number): (Pack & { so
   };
 }
 
-export const sircaProducts: SircaProduct[] = [
+const coreSircaProducts: SircaProduct[] = [
   {
     sku: 'IMW4800',
     slug: 'imw4800',
@@ -1036,6 +1050,8 @@ export const sircaProducts: SircaProduct[] = [
     coats: 3,
   },
 ];
+
+export const sircaProducts: SircaProduct[] = [...coreSircaProducts, ...sircaTdsProducts].map(enrichFromTds);
 
 export function sircaBySlug(slug: string): SircaProduct | undefined {
   return sircaProducts.find((p) => p.slug === slug);
