@@ -57,9 +57,34 @@ def short_name(sku: str, use: str) -> str:
     return u or f"Позиция {sku} из каталога домостроения"
 
 
+def features_from(sku: str, use: str, row: dict) -> list[str]:
+    feats = ["Водоразбавимая"]
+    u = use.lower()
+    if row.get("gloss"):
+        g = row["gloss"].split("Назначение")[0].strip()[:20]
+        if g:
+            feats.append(f"Блеск {g}")
+    if "паркет" in u:
+        feats.append("Паркет")
+    elif "мебел" in u:
+        feats.append("Мебель")
+    elif "окон" in u or "двер" in u:
+        feats.append("Окна и двери")
+    elif "фасад" in u or "экстерьер" in u:
+        feats.append("Экстерьер")
+    elif "спорт" in u:
+        feats.append("Спортивные полы")
+    if "mdf" in u:
+        feats.append("MDF")
+    if row.get("wetGsm"):
+        feats.append(f"~{row['wetGsm']} г/м²")
+    return feats[:4]
+
+
 def main() -> None:
     catalog_text = CATALOG_PATH.read_text(encoding="utf-8")
-    existing = {m.group(1).upper() for m in re.finditer(r"sku: '([^']+)'", catalog_text)}
+    core_part = catalog_text.split("export const sircaProducts")[0]
+    existing = {m.group(1).upper() for m in re.finditer(r"sku: '([^']+)'", core_part)}
     tds_list = json.loads(TDS_PATH.read_text(encoding="utf-8"))
     tds = {row["sku"]: row for row in tds_list}
 
@@ -114,6 +139,7 @@ def main() -> None:
             extra += f"\n    coats: {row['coats']},"
 
         task_str = ", ".join(f"'{t}'" for t in tasks)
+        feat_str = ", ".join(f"'{f}'" for f in features_from(sku, use_text, row))
         lines.append(f"""  {{
     sku: '{sku}',
     slug: '{slug}',
@@ -126,7 +152,7 @@ def main() -> None:
     chemistry: '{chem}',
     unit: 'л',
     packs: [pack('л', 1, {price})],
-    features: ['Водоразбавимая', 'TDS Sirca'],{extra}
+    features: [{feat_str}],{extra}
   }},""")
         added += 1
 

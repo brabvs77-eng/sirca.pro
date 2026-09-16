@@ -5,7 +5,7 @@ import ProductCard from '../../components/ProductCard.astro';
 import { sircaChapterNav } from '../../data/nav';
 import { sircaProducts } from '../../data/products-sirca';
 
-const items = sircaProducts.filter((p) => p.chemistry === 'oil');
+const items = sircaProducts.filter((p) => p.use === 'oils');
 ---
 
 <Base
@@ -22,10 +22,10 @@ const items = sircaProducts.filter((p) => p.chemistry === 'oil');
         и вертикаль, где заказчик хочет «дерево, не эмаль».
       </p>
       <p>
-        <a href="/product/sirca/oil30">OIL30</a> — позиция каталога домостроения. Не мебельный
-        ColorSirca и не GN 277: это итальянское масло в той же логике «пропитал — обновил».
-        Рядом по задаче часто берут G Nature <a href="/product/gnature/277">277</a> на террасу
-        и <a href="/product/gnature/280">280</a> на фасад — если важнее натуральный состав.
+        <a href="/product/sirca/oil30">OIL30</a> — масляная линейка каталога. Рядом — восковые лазури
+        <a href="/product/sirca/iwc1800">IWC1800</a> для декинга и террасы: водоразбавимые, но с масляным эффектом.
+        Для натурального состава смотрите G Nature <a href="/product/gnature/277">277</a> и
+        <a href="/product/gnature/280">280</a>.
       </p>
       <p>
         Обновление: очистка, сушка, новый тонкий слой. Не наслаивать как лак.

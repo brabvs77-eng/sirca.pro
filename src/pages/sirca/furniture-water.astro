@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { sircaChapterNav } from '../../data/nav';
+import { productsInFamily } from '../../data/sirca-groups';
+import { sircaProducts } from '../../data/products-sirca';
+
+const items = productsInFamily(sircaProducts, 'furniture-water');
+---
+
+<Base
+  title="Водные лаки Sirca для мебели и панелей | sirca.pro"
+  description="OWPI, SO-WOOD, CRW, FW — водоразбавимые лаки и грунты для мебельных фасадов, MDF и панелей."
+>
+  <div class="wrap page-pad">
+    <p class="crumbs"><a href="/">Каталог</a> / <a href="/sirca">Sirca</a> / Мебель вода</p>
+    <h1>Водная мебель и панели</h1>
+    <ChapterNav items={sircaChapterNav} />
+    <div class="prose">
+      <p>
+        Страницы 38–41 каталога домостроения — водные лаки для фасадов, детской мебели, MDF и
+        фрезерованных панелей. Отдельно от мебельных ПУ (OPU / FPP) и от паркетных FWPI / OW.
+      </p>
+      <ul>
+        <li><a href="/product/sirca/so-wood">SO-WOOD</a> — мат 5, эффект натурального дерева.</li>
+        <li><a href="/product/sirca/owpi930">OWPI930</a> — лак мебельных фасадов.</li>
+        <li><a href="/product/sirca/crw4633">CRW4633</a> — нейтральная база под цветной грунт.</li>
+      </ul>
+      <p>
+        <a class="btn btn-sirca" href="/calc/raskhod?sku=sirca-so-wood">Расход SO-WOOD</a>
+        <a class="btn btn-ghost" href="/tasks/mebel">Задача: мебель</a>
+      </p>
+    </div>
+    <div class="cards cols-3" style="margin-top:1.6rem">
+      {items.map((p) => <ProductCard product={p} />)}
+    </div>
+  </div>
+</Base>

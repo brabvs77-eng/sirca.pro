@@ -4,43 +4,45 @@ import ProductCard from '../../components/ProductCard.astro';
 import ChapterNav from '../../components/ChapterNav.astro';
 import { covers } from '../../data/media';
 import { sircaChapterNav } from '../../data/nav';
+import { groupSircaProducts } from '../../data/sirca-groups';
 import { sircaProducts } from '../../data/products-sirca';
 
-const groups = [
-  { title: 'Водный экстерьер и столярка', items: sircaProducts.filter((p) => ['exterior', 'windows', 'oils'].includes(p.use)) },
-  { title: 'Паркет', items: sircaProducts.filter((p) => p.use === 'parquet') },
-  { title: 'Мебель и столярка', items: sircaProducts.filter((p) => p.use === 'furniture') },
-];
+const sections = groupSircaProducts(sircaProducts);
 ---
 
 <Base
   title="Каталог Sirca — ЛКМ для деревянного домостроения | sirca.pro"
-  description="Разворот Sirca: IMW4800, OWP330, OIL30, паркетные лаки. Доставка по Москве и России."
+  description="109 SKU Sirca: IMW4800, OWE, FWE, паркет, мебель. Доставка по Москве и России."
 >
   <div class="panel sirca" style={`min-height:18rem;border-radius:0;background-image:url('${covers.sirca}')`}>
     <div class="wrap" style="padding:4.5rem 0 1.6rem">
       <p class="eyebrow" style="color:var(--sirca-gold)">Глава · Италия · домостроение</p>
       <h1>Sirca</h1>
-      <p>Водные, масляные, ПУ и акриловые системы для дома, окон, паркета и мебели.</p>
+      <p>{sircaProducts.length} позиций: водные системы домостроения, паркет, мебельные ПУ и акрил.</p>
     </div>
   </div>
   <div class="wrap page-pad">
     <ChapterNav items={sircaChapterNav} />
     <p class="note">
-      Цена за 1 л или 1 кг, если не указано иное. Отвердитель для ПУ — отдельной строкой в счёте.
+      Цена за 1 л или 1 кг. Отвердитель для ПУ — отдельной строкой. TDS — в
+      <a href="/knowledge/sirca-specs">базе знаний</a>.
     </p>
-    {groups.map((g, i) =>
-      g.items.length ? (
-        <section>
-          <div class="chapter">
-            <h2>{g.title}</h2>
-            <span class="pg">0{i + 1}</span>
-          </div>
-          <div class="cards cols-3">
-            {g.items.map((p) => <ProductCard product={p} />)}
-          </div>
-        </section>
-      ) : null
-    )}
+    {sections.map((section, i) => (
+      <section>
+        <div class="chapter">
+          <h2>
+            {section.href ? (
+              <a href={section.href} style="color:inherit;text-decoration:none">{section.label}</a>
+            ) : (
+              section.label
+            )}
+          </h2>
+          <span class="pg">{String(i + 1).padStart(2, '0')}</span>
+        </div>
+        <div class="cards cols-3">
+          {section.items.map((p) => <ProductCard product={p} />)}
+        </div>
+      </section>
+    ))}
   </div>
 </Base>
